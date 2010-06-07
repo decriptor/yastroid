@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-public class ServerActivity extends ListActivity {
+public class ServerListActivity extends ListActivity {
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
