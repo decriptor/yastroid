@@ -10,7 +10,7 @@ public class ServerListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.server);
+		setContentView(R.layout.serverslist);
 		
 		
 	}

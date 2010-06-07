@@ -11,16 +11,17 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
+        public static final int green=0x7f020000;
+        public static final int icon=0x7f020001;
+        public static final int red=0x7f020002;
     }
     public static final class id {
-        public static final int preferences=0x7f070002;
-        public static final int server=0x7f070001;
-        public static final int servers=0x7f070000;
+        public static final int preferences=0x7f070001;
+        public static final int serverlist=0x7f070000;
     }
     public static final class layout {
         public static final int main=0x7f030000;
-        public static final int server=0x7f030001;
+        public static final int serverslist=0x7f030001;
     }
     public static final class menu {
         public static final int menu=0x7f060000;

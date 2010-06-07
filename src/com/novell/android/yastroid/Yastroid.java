@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class Yastroid extends Activity {
@@ -26,7 +25,6 @@ public class Yastroid extends Activity {
         	Toast.makeText(Yastroid.this, "Credentials are either not set or invalid", Toast.LENGTH_LONG).show();
         }
         
-        getServers();
     }
     
     @Override
@@ -46,8 +44,4 @@ public class Yastroid extends Activity {
     	return false;
     }
     
-    protected ListView getServers() {
-    	ListView lv = new ListView();
-    	
-    }
 }
