@@ -3,7 +3,6 @@ package com.novell.android.yastroid;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-//import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,8 +39,6 @@ public class Yastroid extends Activity {
     {
     	switch (item.getItemId()) {
     	case R.id.preferences:
-    		Preferences p = new Preferences();
-    		p.runOnUiThread(null);
     		return true;
     	}
     	return false;
