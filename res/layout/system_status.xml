@@ -3,45 +3,10 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-    <TextView
-	   	android:id="@+id/network_status_text"
-	   	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip" />
-    <TextView
-	   	android:id="@+id/memory_status_text"
-	   	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip"
-	   	android:layout_below="@id/network_status_text" />
-    <TextView
-	   	android:id="@+id/disk_status_text"
-	   	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip"
-    	android:layout_below="@id/memory_status_text" />
-	<TextView
-	   	android:id="@+id/cpu_status_text"
-	   	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip"
-    	android:layout_below="@id/disk_status_text" />
-	<TextView
-	   	android:id="@+id/system_msgs_status_text"
-	   	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip"
-    	android:layout_below="@id/cpu_status_text" />
-  
-<!--   <ImageView
+  	<ImageView
   	   	android:id="@+id/network_status_icon"
-	   	android:layout_width="48px"
-	   	android:layout_height="48px"
+	   	android:layout_width="24px"
+	   	android:layout_height="24px"
 	   	android:adjustViewBounds="true"
 	   	android:layout_marginTop="6dip"
 	   	android:layout_marginLeft="6sp" 
@@ -50,13 +15,13 @@
 	   	android:id="@+id/network_status_text"
 	   	android:layout_width="wrap_content"
 	   	android:layout_height="wrap_content"
-	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip"
+	   	android:layout_marginTop="8dip"
+ 	   	android:layout_marginBottom="3dip"
     	android:layout_toRightOf="@id/network_status_icon" />
-  <ImageView
+  	<ImageView
   	   	android:id="@+id/memory_status_icon"
-	   	android:layout_width="48px"
-	   	android:layout_height="48px"
+	   	android:layout_width="24px"
+	   	android:layout_height="24px"
 	   	android:adjustViewBounds="true"
 	   	android:layout_marginTop="6dip"
 	   	android:layout_marginLeft="6sp" 
@@ -66,13 +31,14 @@
 	   	android:id="@+id/memory_status_text"
 	   	android:layout_width="wrap_content"
 	   	android:layout_height="wrap_content"
-	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip"
-    	android:layout_toRightOf="@id/memory_status_icon" />
-  <ImageView
+	   	android:layout_marginTop="8dip"
+	   	android:layout_marginBottom="3dip"
+    	android:layout_toRightOf="@id/memory_status_icon"
+    	android:layout_below="@id/network_status_text" />
+  	<ImageView
   	   	android:id="@+id/disk_status_icon"
-	   	android:layout_width="48px"
-	   	android:layout_height="48px"
+	   	android:layout_width="24px"
+	   	android:layout_height="24px"
 	   	android:adjustViewBounds="true"
 	   	android:layout_marginTop="6dip"
 	   	android:layout_marginLeft="6sp" 
@@ -82,13 +48,14 @@
 	   	android:id="@+id/disk_status_text"
 	   	android:layout_width="wrap_content"
 	   	android:layout_height="wrap_content"
-	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip"
-    	android:layout_toRightOf="@id/disk_status_icon" />
-  <ImageView
+	   	android:layout_marginTop="8dip"
+	   	android:layout_marginBottom="3dip"
+    	android:layout_toRightOf="@id/disk_status_icon"
+    	android:layout_below="@id/memory_status_text" />
+  	<ImageView
   	   	android:id="@+id/cpu_status_icon"
-	   	android:layout_width="48px"
-	   	android:layout_height="48px"
+	   	android:layout_width="24px"
+	   	android:layout_height="24px"
 	   	android:adjustViewBounds="true"
 	   	android:layout_marginTop="6dip"
 	   	android:layout_marginLeft="6sp" 
@@ -98,7 +65,26 @@
 	   	android:id="@+id/cpu_status_text"
 	   	android:layout_width="wrap_content"
 	   	android:layout_height="wrap_content"
+	   	android:layout_marginTop="8dip"
+	   	android:layout_marginBottom="3dip"
+    	android:layout_toRightOf="@id/cpu_status_icon"
+    	android:layout_below="@id/disk_status_text" />
+    <ImageView
+    	android:id="@+id/system_msgs_icon"
+	   	android:layout_width="24px"
+	   	android:layout_height="24px"
+	   	android:adjustViewBounds="true"
 	   	android:layout_marginTop="6dip"
-	   	android:layout_marginBottom="6dip"
-    	android:layout_toRightOf="@id/cpu_status_icon" -->
+	   	android:layout_marginLeft="6sp" 
+    	android:layout_marginRight="6sp"
+    	android:layout_below="@id/disk_status_icon" />
+    <TextView
+	   	android:id="@+id/system_msgs_text"
+	   	android:layout_width="wrap_content"
+	   	android:layout_height="wrap_content"
+	   	android:layout_marginTop="8dip"
+	   	android:layout_marginBottom="3dip"
+    	android:layout_toRightOf="@id/system_msgs_icon"
+    	android:layout_below="@id/cpu_status_text" />
+
 </RelativeLayout>

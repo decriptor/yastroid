@@ -2,7 +2,6 @@ package com.novell.android.yastroid;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.ImageView;
 
@@ -11,7 +10,7 @@ public class SystemStatusActivity extends Activity {
 	private TextView memoryStatusText;
 	private TextView diskStatusText;
 	private TextView cpuStatusText;
-	private TextView systemMsgsStatusText;
+	private TextView systemMsgsText;
 	private ImageView networkStatusIcon;
 	private ImageView memoryStatusIcon;
 	private ImageView diskStatusIcon;
@@ -34,12 +33,11 @@ public class SystemStatusActivity extends Activity {
 		memoryStatusText.setText(R.string.memory_status_text);
 		diskStatusText.setText(R.string.disk_status_text);
 		cpuStatusText.setText(R.string.cpu_status_text);
-		systemMsgsStatusText.setText(R.string.system_msgs_status_text);
-		//networkStatusIcon.setImageDrawable(networkStatusIcon.getDrawable());
-		//networkStatusIcon.setVisibility(View.VISIBLE);
-		//memoryStatusIcon.setImageDrawable(memoryStatusIcon.getDrawable());
-		//diskStatusIcon.setImageDrawable(diskStatusIcon.getDrawable());
-		//cpuStatusIcon.setImageDrawable(cpuStatusIcon.getDrawable());
+		systemMsgsText.setText(R.string.system_msgs_status_text);
+		networkStatusIcon.setImageResource(R.drawable.status_green);
+		memoryStatusIcon.setImageResource(R.drawable.status_green);
+		diskStatusIcon.setImageResource(R.drawable.status_red);
+		cpuStatusIcon.setImageResource(R.drawable.status_green);
 	}
 	
 	private void setUpViews() {
@@ -47,10 +45,10 @@ public class SystemStatusActivity extends Activity {
 		memoryStatusText = (TextView)findViewById(R.id.memory_status_text);
 		diskStatusText = (TextView)findViewById(R.id.disk_status_text);
 		cpuStatusText = (TextView)findViewById(R.id.cpu_status_text);
-		systemMsgsStatusText = (TextView)findViewById(R.id.system_msgs_status_text);
-		//networkStatusIcon =(ImageView)findViewById(R.id.network_status_icon);
-		//memoryStatusIcon =(ImageView)findViewById(R.id.memory_status_icon);
-		//diskStatusIcon =(ImageView)findViewById(R.id.disk_status_icon);
-		//cpuStatusIcon =(ImageView)findViewById(R.id.cpu_status_icon);
+		systemMsgsText = (TextView)findViewById(R.id.system_msgs_text);
+		networkStatusIcon =(ImageView)findViewById(R.id.network_status_icon);
+		memoryStatusIcon =(ImageView)findViewById(R.id.memory_status_icon);
+		diskStatusIcon =(ImageView)findViewById(R.id.disk_status_icon);
+		cpuStatusIcon =(ImageView)findViewById(R.id.cpu_status_icon);
 	}
 }
