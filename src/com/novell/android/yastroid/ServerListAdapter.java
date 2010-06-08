@@ -10,21 +10,22 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class ServerListAdapter extends ArrayAdapter<Server> {
+	
 	private ArrayList<Server> servers;
-	Context context;
+	private Context context;
 	
 	public ServerListAdapter(Context context, int textViewResourceId, ArrayList<Server> servers) {
 		super(context, textViewResourceId, servers);
-		this.context = context;
 		this.servers = servers;
+		this.context = context;
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View serverView = convertView;
 		if (serverView == null) {
-			LayoutInflater li = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			serverView = li.inflate(R.layout.serverslistrow, null);
+			LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			serverView = vi.inflate(R.layout.serverslistrow, null);
 		}
 		
 		Server s = servers.get(position);

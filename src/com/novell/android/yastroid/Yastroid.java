@@ -26,8 +26,8 @@ public class Yastroid extends Activity {
         	Toast.makeText(Yastroid.this, "Credentials are either not set or invalid", Toast.LENGTH_LONG).show();
         }
         
-        Intent intent = new Intent(Yastroid.this, SystemStatusActivity.class);
-        startActivity(intent);        
+        Intent intent = new Intent(Yastroid.this, ServerListActivity.class);
+        startActivity(intent);
     }
     
     
