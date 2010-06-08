@@ -13,7 +13,7 @@ import com.novell.android.yastroid.Server;
 public class ServerListActivity extends ListActivity {
 	private ProgressDialog serverListProgress = null;
 	private ArrayList<Server> servers = null;
-	private ServersAdapter adapter;
+	private ServerListAdapter adapter;
 	private Runnable viewServers;
 	
     @Override
