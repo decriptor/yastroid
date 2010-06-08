@@ -1,0 +1,43 @@
+package com.novell.android.yastroid;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+public class ServerListAdapter extends ArrayAdapter<Server> {
+	private ArrayList<Server> servers;
+	Context context;
+	
+	public ServerListAdapter(Context context, int textViewResourceId, ArrayList<Server> servers) {
+		super(context, textViewResourceId, servers);
+		this.context = context;
+		this.servers = servers;
+	}
+	
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View serverView = convertView;
+		if (serverView == null) {
+			LayoutInflater li = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			serverView = li.inflate(R.layout.serverslistrow, null);
+		}
+		
+		Server s = servers.get(position);
+		if (s != null) {
+			TextView tt = (TextView) serverView.findViewById(R.id.toptext);
+			TextView bt = (TextView) serverView.findViewById(R.id.bottomtext);
+			if (tt != null) {
+				tt.setText(s.getServerName());
+			}
+			if (bt != null) {
+				bt.setText(s.getIpAddress());
+			}
+		}
+		return serverView;
+	}
+}
