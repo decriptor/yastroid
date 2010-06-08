@@ -8,6 +8,6 @@
     <string name="disk_status_text">Disk</string>
     <string name="cpu_status_text">CPU</string>
     <string name="system_msgs_status_text">System Messages</string>
-    <string name="server_list_activity">List WebYaST Servers</string>
+    <string name="server_list_activity">WebYaST Servers</string>
     <string name="system_status_activity">System Status</string>
 </resources>
