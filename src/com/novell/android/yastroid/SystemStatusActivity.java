@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.ImageView;
-import android.graphics.drawable.Drawable;
 
 public class SystemStatusActivity extends Activity {
 	private TextView networkStatusText;
@@ -16,7 +15,6 @@ public class SystemStatusActivity extends Activity {
 	private ImageView memoryStatusIcon;
 	private ImageView diskStatusIcon;
 	private ImageView cpuStatusIcon;
-	private Drawable statusIcon;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
