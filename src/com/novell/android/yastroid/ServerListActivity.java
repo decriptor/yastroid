@@ -42,7 +42,7 @@ public class ServerListActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-        Intent intent = new Intent(ServerListActivity.this, SystemStatusActivity.class);
+        Intent intent = new Intent(ServerListActivity.this, ServerActivity.class);
         startActivity(intent);
 	}
 
