@@ -11,9 +11,7 @@ public class UpdateModule {
 	}
 
 	public int getNumberOfAvailableUpdates() throws Exception {
-		String jsonStr = new RestClient().getMethod(server.getScheme(), server
-				.getHostname(), server.getPort(), "/patches.json", server
-				.getUser(), server.getPass());
+		String jsonStr = new RestClient().getMethod(server, "/patches.json");
 		JSONArray updates = new JSONArray(jsonStr);
 
 		return updates.length();

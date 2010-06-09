@@ -32,4 +32,8 @@ public class RestClient {
 		in.close();
 		return sb.toString();
 	}
+
+	public String getMethod (Server server, final String resourcePath) throws Exception {
+		return getMethod(server.getScheme(), server.getHostname(), server.getPort(), resourcePath, server.getUser(), server.getPass());
+	}
 }
