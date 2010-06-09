@@ -40,6 +40,11 @@ public class Server {
 	}
 
 	// FIXME: JUnit this
+	public UpdateModule getUpdateModule() {
+		return new UpdateModule (this);
+	}
+
+	// FIXME: JUnit this
 	public StatusModule getStatusModule ()
 	{
 		return new StatusModule (this);
