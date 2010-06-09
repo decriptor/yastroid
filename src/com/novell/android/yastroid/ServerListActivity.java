@@ -14,18 +14,18 @@ import com.novell.android.yastroid.Server;
 
 public class ServerListActivity extends ListActivity {
 	private ProgressDialog serverListProgress = null;
-	private ArrayList<Server> serversList = null;
+	private ArrayList<Server> serverList = null;
 	private ServerListAdapter serverAdapter;
 	private Runnable serverView;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.serverslist);
+		setContentView(R.layout.serverlist);
     
 		
-		serversList = new ArrayList<Server>();
-		this.serverAdapter = new ServerListAdapter(this, R.layout.serverslistrow, serversList);
+		serverList = new ArrayList<Server>();
+		this.serverAdapter = new ServerListAdapter(this, R.layout.serverlistrow, serverList);
 		setListAdapter(this.serverAdapter);
 		
 		serverView = new Runnable() {
@@ -54,17 +54,17 @@ public class ServerListActivity extends ListActivity {
     
 	private void getServers() {
 		try {
-			serversList = new ArrayList<Server>();
+			serverList = new ArrayList<Server>();
 			Server s1 = new Server();
 			s1.setServerName("webyast1");
 			s1.setIpAddress("1.2.3.4");
 			Server s2 = new Server();
 			s2.setServerName("webyast2");
 			s2.setIpAddress("4.3.2.1");
-			serversList.add(s1);
-			serversList.add(s2);
+			serverList.add(s1);
+			serverList.add(s2);
 				Thread.sleep(2000);
-			Log.i("ARRAY", ""+ serversList.size());
+			Log.i("ARRAY", ""+ serverList.size());
 		} catch (Exception e) {
 			Log.e("BACKGROUND_PROC", e.getMessage());
 		}
@@ -75,10 +75,10 @@ public class ServerListActivity extends ListActivity {
 		
 		@Override
 		public void run() {
-			if(serversList != null && serversList.size() > 0) {
+			if(serverList != null && serverList.size() > 0) {
 				serverAdapter.notifyDataSetChanged();
-				for(int i = 0; i < serversList.size(); i++)
-					serverAdapter.add(serversList.get(i));
+				for(int i = 0; i < serverList.size(); i++)
+					serverAdapter.add(serverList.get(i));
 			}
 			serverListProgress.dismiss();
 			serverAdapter.notifyDataSetChanged();

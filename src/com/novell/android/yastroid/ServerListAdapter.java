@@ -25,7 +25,7 @@ public class ServerListAdapter extends ArrayAdapter<Server> {
 		View serverView = convertView;
 		if (serverView == null) {
 			LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			serverView = vi.inflate(R.layout.serverslistrow, null);
+			serverView = vi.inflate(R.layout.serverlistrow, null);
 		}
 		
 		Server s = servers.get(position);
