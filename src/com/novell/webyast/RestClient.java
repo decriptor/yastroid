@@ -1,33 +1,35 @@
 package com.novell.webyast;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import java.net.Authenticator;
+import java.net.HttpURLConnection;
+import java.net.PasswordAuthentication;
+import java.net.URL;
 
 public class RestClient {
-    
+
 	// FIXME: JUnit this
-	public String getMethod (String url) throws Exception {
-        HttpClient client = new DefaultHttpClient();
-        HttpGet get = new HttpGet(url);
-        HttpResponse response;
-        response = client.execute(get);
-        HttpEntity entity = response.getEntity();
-        if (entity == null)
-                return null;
-       
-        InputStream in = entity.getContent ();
-        BufferedReader reader = new BufferedReader (new InputStreamReader (in));
-        StringBuilder sb = new StringBuilder ();
-        String line = null;
-        while ((line = reader.readLine ()) != null)
-                sb.append (line + "\n");
-        
-        return sb.toString ();
+	public String getMethod(final String scheme, final String hostname, final int port,
+			final String resourcePath, final String user, final String pass)
+			throws Exception {
+		Authenticator.setDefault(new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user, pass.toCharArray());
+			}
+		});
+		HttpURLConnection c = (HttpURLConnection) new URL(scheme,
+				hostname, 4984, resourcePath).openConnection();
+		c.setUseCaches(false);
+		c.connect();
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(c
+				.getInputStream()));
+		String inputLine;
+		StringBuilder sb = new StringBuilder();
+		while ((inputLine = in.readLine()) != null)
+			sb.append(inputLine + "\n");
+		in.close();
+		return sb.toString();
 	}
 }
