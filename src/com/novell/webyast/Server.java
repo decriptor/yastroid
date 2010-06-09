@@ -18,8 +18,8 @@ public class Server {
 	{
 		return url;
 	}
-	// 
-	FIXME: JUnit this
+	
+	// FIXME: JUnit this
 	public StatusModule getStatusModule ()
 	{
 		return new StatusModule (this);

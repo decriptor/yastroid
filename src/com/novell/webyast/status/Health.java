@@ -1,11 +1,19 @@
 package com.novell.webyast.status;
 
-//FIXME: JUnit this
+// FIXME: JUnit this
+
+/***
+ * Represents the health of a particular element in the server.
+ * Known elements are: Network, Memory, CPU and Disk. 
+ * 
+ * @author Mario Carrion
+ *
+ */
 public class Health {
 	private int maxLimit;
 	private int minLimit;
-	private String headline; // For example "Memory"
-	private String label; // For example "free" "cached" "used"
+	private String headline;
+	private String label;
 	
 	public Health (int maxLimit, int minLimit, String headline, String label)
 	{
@@ -15,19 +23,53 @@ public class Health {
 		this.label = label;
 	}
 
-	public int getMaxLimit() {
+	/***
+	 * Gets the maximum limit reached. 
+	 * 
+	 * If this value is greater than 0 it means the alarm is active, 
+	 * it exceeds the configured limit.   
+	 * 
+	 * @return maximum limit
+	 */
+	public int getMaxLimit () 
+	{
 		return maxLimit;
 	}
 
+	/***
+	 * Gets translated headline of unhealthy element
+	 * 
+	 * For example "Memory" or "Network"
+	 * 
+	 * @return translated headline
+	 */
 	public String getHeadline() {
 		return headline;
 	}
 
-	public String getLabel() {
+	/***
+	 * Gets translated label of unhealthy element
+	 * 
+	 * For example "free", "cached" or "used", when the headline
+	 * is "Memory"
+	 * 
+	 * @return translated label
+	 */
+	public String getLabel () 
+	{
 		return label;
 	}
 
-	public int getMinLimit() {
+	/***
+	 * Gets the minimum limit reached. 
+	 * 
+	 * If this value is greater than 0 it means the alarm is active, 
+	 * it undercuts the configured limit.   
+	 * 
+	 * @return minimum limit
+	 */
+	public int getMinLimit ()
+	{
 		return minLimit;
 	}
 }
