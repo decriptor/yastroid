@@ -19,7 +19,7 @@ public class RestClient {
 			}
 		});
 		HttpURLConnection c = (HttpURLConnection) new URL(scheme,
-				hostname, 4984, resourcePath).openConnection();
+				hostname, port, resourcePath).openConnection();
 		c.setUseCaches(false);
 		c.connect();
 
