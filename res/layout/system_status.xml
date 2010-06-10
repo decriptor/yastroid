@@ -6,7 +6,6 @@
     android:background="#ffffff">
     <ListView
 		android:id="@+id/android:list"
-		android:orientation="vertical"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:background="#eeeeee" />
