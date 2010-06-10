@@ -1,6 +1,6 @@
 package com.novell.android.yastroid;
 
-import static com.novell.android.yastroid.YaSTroidOpenHelper.*;
+import static com.novell.android.yastroid.YastroidOpenHelper.*;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class ServerListActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.serverlist);
 
-		YaSTroidOpenHelper helper = new YaSTroidOpenHelper(this);
+		YastroidOpenHelper helper = new YastroidOpenHelper(this);
 		database = helper.getReadableDatabase();
 
 		serverList = new ArrayList<Server>();

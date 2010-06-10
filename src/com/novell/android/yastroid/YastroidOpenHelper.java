@@ -7,7 +7,7 @@ import android.util.Log;
 
 //import android.widget.Toast;
 
-public class YaSTroidOpenHelper extends SQLiteOpenHelper {
+public class YastroidOpenHelper extends SQLiteOpenHelper {
 
 	private static final String TAG = "YaSTroidDatabase";
 
@@ -31,7 +31,7 @@ public class YaSTroidOpenHelper extends SQLiteOpenHelper {
 			+ SERVER_TABLE_NAME
 			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast2', 'https', '137.65.132.194', '54984','root','sandy');";
 
-	public YaSTroidOpenHelper(Context context) {
+	public YastroidOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
