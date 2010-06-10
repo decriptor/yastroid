@@ -11,6 +11,15 @@ public class SingleGraph {
 	private String headline;
 	private Collection<Line> lines;
 	
+	public SingleGraph (boolean cummulated, boolean linegraph, 
+			String headline, Collection<Line> lines)
+	{
+		this.cummulated = cummulated;
+		this.linegraph = linegraph;
+		this.headline = headline;
+		this.lines = lines;
+	}
+	
 	public boolean isCummulated () 
 	{
 		return cummulated;

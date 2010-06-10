@@ -10,6 +10,11 @@ package com.novell.webyast.status;
  *
  */
 public class Health {
+	
+	public static final int Error = 0;
+	public static final int Healthy = 1;
+	public static final int Unhealthy = 2;
+	
 	private int maxLimit;
 	private int minLimit;
 	private String headline;

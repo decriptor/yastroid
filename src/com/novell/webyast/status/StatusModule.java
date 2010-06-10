@@ -2,6 +2,10 @@ package com.novell.webyast.status;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.xml.sax.SAXException;
+
+import com.novell.webyast.RestClient;
 import com.novell.webyast.Server;
 
 //FIXME: JUnit this
@@ -10,7 +14,7 @@ import com.novell.webyast.Server;
  * 
  * Gets status information.
  * 
- * - Graphs: health status - in progress
+ * - Graphs: health status
  * - Logs: retrieving logs - in progress
  * - Metrics: data to generate graphs - missing
  * 
@@ -26,11 +30,43 @@ public class StatusModule {
 		this.server = server;
 	}
 	
-	public Collection<Graph> getGraphs ()
+	/***
+	 * Gets the data returned by the graphs method.
+	 * 
+	 * @return Collection of Graph objects
+	 * @throws SAXException
+	 */
+	public Collection<Graph> getGraphs () throws SAXException
 	{
-		// we will use server.getUrl() + "graphs?checklimits=true"
-		// FIXME: Use real data
-		return new ArrayList<Graph> ();
+		String xmlData = null;
+
+		try {
+			xmlData = new RestClient ().getMethod (server, "/graphs?checklimits=true");
+		} catch (Exception e) {
+			return null;
+		}
+		
+		if (xmlData == null)
+			return null;
+		
+		return Graph.FromXmlData (xmlData);
+	}
+	
+	/***
+	 * Gets a summary of the health status.
+	 * Returned values are Health.Error, Health.Healthy and Health.Unhealthy 
+	 * 
+	 * @return health status
+	 */
+	public int getHealthSummary ()
+	{
+		Collection<Health> fullHealth = getFullHealth ();
+		if (fullHealth == null)
+			return Health.Error;
+		else if (fullHealth.size () == 0)
+			return Health.Healthy;
+		else 
+			return Health.Unhealthy;
 	}
 
 	/***
@@ -42,11 +78,20 @@ public class StatusModule {
 	 * 
 	 * @return collection of Health objects
 	 */
-	public Collection<Health> getHealth ()
+	public Collection<Health> getFullHealth ()
 	{
 		Collection<Health> collection = new ArrayList<Health> ();
+		Collection<Graph> graphs = null;
 		
-		for (Graph g : getGraphs ()) {
+		try {
+			graphs = getGraphs ();
+		} catch (SAXException e) {
+			return null;
+		}
+		if (graphs == null)
+			return null;
+		
+		for (Graph g : graphs) {
 			for (SingleGraph sg : g.getSingleGraphs()) {
 				for (Line l : sg.getLines()) {
 					if (l.isReached()) {

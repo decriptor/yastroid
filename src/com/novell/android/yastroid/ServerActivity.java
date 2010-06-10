@@ -2,6 +2,8 @@ package com.novell.android.yastroid;
 
 import java.util.ArrayList;
 
+import com.novell.webyast.status.Health;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -27,9 +29,6 @@ public class ServerActivity extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.server);
-
-		// String[] MODULES = new String[] { updateStr,
-		// "Your System Is Sick :-(" };
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.module_list_row,
 				moduleList));
 
@@ -56,16 +55,17 @@ public class ServerActivity extends ListActivity {
 				// TODO: Add icons for each module, which change dynamically
 				// (for example, green icon when system is healthy, red
 				// otherwise)
+				Bundle b = getIntent().getExtras();
+				Server yastServer =
+					new Server (b.getString("SERVER_NAME"),
+							b.getString("SERVER_SCHEME"),
+							b.getString("SERVER_HOSTNAME"),
+							b.getInt("SERVER_PORT"),
+							b.getString("SERVER_USER"),
+							b.getString("SERVER_PASS"));
+				
 				int availableUpdates = 0;
 				try {
-					Bundle b = getIntent().getExtras();
-					Server yastServer =
-						new Server (b.getString("SERVER_NAME"),
-								b.getString("SERVER_SCHEME"),
-								b.getString("SERVER_HOSTNAME"),
-								b.getInt("SERVER_PORT"),
-								b.getString("SERVER_USER"),
-								b.getString("SERVER_PASS"));
 					availableUpdates =
 							yastServer.getUpdateModule().getNumberOfAvailableUpdates();
 				} catch (Exception e) {
@@ -77,7 +77,19 @@ public class ServerActivity extends ListActivity {
 				// TODO: Figure out available modules dynamically
 				// TODO: Populate health text dynamically
 				moduleList.add(updateStr);
-				moduleList.add("Your System Is Sick :-(");
+
+				String healthStr = "System is healthy";
+				try {
+					// TODO: Clicking this message should show you full details of the status
+					int healthSummary = yastServer.getStatusModule ().getHealthSummary ();
+					if (healthSummary == Health.Error)
+						healthStr = "Cannot read system status";
+					else if (healthSummary == Health.Unhealthy)
+						healthStr = "System is not healthy";
+				}  catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				moduleList.add (healthStr);
 
 				runOnUiThread(new Runnable() {
 					@Override
