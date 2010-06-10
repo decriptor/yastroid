@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginBottom="3dip"
+	android:layout_marginTop="3dip">
+	<ImageView
+		android:id="@+id/system_status_icon"
+		android:layout_width="24px"
+		android:layout_height="24px"
+		android:layout_centerVertical="true"
+		android:adjustViewBounds="true"
+		android:layout_marginLeft="6sp" 
+		android:layout_marginRight="6sp" />
+	<TextView
+		android:id="@+id/system_status_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="#000000"
+		android:layout_centerVertical="true"
+		android:layout_toRightOf="@id/system_status_icon" />
+</RelativeLayout>
