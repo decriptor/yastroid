@@ -9,7 +9,15 @@
     <string name="cpu_status_text">CPU</string>
     <string name="system_msgs_status_text">System Messages</string>
     <string name="server_list_activity">WebYaST Servers</string>
+    <string name="server_add_activity">Add WebYaST Server</string>
     <string name="system_status_activity">System Status</string>
 	<string name="no_modules_found">No YaST Modules Found</string>
 	<string name="server_activity">Server Maintenance</string>
+	<string name="add_server_title">WebYaST Server Settings</string>
+	<string name="add_server_name">Name</string>
+	<string name="add_server_hostname">Hostname</string>
+	<string name="add_server_port">Port</string>
+	<string name="add_server_user">User</string>
+	<string name="add_server_password">Password</string>
+	<string name="add_server_button">Add</string>
 </resources>

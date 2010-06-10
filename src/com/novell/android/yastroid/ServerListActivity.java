@@ -11,6 +11,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView; //import android.widget.Toast;
 
@@ -69,10 +72,29 @@ public class ServerListActivity extends ListActivity {
 		intent.putExtra("SERVER_PASS", s.getPass());
 		startActivity(intent);
 	}
+	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.serverlistmenu, menu);
+    	return true;
+    }
+    
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	switch (item.getItemId()) {
+    	case R.id.add_server:
+    		Intent intent = new Intent(ServerListActivity.this, ServerAddActivity.class);
+    		startActivity(intent);
+    		return true;
+    	}
+    	return false;
+    }
 
 	private void getServers() {
 		try {
-			Cursor sc = database.query(SERVER_TABLE_NAME, new String[] {
+			Cursor sc = database.query(SERVERS_TABLE_NAME, new String[] {
 					"name", "scheme", "hostname", "port", "user", "pass" },
 					null, null, null, null, null);
 
@@ -105,6 +127,9 @@ public class ServerListActivity extends ListActivity {
 				serverAdapter.notifyDataSetChanged();
 				for (int i = 0; i < serverList.size(); i++)
 					serverAdapter.add(serverList.get(i));
+			}
+			else {
+				//Add button 'Add new Server'
 			}
 			serverListProgress.dismiss();
 			serverAdapter.notifyDataSetChanged();

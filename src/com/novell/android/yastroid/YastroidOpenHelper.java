@@ -13,10 +13,16 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "yastroid";
 	private static final int DATABASE_VERSION = 3;
-	static final String SERVER_TABLE_NAME = "servers";
+	static final String SERVERS_TABLE_NAME = "servers";
+	static final String SERVERS_NAME = "name";
+	static final String SERVERS_SCHEME = "scheme";
+	static final String SERVERS_HOST = "hostname";
+	static final String SERVERS_PORT = "port";
+	static final String SERVERS_USER = "user";
+	static final String SERVERS_PASS = "pass";
 
 	private static final String CREATE_TABLES = "CREATE TABLE "
-			+ SERVER_TABLE_NAME + " ("
+			+ SERVERS_TABLE_NAME + " ("
 			+ "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT, "
 			+ "scheme TEXT, " + "hostname TEXT, " + "port INTEGER, "
 			+ "user TEXT, " + "pass TEXT);";
@@ -24,11 +30,11 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 	// "CREATE TABLE group (_id INTEGER PRIMARY KEY AUTOINCREMENTE, name TEXT, serverID INTEGER";
 
 	private static final String ADD_SERVER = "INSERT INTO "
-			+ SERVER_TABLE_NAME
+			+ SERVERS_TABLE_NAME
 			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy');";
 
 	private static final String ADD_SERVER_2 = "INSERT INTO "
-			+ SERVER_TABLE_NAME
+			+ SERVERS_TABLE_NAME
 			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast2', 'http', '137.65.132.194', '4984','root','sandy');";
 
 	public YastroidOpenHelper(Context context) {

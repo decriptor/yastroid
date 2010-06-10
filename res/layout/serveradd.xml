@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TextView
+	android:id="@+id/txt_server_title"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:textSize="24sp"
+	android:text="@string/add_server_title" />
+	<TableRow>
+		<TextView 
+		android:id="@+id/txt_server_name"
+		android:width="120px"
+		android:text="@string/add_server_name"
+		/>
+		<EditText android:id="@+id/edit_server_name"
+		android:width="200px"
+		/>
+	</TableRow>
+	<TableRow>
+		<TextView
+		android:id="@+id/txt_server_host"
+		android:width="120px"
+		android:text="@string/add_server_hostname"
+		/>
+		<EditText 
+		android:id="@+id/edit_server_host"
+		/>
+	</TableRow>
+	<TableRow>
+		<TextView 
+		android:id="@+id/txt_server_port"
+		android:width="120px"
+		android:text="@string/add_server_port"
+		/>
+		<EditText 
+		android:id="@+id/edit_server_port"
+		/>
+	</TableRow>
+	<TableRow>
+		<TextView
+		android:id="@+id/txt_server_user"
+		android:width="120px"
+		android:text="@string/add_server_user"
+		/>
+		<EditText
+		android:id="@+id/edit_server_user"
+		/>
+	</TableRow>
+	<TableRow>
+		<TextView
+		android:id="@+id/txt_server_pass"
+		android:width="120px"
+		android:text="@string/add_server_password"
+		/>
+		<EditText
+		android:id="@+id/edit_server_pass"
+		android:password="true"
+		/>
+	</TableRow>
+	<Button
+	android:id="@+id/button_add_server"
+	android:text="@string/add_server_button"
+	/>
+</TableLayout>
