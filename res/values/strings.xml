@@ -11,7 +11,7 @@
     <string name="server_list_activity">WebYaST Servers</string>
     <string name="server_add_activity">Add WebYaST Server</string>
     <string name="system_status_activity">System Status</string>
-    <string name="display_resource_activity">System Status</string>
+    <string name="display_resource_activity">Resource Status</string>
 	<string name="no_modules_found">No YaST Modules Found</string>
 	<string name="server_activity">Server Maintenance</string>
 	<string name="add_server_title">WebYaST Server Settings</string>
@@ -21,6 +21,7 @@
 	<string name="add_server_user">User</string>
 	<string name="add_server_password">Password</string>
 	<string name="add_server_button">Add</string>
+	<string name="time_label">Show last:</string>
 	<string name="time_prompt">Display Length</string>
 	<string-array name="times_array"><item>5 Minutes</item>
 	<item>15 Minutes</item>

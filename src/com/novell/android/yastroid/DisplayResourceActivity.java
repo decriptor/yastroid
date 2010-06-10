@@ -37,6 +37,9 @@ public class DisplayResourceActivity extends Activity {
 
         setContentView(R.layout.display_resource);
 
+        TextView v = (TextView) findViewById(R.id.resource_type);
+        v.setText("Network");
+        
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
         this.mAdapter = ArrayAdapter.createFromResource(this, R.array.times_array,
@@ -99,7 +102,7 @@ public class DisplayResourceActivity extends Activity {
              * Set the value of the text field in the UI
              */
             TextView resultText = (TextView)findViewById(R.id.SpinnerResult);
-            resultText.setText(DisplayResourceActivity.this.mSelection);
+            resultText.setText("Display a graph here of the last " + DisplayResourceActivity.this.mSelection);
         }
 
         /**
