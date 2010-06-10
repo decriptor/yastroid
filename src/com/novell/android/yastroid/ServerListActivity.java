@@ -59,8 +59,14 @@ public class ServerListActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		Intent intent = new Intent(ServerListActivity.this,
-				ServerActivity.class);
+		Intent intent = new Intent(ServerListActivity.this, ServerActivity.class);
+		Server s = serverList.get(position);
+		intent.putExtra("SERVER_NAME", s.getName());
+		intent.putExtra("SERVER_SCHEME", s.getScheme());
+		intent.putExtra("SERVER_HOSTNAME", s.getHostname());
+		intent.putExtra("SERVER_PORT", s.getPort());
+		intent.putExtra("SERVER_USER", s.getUser());
+		intent.putExtra("SERVER_PASS", s.getPass());
 		startActivity(intent);
 	}
 

@@ -58,8 +58,14 @@ public class ServerActivity extends ListActivity {
 				// otherwise)
 				int availableUpdates = 0;
 				try {
-					com.novell.webyast.Server yastServer =
-						new com.novell.webyast.Server("http", "137.65.132.194", 4984, "root", "sandy");
+					Bundle b = getIntent().getExtras();
+					Server yastServer =
+						new Server (b.getString("SERVER_NAME"),
+								b.getString("SERVER_SCHEME"),
+								b.getString("SERVER_HOSTNAME"),
+								b.getInt("SERVER_PORT"),
+								b.getString("SERVER_USER"),
+								b.getString("SERVER_PASS"));
 					availableUpdates =
 							yastServer.getUpdateModule().getNumberOfAvailableUpdates();
 				} catch (Exception e) {
