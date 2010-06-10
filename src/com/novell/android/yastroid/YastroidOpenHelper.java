@@ -12,7 +12,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 	private static final String TAG = "YaSTroidDatabase";
 
 	private static final String DATABASE_NAME = "yastroid";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	static final String SERVER_TABLE_NAME = "servers";
 
 	private static final String CREATE_TABLES = "CREATE TABLE "
@@ -25,11 +25,11 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 
 	private static final String ADD_SERVER = "INSERT INTO "
 			+ SERVER_TABLE_NAME
-			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast1', 'https', '137.65.132.194', '54984','root','sandy');";
+			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy');";
 
 	private static final String ADD_SERVER_2 = "INSERT INTO "
 			+ SERVER_TABLE_NAME
-			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast2', 'https', '137.65.132.194', '54984','root','sandy');";
+			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast2', 'http', '137.65.132.194', '4984','root','sandy');";
 
 	public YastroidOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,5 +52,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 		// than the new version.
 		// ie. db.execSQL("alter table " + TASKS_TABLE + " add column " +
 		// TASK_ADDRESS + " text");
+		db.execSQL("DROP TABLES servers");
+		onCreate(db);
 	}
 }
