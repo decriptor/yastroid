@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 import android.content.*;
 
 public class Yastroid extends Activity {
@@ -23,7 +22,7 @@ public class Yastroid extends Activity {
         String pass = settings.getString("password", null);
         
         if (user == null || pass == null) {
-        	Toast.makeText(Yastroid.this, "Credentials are either not set or invalid", Toast.LENGTH_LONG).show();
+        	//Toast.makeText(Yastroid.this, "Credentials are either not set or invalid", Toast.LENGTH_SHORT).show();
         }
         
         Intent intent = new Intent(Yastroid.this, ServerListActivity.class);
