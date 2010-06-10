@@ -12,7 +12,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 	private static final String TAG = "YaSTroidDatabase";
 
 	private static final String DATABASE_NAME = "yastroid";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	static final String SERVER_TABLE_NAME = "servers";
 
 	private static final String CREATE_TABLES = "CREATE TABLE "
@@ -52,7 +52,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 		// than the new version.
 		// ie. db.execSQL("alter table " + TASKS_TABLE + " add column " +
 		// TASK_ADDRESS + " text");
-		db.execSQL("DROP TABLES servers");
+		db.execSQL("DROP TABLE servers");
 		onCreate(db);
 	}
 }
