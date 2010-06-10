@@ -64,8 +64,7 @@ public class SystemStatusActivity extends ListActivity {
 	protected void onResume() {
 		super.onResume();
 		loadStatusListIfNotLoaded();
-	}*/
-
+	}
 
 	private void showStatus() {
 		networkStatusText.setText(R.string.network_status_text);
@@ -90,4 +89,5 @@ public class SystemStatusActivity extends ListActivity {
 		diskStatusIcon =(ImageView)findViewById(R.id.disk_status_icon);
 		cpuStatusIcon =(ImageView)findViewById(R.id.cpu_status_icon);
 	}
+	*/
 }
