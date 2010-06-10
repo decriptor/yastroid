@@ -1,6 +1,9 @@
 package com.novell.android.yastroid;
 
+import java.util.ArrayList;
+
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +13,9 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class ServerActivity extends ListActivity {
+
+	private ProgressDialog moduleListProgress;
+	private ArrayList<String> moduleList = new ArrayList<String>();
 
 	/*
 	 * (non-Javadoc)
@@ -22,26 +28,10 @@ public class ServerActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.server);
 
-		// TODO: Add icons for each module, which change dynamically
-		// (for example, green icon when system is healthy, red otherwise)
-		int availableUpdates = 0;
-		// TODO: Uncomment after copying some code to show progress (don't hang
-		// Activity while request is made)
-//		try {
-//			availableUpdates = new com.novell.webyast.Server("http",
-//					"137.65.132.194", 4984, "root", "sandy").getUpdateModule()
-//					.getNumberOfAvailableUpdates();
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		}
-
-		String updateStr = availableUpdates + " updates available";
-
-		// TODO: Figure out available modules dynamically
-		// TODO: Populate health text dynamically
-		String[] MODULES = new String[] { updateStr, "Your System Is Sick :-(" };
+		// String[] MODULES = new String[] { updateStr,
+		// "Your System Is Sick :-(" };
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.module_list_row,
-				MODULES));
+				moduleList));
 
 		// TODO: Can we use lv.addHeaderView to make a nicer header than what we
 		// do in server.xml?
@@ -58,5 +48,42 @@ public class ServerActivity extends ListActivity {
 				}
 			}
 		});
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+
+				// TODO: Add icons for each module, which change dynamically
+				// (for example, green icon when system is healthy, red
+				// otherwise)
+				int availableUpdates = 0;
+				try {
+					com.novell.webyast.Server yastServer =
+						new com.novell.webyast.Server("http", "137.65.132.194", 4984, "root", "sandy");
+					availableUpdates =
+							yastServer.getUpdateModule().getNumberOfAvailableUpdates();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+				String updateStr = availableUpdates + " updates available";
+
+				// TODO: Figure out available modules dynamically
+				// TODO: Populate health text dynamically
+				moduleList.add(updateStr);
+				moduleList.add("Your System Is Sick :-(");
+
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						moduleListProgress.dismiss();
+						((ArrayAdapter<String>) getListAdapter()).notifyDataSetChanged();
+					}
+				});
+			}
+		}).start();
+
+		moduleListProgress = ProgressDialog.show(this, "Please wait...",
+				"Contacting Server...", true);
 	}
 }
