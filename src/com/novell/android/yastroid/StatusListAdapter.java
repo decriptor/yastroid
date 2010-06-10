@@ -10,6 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class StatusListAdapter extends ArrayAdapter<SystemStatus> {
+	public static final int NETWORK_STATUS = 0;
+	public static final int MEMORY_STATUS = 0;
+	public static final int DISK_STATUS = 0;
+	public static final int CPU_STATUS = 0;
+	public static final int SYSTEM_MSGS_STATUS = 0;
 	private ArrayList<SystemStatus> statii;
 	private Context context;
 	
