@@ -38,7 +38,8 @@ public class DisplayResourceActivity extends Activity {
         setContentView(R.layout.display_resource);
 
         TextView v = (TextView) findViewById(R.id.resource_type);
-        v.setText("Network");
+        Bundle b = getIntent().getExtras();
+        v.setText(b.getString("RESOURCE_TYPE"));
         
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 

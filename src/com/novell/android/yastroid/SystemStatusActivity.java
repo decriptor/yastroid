@@ -28,18 +28,19 @@ public class SystemStatusActivity extends ListActivity {
 		
 		super.onListItemClick(l, v, position, id);
 		systemStatus = (SystemStatus)getListView().getItemAtPosition(position);
+        statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
 		switch (systemStatus.getSystemType()) {
 		case SystemStatus.NETWORK_STATUS:
-	        statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        statusIntent.putExtra("RESOURCE_TYPE", "Network");
 	        break;
 		case SystemStatus.MEMORY_STATUS:
-	        //statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        statusIntent.putExtra("RESOURCE_TYPE", "Memory");
 	        break;
 		case SystemStatus.DISK_STATUS:
-	        //statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        statusIntent.putExtra("RESOURCE_TYPE", "Disk");
 	        break;
 		case SystemStatus.CPU_STATUS:
-	        //statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        statusIntent.putExtra("RESOURCE_TYPE", "CPU");
 	        break;
 		case SystemStatus.SYSTEM_MSGS_STATUS:
 	        //statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
