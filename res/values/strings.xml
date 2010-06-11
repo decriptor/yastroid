@@ -23,6 +23,8 @@
 	<string name="add_server_button">Add</string>
 	<string name="time_label">Show last:</string>
 	<string name="time_prompt">Select Display Length</string>
+	<string name="system_messages_activity">System Messages</string>
+	<string name="no_messages_found">No System Messages Found</string>
 	<string-array name="times_array"><item>5 Minutes</item>
 	<item>15 Minutes</item>
 	<item>1 Hour</item>
