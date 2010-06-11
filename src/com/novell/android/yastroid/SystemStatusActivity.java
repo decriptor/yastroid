@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 
 public class SystemStatusActivity extends ListActivity {
 	private StatusListAdapter statusListAdapter;
@@ -53,8 +52,6 @@ public class SystemStatusActivity extends ListActivity {
 	
 	protected void buildList() {
 		SystemStatus status;
-		Drawable greenIcon;
-		Drawable redIcon;
 		
 		status = new SystemStatus(this.getApplication(), SystemStatus.NETWORK_STATUS, SystemStatus.STATUS_GREEN);
 		statusListAdapter.add(status);
