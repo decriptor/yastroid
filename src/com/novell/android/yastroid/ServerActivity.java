@@ -41,8 +41,16 @@ public class ServerActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				if (position == 1) {
-					Intent intent = new Intent(ServerActivity.this,
-							SystemStatusActivity.class);
+					Intent intent = new Intent(ServerActivity.this, SystemStatusActivity.class);
+					Bundle b = getIntent().getExtras();
+					// XXX: Temporal, should be replace by something better. Singleton?	
+					intent.putExtra("SERVER_NAME", b.getString("SERVER_NAME"));
+					intent.putExtra("SERVER_SCHEME", b.getString("SERVER_SCHEME"));
+					intent.putExtra("SERVER_HOSTNAME", b.getString("SERVER_HOSTNAME"));
+					intent.putExtra("SERVER_PORT", b.getInt("SERVER_PORT"));
+					intent.putExtra("SERVER_USER", b.getString("SERVER_USER"));
+					intent.putExtra("SERVER_PASS", b.getString("SERVER_PASS"));
+					// XXX
 					startActivity(intent);
 				}
 			}

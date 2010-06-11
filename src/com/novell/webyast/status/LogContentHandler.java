@@ -24,6 +24,11 @@ public class LogContentHandler extends DefaultHandler {
 	private String description;
 	private int contentPosition;
 	private String contentValue;
+	
+	public Collection<Log> getLogs ()
+	{
+		return logs;
+	}
 
 	public void startElement (String uri, String localName, String qName, Attributes atts) throws SAXException
 	{

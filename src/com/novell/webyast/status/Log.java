@@ -1,5 +1,11 @@
 package com.novell.webyast.status;
 
+import java.util.Collection;
+
+import org.xml.sax.SAXException;
+
+import android.util.Xml;
+
 // FIXME: JUnit this
 public class Log {
 	private String id;
@@ -41,5 +47,12 @@ public class Log {
 	public String getContentValue ()
 	{
 		return contentValue;
+	}
+	
+	public static Collection<Log> FromXmlData (String xmlData) throws SAXException
+	{
+		LogContentHandler contentHandler = new LogContentHandler ();
+		Xml.parse (xmlData, contentHandler);
+		return contentHandler.getLogs ();
 	}
 }

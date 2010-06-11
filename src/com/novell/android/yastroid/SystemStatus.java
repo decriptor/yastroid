@@ -4,11 +4,11 @@ import android.app.Application;
 import android.graphics.drawable.Drawable;
 
 public class SystemStatus {
+	public static final int LOG_STATUS = 0;
 	public static final int NETWORK_STATUS = 1;
 	public static final int MEMORY_STATUS = 2;
 	public static final int DISK_STATUS = 3;
 	public static final int CPU_STATUS = 4;
-	public static final int SYSTEM_MSGS_STATUS = 5;
 	public static final int STATUS_GREEN = 100;
 	public static final int STATUS_RED = 101;
 	private Application app;
@@ -27,6 +27,11 @@ public class SystemStatus {
 		this(app, systemType, 0);
 	}
 	
+	public SystemStatus(Application app, String name) {
+		this.app = app;
+		this.name = name;
+	}
+	
 	public void setSystemType(int type) {
 		this.systemType = type;
 		switch (type) {
@@ -41,9 +46,6 @@ public class SystemStatus {
 			break;
 		case CPU_STATUS:
 			name = app.getResources().getString(R.string.cpu_status_text);
-			break;
-		case SYSTEM_MSGS_STATUS:
-			name = app.getResources().getString(R.string.system_msgs_status_text);
 			break;
 		default:
 			name = "";

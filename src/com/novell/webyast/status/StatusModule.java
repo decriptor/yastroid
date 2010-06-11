@@ -31,6 +31,98 @@ public class StatusModule {
 	}
 	
 	/***
+	 * Gets all available metrics. The returned value represents
+	 * the data returned by /metrics 
+	 * 
+	 * @return
+	 * @throws SAXException
+	 */
+	public Collection<Metric> getMetrics () throws SAXException
+	{
+		String xmlData = null;
+
+		try {
+			xmlData = new RestClient ().getMethod (server, "/metrics");
+		} catch (Exception e) {
+			return null;
+		}
+		
+		if (xmlData == null)
+			return null;
+		
+		return Metric.FromXmlData (xmlData);
+	}
+	
+	/*** 
+	 * Gets the metric specific metrics associated to the type
+	 * 
+	 * @param metricType Use Metric.NETWORK, Metric.CPU, Metric.MEMORY, Metric.DISK
+	 * @return collection of specific metrics
+	 */
+	public Collection<Metric> getMetric (int metricType)
+	{
+		Collection<Metric> metrics = null;
+
+		try {
+			metrics = getMetrics ();
+		} catch (SAXException e) {
+			return null;
+		}
+		
+		String plugin = null;
+		switch (metricType) {
+		case Metric.CPU:
+			plugin = Metric.CPU_PLUGIN;
+			break;
+		case Metric.DISK:
+			plugin = Metric.DISK_PLUGIN;
+			break;
+		case Metric.MEMORY:
+			plugin = Metric.MEMORY_PLUGIN;
+			break;
+		case Metric.NETWORK:
+			plugin = Metric.NETWORK_PLUGIN;
+			break;
+		default:
+			return null;
+		}
+		
+		Collection<Metric> collection = new ArrayList<Metric> ();
+		for (Metric m : metrics) {
+			if (m.getPlugin ().compareTo (plugin) == 0)
+				collection.add (m);
+		}
+		
+		return collection;
+	}
+
+	public Metric getMetricData (String id, int start, int stop) throws SAXException
+	{
+		String xmlData = null;
+
+		try {
+			String startStop = "";
+			if (start > 0)
+				startStop = "start=" + start;
+			if (stop > 0)
+				startStop = (startStop.compareTo("") == 0 ? "" : "&") + "stop=" + stop;
+			
+			xmlData = new RestClient ().getMethod (server, "/metrics/" + id + startStop);
+		} catch (Exception e) {
+			return null;
+		}
+		
+		if (xmlData == null)
+			return null;
+		
+		Collection<Metric> metrics = Metric.FromXmlData (xmlData);
+		if (metrics.size() == 0)
+			return null;
+		
+		return ((ArrayList<Metric>) metrics).get (0);
+	}
+	
+	/***
 	 * Gets the data returned by the graphs method.
 	 * 
 	 * @return Collection of Graph objects
@@ -114,11 +206,22 @@ public class StatusModule {
 	 * lists the available logs. To get the content use getLog()
 	 * 
 	 * @return collection of logs
+	 * @throws SAXException 
 	 */
-	public Collection<Log> getLogs ()
+	public Collection<Log> getLogs () throws SAXException
 	{
-		// we will use server.getUrl() + "logs"
-		return new ArrayList<Log> ();
+		String xmlData = null;
+
+		try {
+			xmlData = new RestClient ().getMethod (server, "/logs");
+		} catch (Exception e) {
+			return null;
+		}
+		
+		if (xmlData == null)
+			return null;
+		
+		return Log.FromXmlData (xmlData);
 	}
 	
 	/*** 
