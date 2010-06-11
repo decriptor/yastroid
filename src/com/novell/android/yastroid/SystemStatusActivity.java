@@ -34,15 +34,7 @@ public class SystemStatusActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		systemStatus = (SystemStatus)getListView().getItemAtPosition(position);
         statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
-		Bundle b = getIntent().getExtras();
-		// XXX: Temporal, should be replace by something better. Singleton?	
-		statusIntent.putExtra("SERVER_NAME", b.getString("SERVER_NAME"));
-		statusIntent.putExtra("SERVER_SCHEME", b.getString("SERVER_SCHEME"));
-		statusIntent.putExtra("SERVER_HOSTNAME", b.getString("SERVER_HOSTNAME"));
-		statusIntent.putExtra("SERVER_PORT", b.getInt("SERVER_PORT"));
-		statusIntent.putExtra("SERVER_USER", b.getString("SERVER_USER"));
-		statusIntent.putExtra("SERVER_PASS", b.getString("SERVER_PASS"));
-		// XXX
+		statusIntent.putExtras(getIntent().getExtras());
 		switch (systemStatus.getSystemType()) {
 		case SystemStatus.NETWORK_STATUS:
 	        statusIntent.putExtra("RESOURCE_TYPE", getString(R.string.network_status_text));
