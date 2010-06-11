@@ -1,7 +1,5 @@
 package com.novell.android.yastroid;
 
-import com.arnodenhond.graphview.GraphView;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,7 +39,7 @@ public class DisplayResourceActivity extends Activity {
             float[] values = new float[] { 2.0f, 1.5f, 2.5f, 1.0f , 3.0f, 3.1f, 3.2f };
             String[] verlabels = new String[] { "6", "4", "2", "0" };
             String[] horlabels = new String[] { "2:00", "2:01", "2:02", "2:03" };
-            GraphView graphView = new GraphView(this, values, "MByte/s", horlabels, verlabels, GraphView.LINE);
+            CustomGraphView graphView = new CustomGraphView(this, values, "MByte/s", horlabels, verlabels, CustomGraphView.LINE);
             setContentView(graphView);
         }
         else
@@ -60,6 +58,8 @@ public class DisplayResourceActivity extends Activity {
 
             OnItemSelectedListener spinnerListener = new myOnItemSelectedListener(this,this.mAdapter);
             spinner.setOnItemSelectedListener(spinnerListener);
+            
+            CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
         }
     }
 
