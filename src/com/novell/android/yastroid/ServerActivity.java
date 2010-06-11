@@ -57,7 +57,8 @@ public class ServerActivity extends ListActivity {
 				// otherwise)
 				Bundle b = getIntent().getExtras();
 				Server yastServer =
-					new Server (b.getString("SERVER_NAME"),
+					new Server (b.getInt("SERVER_ID"),
+							b.getString("SERVER_NAME"),
 							b.getString("SERVER_SCHEME"),
 							b.getString("SERVER_HOSTNAME"),
 							b.getInt("SERVER_PORT"),

@@ -28,9 +28,7 @@ public class Yastroid extends Activity {
         Intent intent = new Intent(Yastroid.this, ServerListActivity.class);
         startActivity(intent);
     }
-    
-    
-    
+        
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {

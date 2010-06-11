@@ -33,10 +33,6 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 			+ SERVERS_TABLE_NAME
 			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy');";
 
-	private static final String ADD_SERVER_2 = "INSERT INTO "
-			+ SERVERS_TABLE_NAME
-			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast2', 'http', '137.65.132.194', '4984','root','sandy');";
-
 	public YastroidOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -46,7 +42,6 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLES);
 		// Demo data
 		db.execSQL(ADD_SERVER);
-		db.execSQL(ADD_SERVER_2);
 	}
 
 	@Override
