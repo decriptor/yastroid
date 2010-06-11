@@ -19,23 +19,35 @@ public class SystemStatusActivity extends ListActivity {
 		setListAdapter(statusListAdapter);
 		buildList();
 		statusListAdapter.notifyDataSetChanged();
-//		setUpViews();
-//		showStatus();
 	}
 	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		Intent networkStatusIntent, memoryStatusIntent, diskStatusIntent,
-			cpuStatusIntent, systemMsgsStatusIntent;
+		Intent statusIntent = null;
+		SystemStatus systemStatus = null;
 		
 		super.onListItemClick(l, v, position, id);
-		//SystemStatus status = (SystemStatus)getListView().getItemAtPosition(position);
-        networkStatusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
-        //memoryStatusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
-        //diskStatusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
-        //cpuStatusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
-        //systemMsgsStatusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
-        startActivity(networkStatusIntent);
+		systemStatus = (SystemStatus)getListView().getItemAtPosition(position);
+		switch (systemStatus.getSystemType()) {
+		case SystemStatus.NETWORK_STATUS:
+	        statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        break;
+		case SystemStatus.MEMORY_STATUS:
+	        //statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        break;
+		case SystemStatus.DISK_STATUS:
+	        //statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        break;
+		case SystemStatus.CPU_STATUS:
+	        //statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        break;
+		case SystemStatus.SYSTEM_MSGS_STATUS:
+	        //statusIntent = new Intent(SystemStatusActivity.this, DisplayResourceActivity.class);
+	        break;
+		}
+		if (statusIntent != null) {
+			startActivity(statusIntent);
+		}
 	}
 	
 	protected void buildList() {
@@ -43,17 +55,15 @@ public class SystemStatusActivity extends ListActivity {
 		Drawable greenIcon;
 		Drawable redIcon;
 		
-		greenIcon = this.getResources().getDrawable(R.drawable.status_green);
-		redIcon = this.getResources().getDrawable(R.drawable.status_red);
-		status = new SystemStatus(getString(R.string.network_status_text), greenIcon);
+		status = new SystemStatus(this.getApplication(), SystemStatus.NETWORK_STATUS, SystemStatus.STATUS_GREEN);
 		statusListAdapter.add(status);
-		status = new SystemStatus(getString(R.string.memory_status_text), greenIcon);
+		status = new SystemStatus(this.getApplication(), SystemStatus.MEMORY_STATUS, SystemStatus.STATUS_GREEN);
 		statusListAdapter.add(status);
-		status = new SystemStatus(getString(R.string.disk_status_text), redIcon);
+		status = new SystemStatus(this.getApplication(), SystemStatus.DISK_STATUS, SystemStatus.STATUS_RED);
 		statusListAdapter.add(status);
-		status = new SystemStatus(getString(R.string.cpu_status_text), greenIcon);
+		status = new SystemStatus(this.getApplication(), SystemStatus.CPU_STATUS, SystemStatus.STATUS_GREEN);
 		statusListAdapter.add(status);
-		status = new SystemStatus(getString(R.string.system_msgs_status_text), null);
+		status = new SystemStatus(this.getApplication(), SystemStatus.SYSTEM_MSGS_STATUS);
 		statusListAdapter.add(status);
 	}
 
