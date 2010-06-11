@@ -26,6 +26,7 @@ public class Yastroid extends Activity {
         }
         
         Intent intent = new Intent(Yastroid.this, ServerListActivity.class);
+        //Intent intent = new Intent(Yastroid.this, SystemStatusActivity.class);
         startActivity(intent);
     }
         

@@ -2,9 +2,8 @@ package com.novell.android.yastroid;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import com.novell.webyast.status.Log;
-
+import com.novell.webyast.status.StatusModule;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +11,7 @@ import android.widget.ListView;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import com.novell.webyast.status.Health;
 
 public class SystemStatusActivity extends ListActivity {
 	private StatusListAdapter statusListAdapter;
@@ -66,19 +66,51 @@ public class SystemStatusActivity extends ListActivity {
 	}
 	
 	protected void buildList() {
+		Intent statusIntent;
 		SystemStatus status;
+		Server server;
+		StatusModule statusModule;
+		Collection<Health> healthCollection;
+		int statusID;
+		Bundle b;
+		Health health;
 		
-		status = new SystemStatus(this.getApplication(), SystemStatus.NETWORK_STATUS, SystemStatus.STATUS_GREEN);
+		statusIntent = getIntent();
+		b = statusIntent.getExtras();
+		server = new Server(b);
+		statusModule = server.getStatusModule();
+		healthCollection = statusModule.getFullHealth();
+		health = new Health(0, 0, "Network", "");
+		if(healthCollection.contains(health))
+			statusID = SystemStatus.STATUS_RED;
+		else
+			statusID = SystemStatus.STATUS_GREEN;
+		status = new SystemStatus(this.getApplication(), SystemStatus.NETWORK_STATUS, statusID);
 		statusListAdapter.add(status);
-		status = new SystemStatus(this.getApplication(), SystemStatus.MEMORY_STATUS, SystemStatus.STATUS_GREEN);
+		health.setHeadline("Memory");
+		if(healthCollection.contains(health))
+			statusID = SystemStatus.STATUS_RED;
+		else
+			statusID = SystemStatus.STATUS_GREEN;
+		status = new SystemStatus(this.getApplication(), SystemStatus.MEMORY_STATUS, statusID);
 		statusListAdapter.add(status);
-		status = new SystemStatus(this.getApplication(), SystemStatus.DISK_STATUS, SystemStatus.STATUS_RED);
+		health.setHeadline("Disk");
+		if(healthCollection.contains(health))
+			statusID = SystemStatus.STATUS_RED;
+		else
+			statusID = SystemStatus.STATUS_GREEN;
+		status = new SystemStatus(this.getApplication(), SystemStatus.DISK_STATUS, statusID);
 		statusListAdapter.add(status);
-		status = new SystemStatus(this.getApplication(), SystemStatus.CPU_STATUS, SystemStatus.STATUS_GREEN);
+		health.setHeadline("CPU");
+		if(healthCollection.contains(health))
+			statusID = SystemStatus.STATUS_RED;
+		else
+			statusID = SystemStatus.STATUS_GREEN;
+		status = new SystemStatus(this.getApplication(), SystemStatus.CPU_STATUS, statusID);
 		statusListAdapter.add(status);
 
 		// TODO: Use a ProgressDialog
-		Bundle b = getIntent().getExtras(); // XXX: Temporal, should be replace by something better. Singleton?	
+		//Bundle b = getIntent().getExtras(); // XXX: Temporal, should be replace by something better. Singleton?	
 		Server yastServer =
 			new Server (b.getInt("SERVER_ID"),
 					b.getString("SERVER_NAME"),

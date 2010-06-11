@@ -40,17 +40,19 @@ public class ServerActivity extends ListActivity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				Bundle b;
+				
+				b = getIntent().getExtras();
+				//b.putInt("SERVER_ID", b.getInt("SERVER_ID"));
+				//b.putString("SERVER_NAME", b.getString("SERVER_NAME"));
+				//b.putString("SERVER_SCHEME", b.getString("SERVER_SCHEME"));
+				//b.putString("SERVER_HOSTNAME", b.getString("SERVER_HOSTNAME"));
+				//b.putInt("SERVER_PORT", b.getInt("SERVER_PORT"));
+				//b.putString("SERVER_USER", b.getString("SERVER_USER"));
+				//b.putString("SERVER_PASS", b.getString("SERVER_PASS"));
 				if (position == 1) {
 					Intent intent = new Intent(ServerActivity.this, SystemStatusActivity.class);
-					Bundle b = getIntent().getExtras();
-					// XXX: Temporal, should be replace by something better. Singleton?	
-					intent.putExtra("SERVER_NAME", b.getString("SERVER_NAME"));
-					intent.putExtra("SERVER_SCHEME", b.getString("SERVER_SCHEME"));
-					intent.putExtra("SERVER_HOSTNAME", b.getString("SERVER_HOSTNAME"));
-					intent.putExtra("SERVER_PORT", b.getInt("SERVER_PORT"));
-					intent.putExtra("SERVER_USER", b.getString("SERVER_USER"));
-					intent.putExtra("SERVER_PASS", b.getString("SERVER_PASS"));
-					// XXX
+					intent.putExtras(b);
 					startActivity(intent);
 				}
 			}

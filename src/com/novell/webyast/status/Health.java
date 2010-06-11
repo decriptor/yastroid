@@ -27,6 +27,10 @@ public class Health {
 		this.headline = headline;
 		this.label = label;
 	}
+	
+	public void setHeadline(String headline) {
+		this.headline = headline;
+	}
 
 	/***
 	 * Gets the maximum limit reached. 
@@ -76,5 +80,24 @@ public class Health {
 	public int getMinLimit ()
 	{
 		return minLimit;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		boolean retVal = false;
+		String compString;
+		Health compHealth;
+		
+		if(o != null && o instanceof Health) {
+			compHealth = (Health)o;
+			if(compHealth != null) {
+				compString = compHealth.getHeadline();
+				retVal = compString.equalsIgnoreCase(this.getHeadline());
+			}
+		}
+		return retVal;
 	}
 }
