@@ -34,42 +34,27 @@ public class DisplayResourceActivity extends Activity {
 
         Bundle b = getIntent().getExtras();
         String resource_type = b.getString("RESOURCE_TYPE");
-        /* hardcoding Network just to show the graph capability for now because
-         * the embeded below does not work yet
-         * 
-         */
-        if (resource_type.equals("Network"))
-        {
-            float[] values = new float[] { 2.0f, 1.5f, 2.5f, 1.0f , 3.0f, 3.1f, 3.2f };
-            String[] verlabels = new String[] { "8", "4", "2", "0" };
-            String[] horlabels = new String[] { "2:00", "2:01", "2:02", "2:03" };
-            CustomGraphView graphView = new CustomGraphView(this);
-            graphView.setCustomGraphViewParms(values, "MByte/s", horlabels, verlabels, CustomGraphView.LINE);
-            setContentView(graphView);
-        }
-        else
-        {
-            setContentView(R.layout.display_resource);
 
-            TextView v = (TextView) findViewById(R.id.resource_type);
-            v.setText(b.getString("RESOURCE_TYPE"));
-            
-            Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        setContentView(R.layout.display_resource);
 
-            this.mAdapter = ArrayAdapter.createFromResource(this, R.array.times_array,
-                    android.R.layout.simple_spinner_dropdown_item);
+        TextView v = (TextView) findViewById(R.id.resource_type);
+        v.setText(b.getString("RESOURCE_TYPE"));
+        
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
-            spinner.setAdapter(this.mAdapter);
+        this.mAdapter = ArrayAdapter.createFromResource(this, R.array.times_array,
+                android.R.layout.simple_spinner_dropdown_item);
 
-            OnItemSelectedListener spinnerListener = new myOnItemSelectedListener(this,this.mAdapter);
-            spinner.setOnItemSelectedListener(spinnerListener);
-            
-            CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
-            float[] values = new float[] { 2.0f, 1.5f, 2.5f, 1.0f , 3.0f, 3.1f, 3.2f };
-            String[] verlabels = new String[] { "6", "4", "2", "0" };
-            String[] horlabels = new String[] { "2:00", "2:01", "2:02", "2:03" };
-            gv.setCustomGraphViewParms(values, "MByte/s", horlabels, verlabels, CustomGraphView.LINE);
-        }
+        spinner.setAdapter(this.mAdapter);
+
+        OnItemSelectedListener spinnerListener = new myOnItemSelectedListener(this,this.mAdapter);
+        spinner.setOnItemSelectedListener(spinnerListener);
+        
+        CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
+        float[] values = new float[] { 2.0f, 1.5f, 2.5f, 1.0f , 3.0f, 3.1f, 3.2f };
+        String[] verlabels = new String[] { "6", "4", "2", "0" };
+        String[] horlabels = new String[] { "2:00", "2:01", "2:02", "2:03" };
+        gv.setCustomGraphViewParms(values, "MByte/s", horlabels, verlabels, CustomGraphView.LINE);
     }
 
 
