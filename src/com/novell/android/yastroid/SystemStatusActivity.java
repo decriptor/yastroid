@@ -48,6 +48,8 @@ public class SystemStatusActivity extends ListActivity {
 		case SystemStatus.CPU_STATUS:
 	        statusIntent.putExtra("RESOURCE_TYPE", getString(R.string.cpu_status_text));
 	        break;
+	    default:
+	    	statusIntent = null;
 		//case SystemStatus.SYSTEM_MSGS_STATUS:
 	        //statusIntent = new Intent(SystemStatusActivity.this, SystemMessagesActivity.class);
 	        //break;
