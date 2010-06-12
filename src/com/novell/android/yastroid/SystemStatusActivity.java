@@ -60,7 +60,7 @@ public class SystemStatusActivity extends ListActivity {
 	protected void buildList() {
 		Intent statusIntent;
 		SystemStatus status;
-		Server server;
+		Server yastServer;
 		StatusModule statusModule;
 		Collection<Health> healthCollection;
 		int statusID;
@@ -69,8 +69,8 @@ public class SystemStatusActivity extends ListActivity {
 		
 		statusIntent = getIntent();
 		b = statusIntent.getExtras();
-		server = new Server(b);
-		statusModule = server.getStatusModule();
+		yastServer = new Server(b);
+		statusModule = yastServer.getStatusModule();
 		healthCollection = statusModule.getFullHealth();
 		health = new Health(0, 0, "Network", "");
 		if(healthCollection.contains(health))
@@ -102,16 +102,6 @@ public class SystemStatusActivity extends ListActivity {
 		statusListAdapter.add(status);
 
 		// TODO: Use a ProgressDialog
-		//Bundle b = getIntent().getExtras(); // XXX: Temporal, should be replace by something better. Singleton?	
-		Server yastServer =
-			new Server (b.getInt("SERVER_ID"),
-					b.getString("SERVER_NAME"),
-					b.getString("SERVER_SCHEME"),
-					b.getString("SERVER_HOSTNAME"),
-					b.getInt("SERVER_PORT"),
-					b.getString("SERVER_USER"),
-					b.getString("SERVER_PASS"));
-
 		try {
 			Collection<Log> logs = yastServer.getStatusModule ().getLogs ();
 			if (logs == null) {
