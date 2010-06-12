@@ -33,4 +33,9 @@
   	android:layout_marginTop="10dip"
   	android:text="@string/time_prompt"
   />
+  <com.novell.android.yastroid.CustomGraphView
+    android:id="@+id/graph_view"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  />
 </LinearLayout>

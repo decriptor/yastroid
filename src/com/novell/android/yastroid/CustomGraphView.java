@@ -1,6 +1,7 @@
 package com.novell.android.yastroid;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,27 +21,34 @@ public class CustomGraphView extends View {
 	private String title;
 	private boolean type;
 
-	public CustomGraphView(Context context, float[] values, String title, String[] horlabels, String[] verlabels, boolean type) {
+	public CustomGraphView(Context context) {
 		super(context);
-		if (values == null)
-			values = new float[0];
-		else
-			this.values = values;
-		if (title == null)
-			title = "";
-		else
-			this.title = title;
-		if (horlabels == null)
-			this.horlabels = new String[0];
-		else
-			this.horlabels = horlabels;
-		if (verlabels == null)
-			this.verlabels = new String[0];
-		else
-			this.verlabels = verlabels;
-		this.type = type;
-		paint = new Paint();
 	}
+
+	public CustomGraphView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+
+	public void setCustomGraphViewParms(float[] values, String title, String[] horlabels, String[] verlabels, boolean type) {
+	if (values == null)
+		values = new float[0];
+	else
+		this.values = values;
+	if (title == null)
+		title = "";
+	else
+		this.title = title;
+	if (horlabels == null)
+		this.horlabels = new String[0];
+	else
+		this.horlabels = horlabels;
+	if (verlabels == null)
+		this.verlabels = new String[0];
+	else
+		this.verlabels = verlabels;
+	this.type = type;
+	paint = new Paint();
+}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
