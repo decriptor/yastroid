@@ -70,17 +70,20 @@ public class ServerActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Intent intent = null;
-		Module m = moduleList.get(position);
-		String n = m.getName();
-		
-		if (n == "UPDATE") {
-			// Do something with the updates
-		} else if (n == "HEALTH") {
-			intent = new Intent(ServerActivity.this, SystemStatusActivity.class);
-			intent.putExtras(getIntent().getExtras());
-			startActivity(intent);
-		} else {
-			// Do nothing?
+		// Ignore first item showing the server name and IP
+		if (position != 0) {
+			Module m = moduleList.get(position - 1);
+			String n = m.getName();
+			
+			if (n == "UPDATE") {
+				// Do something with the updates
+			} else if (n == "HEALTH") {
+				intent = new Intent(ServerActivity.this, SystemStatusActivity.class);
+				intent.putExtras(getIntent().getExtras());
+				startActivity(intent);
+			} else {
+				// Do nothing?
+			}
 		}
 	}
 	
