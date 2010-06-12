@@ -3,8 +3,6 @@ package com.novell.android.yastroid;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.arnodenhond.graphview.GraphView;
-import com.novell.webyast.status.Log;
 import com.novell.webyast.status.Metric;
 import com.novell.webyast.status.Value;
 
@@ -38,91 +36,54 @@ public class DisplayResourceActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
+
+		float[] values = new float[] { 0f, 3f, 2f, 3f, 3f, 1f, 5f, 2f, 4f, 4f, 3f, 2f};
+		//      float[] fake_values = new float[] { 2.0f, 1.5f, 2.5f, 1.0f , 3.0f, 3.1f, 3.2f };
+		String[] verlabels = new String[] { "6", "4", "2", "0" };
+		String[] horlabels = new String[] { "2:00", "2:01", "2:02", "2:03", "2:04"};
         
         Bundle b = getIntent().getExtras();
         String resource_type = b.getString("RESOURCE_TYPE");
-        /*
-        float[] values = null;
-        String[] verlabels = null;
-        String[] horlabels = null;
 
- 
-//        /* hardcoding Network just to show the graph capability for now because
-//         * the embeded below does not work yet
-//         * 
-//         *
-//        if (resource_type.equals("Network"))
-        {
-    		// TODO: Use a ProgressDialog
-    		Server yastServer =
-    			new Server (b.getInt("SERVER_ID"),
-    					b.getString("SERVER_NAME"),
-    					b.getString("SERVER_SCHEME"),
-    					b.getString("SERVER_HOSTNAME"),
-    					b.getInt("SERVER_PORT"),
-    					b.getString("SERVER_USER"),
-    					b.getString("SERVER_PASS"));
-
-    		Metric metric = null;
-    		try {
-    			Collection<com.novell.webyast.status.Graph> graphs = yastServer.getStatusModule ().getGraphs();
-    			boolean boo = yastServer.getStatusModule ().isHealthy(Metric.MEMORY, graphs);
-    			boo = yastServer.getStatusModule ().isHealthy(Metric.CPU, graphs);
-    			boo = yastServer.getStatusModule ().isHealthy(Metric.DISK, graphs);
-    			boo = yastServer.getStatusModule ().isHealthy(Metric.NETWORK, graphs);
-    			
-    			Collection<Metric> networkMetrics = yastServer.getStatusModule ().getMetric(Metric.NETWORK);
-    			// FIXME: We are using "eth0" in the meantime, but we should be able to show the other interfaces
-    			// Also, each interface has different types, we are hard-coding "if_packets"
-    			String id = null;
-    			for (Metric m : networkMetrics) {
-    				if (m.getTypeInstance () != null && m.getTypeInstance().compareTo("eth0") == 0
-    						&& m.getType () != null && m.getType().compareTo("if_packets") == 0) {
-    					id = m.getId ();
-    					break;
-    				}
-    			}
-    			metric = yastServer.getStatusModule ().getMetricData(id, 0, 0);
-    		} catch (Exception e) {
-    			System.out.println(e.getMessage());
-    		}
-    		// XXX
-        	if (metric != null) {
-        		// FIXME: GraphArrayList<E>orts one value only,
-//        		/ArrayList<Value> xmlValues = (ArrayList<Value>) metric.getValues ();
-//	            values = xmlValues.get(0).getValues ().toArray(arg0)
-//	            verlabels = new String[] { "6", "4", "2", "0" };
-//	            horlabels = new String[] { "2:00", "2:01", "2:02", "2:03" };
-//	            GraphView graphView = new GraphView(this, values, "MByte/s", horlabels, verlabels, GraphView.LINE);
-//	        	
-//	            setContentView(graphView);
-        	}
-        }
-        else
-        {
-            setContentView(R.layout.display_resource);
-
-            TextView v = (TextView) findViewById(R.id.resource_type);
-            v.setText(b.getString("RESOURCE_TYPE"));
-            
-            Spinner spinner = (Spinner) findViewById(R.id.spinner);
-
-            this.mAdapter = ArrayAdapter.createFromResource(this, R.array.times_array,
-                    android.R.layout.simple_spinner_dropdown_item);
-
-            spinner.setAdapter(this.mAdapter);
-
-            OnItemSelectedListener spinnerListener = new myOnItemSelectedListener(this,this.mAdapter);
-            spinner.setOnItemSelectedListener(spinnerListener);
-            
-            //CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
-            values = new float[] { 2.0f, 1.5f, 2.5f, 1.0f , 3.0f, 3.1f, 3.2f };
-            verlabels = new String[] { "6", "4", "2", "0" };
-            horlabels = new String[] { "2:00", "2:01", "2:02", "2:03" };
-            //gv.setCustomGraphViewParms(values, "MByte/s", horlabels, verlabels, CustomGraphView.LINE);
-        }*/
-
+		if (resource_type.equals("Network"))  {
+			// TODO: figure out how many data points we want to graph on this small screen - hardcoded right now to 12
+			// TODO: compute the verlabels from the min/max of the real data
+			// TODO: compute the horlabels form the time vals of the real data
+			// TODO: Use a ProgressDialog
+			Server yastServer =	new Server (b.getInt("SERVER_ID"),	b.getString("SERVER_NAME"),
+				b.getString("SERVER_SCHEME"), b.getString("SERVER_HOSTNAME"), b.getInt("SERVER_PORT"),
+				b.getString("SERVER_USER"),	b.getString("SERVER_PASS"));
+		
+			Metric metric = null;
+			try {		
+				Collection<Metric> networkMetrics = yastServer.getStatusModule ().getMetric(Metric.NETWORK);
+				// FIXME: We are using "eth0" in the meantime, but we should be able to show the other interfaces
+				// Also, each interface has different types, we are hard-coding "if_packets"
+				String id = null;
+				for (Metric m : networkMetrics) {
+					if (m.getTypeInstance () != null && m.getTypeInstance().compareTo("eth0") == 0
+							&& m.getType () != null && m.getType().compareTo("if_packets") == 0) {
+						id = m.getId ();
+						break;
+					}
+				}
+				metric = yastServer.getStatusModule ().getMetricData(id, 0, 0);
+				if (metric != null) {
+				// FIXME: GraphArrayList<E>orts one value only,
+		        		ArrayList<Value> xmlValues = (ArrayList<Value>) metric.getValues ();
+			            Float [] fvalues = xmlValues.get(0).getValues ().toArray(new Float[0]);
+			            for (int x=0; x<fvalues.length; x++) {
+			            	values[x] = fvalues[x].floatValue();
+			            	if (x>10)
+			            		break;
+			            }
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
         setContentView(R.layout.display_resource);
 
         TextView v = (TextView) findViewById(R.id.resource_type);
@@ -139,10 +100,7 @@ public class DisplayResourceActivity extends Activity {
         spinner.setOnItemSelectedListener(spinnerListener);
         
         CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
-        float[] values = new float[] { 2.0f, 1.5f, 2.5f, 1.0f , 3.0f, 3.1f, 3.2f };
-        String[] verlabels = new String[] { "6", "4", "2", "0" };
-        String[] horlabels = new String[] { "2:00", "2:01", "2:02", "2:03" };
-        gv.setCustomGraphViewParms(values, "MByte/s", horlabels, verlabels, CustomGraphView.LINE); 
+        gv.setCustomGraphViewParms(values, "MByte/s", horlabels, verlabels, CustomGraphView.LINE);
     }
 
 
