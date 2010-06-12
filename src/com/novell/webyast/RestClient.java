@@ -6,6 +6,7 @@ import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public class RestClient {
 
@@ -20,7 +21,15 @@ public class RestClient {
 		});
 		HttpURLConnection c = (HttpURLConnection) new URL(scheme,
 				hostname, port, resourcePath).openConnection();
+		//URLEncoder.encode(resourcePath, "UTF8")
+		c.setAllowUserInteraction(true);
+		c.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+		c.setRequestProperty("Accept","*/*");
+		c.setRequestProperty("Content-type","text/html");
+		c.setRequestMethod("GET");
 		c.setUseCaches(false);
+		c.setDoInput(true);
+		c.setDoOutput(false);
 		c.connect();
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(c

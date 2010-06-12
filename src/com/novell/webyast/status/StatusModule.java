@@ -144,6 +144,42 @@ public class StatusModule {
 		return Graph.FromXmlData (xmlData);
 	}
 	
+	public boolean isHealthy (int element, Collection<Graph> graphs)
+	{
+		if (graphs == null)
+			return false;
+		
+		String id = null;
+		switch (element) {
+		case Metric.CPU:
+			id = Health.CPU_ID;
+			break;
+		case Metric.DISK:
+			id = Health.DISK_ID;
+			break;
+		case Metric.MEMORY:
+			id = Health.MEMORY_ID;
+			break;
+		case Metric.NETWORK:
+			id = Health.NETWORK_ID;
+			break;
+		default:
+			return false;
+		}
+		
+		for (Graph g : graphs) {
+			if (g.getId ().compareTo (id) == 0) {
+				for (SingleGraph sg : g.getSingleGraphs()) {
+					for (Line l : sg.getLines())
+						if (l.isReached())
+							return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
 	/***
 	 * Gets a summary of the health status.
 	 * Returned values are Health.Error, Health.Healthy and Health.Unhealthy 
@@ -154,11 +190,11 @@ public class StatusModule {
 	{
 		Collection<Health> fullHealth = getFullHealth ();
 		if (fullHealth == null)
-			return Health.Error;
+			return Health.ERROR;
 		else if (fullHealth.size () == 0)
-			return Health.Healthy;
+			return Health.HEALTHY;
 		else 
-			return Health.Unhealthy;
+			return Health.UNHEALTHY;
 	}
 
 	/***

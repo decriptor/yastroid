@@ -25,6 +25,8 @@ public class MetricContentHandler extends DefaultHandler {
 	private boolean inMetricColumn;
 	private boolean inMax;
 	private boolean inMin;
+	private boolean inValueRoot;
+	private boolean inValue;
 	
 	private String id;
 	private String identifier;
@@ -34,10 +36,16 @@ public class MetricContentHandler extends DefaultHandler {
 	private String type;
 	private String typeInstance;	
 	private Collection<Limit> limits;
+	private Collection<Value> values;
+	private Collection<Float> floatValues;
 	
 	private String metricColumn;
 	private int max;
 	private int min;
+	
+	private int interval;
+	private String column;
+	private int start;
 	
 	public Collection<Metric> getMetrics ()
 	{
@@ -48,10 +56,11 @@ public class MetricContentHandler extends DefaultHandler {
 	{
 		super.startElement (uri, localName, qName, atts);
 		
-		if (localName.compareTo ("graph") == 0) {
+		if (localName.compareTo ("metric") == 0) {
 			inMetric = true;
 			 if (metrics == null)
 				 metrics = new ArrayList<Metric> ();
+			values = new ArrayList<Value> ();
 		} else if (localName.compareTo ("id") == 0 && inMetric)
 			inId = true;
 		else if (localName.compareTo ("identifier") == 0 && inMetric)
@@ -77,16 +86,26 @@ public class MetricContentHandler extends DefaultHandler {
 			inMax = true;
 		else if (localName.compareTo ("min") == 0 && inLimit)
 			inMin = true;
+		else if (localName.compareTo ("value") == 0 && inMetric) {
+			if (!inValueRoot) {
+				inValueRoot = true;
+				interval = Integer.parseInt (atts.getValue ("interval"));
+				column = atts.getValue ("column");
+				start = Integer.parseInt (atts.getValue ("start"));
+				floatValues = new ArrayList<Float> (); 
+			} else // inner <value>
+				inValue = true;
+		} 
 	}
 	
 	public void endElement (String uri, String localName, String qName) throws SAXException
 	{
 		super.endElement (uri, localName, qName);
 		
-		if (localName.compareTo ("graph") == 0) {
+		if (localName.compareTo ("metric") == 0) {
 			inMetric = false;
 			metrics.add (new Metric (id, identifier, host, plugin,
-					pluginInstance, type, typeInstance, limits, null)); // FIXME: Add values
+					pluginInstance, type, typeInstance, limits, values));
 			id = identifier = host = plugin = null; 
 			pluginInstance = type = typeInstance = null;
 			limits = null;
@@ -117,6 +136,17 @@ public class MetricContentHandler extends DefaultHandler {
 			inMax = false;
 		else if (localName.compareTo ("min") == 0 && inLimit)
 			inMin = false;
+		else if (localName.compareTo ("value") == 0 && inMetric) {
+			if (inValue)
+				inValue = false;
+			else {
+				values.add (new Value (interval, column, start, floatValues));
+				floatValues = null;
+				column = null;
+				interval = start = 0;
+				inValueRoot = false;
+			}
+		}
 	}
 	
 	public void characters (char[] ch, int start, int length) throws SAXException
@@ -148,7 +178,10 @@ public class MetricContentHandler extends DefaultHandler {
 					else if (inMin)
 						min = Integer.parseInt (text);
 				}
-			}
+			} else if (inValueRoot) {
+				if (inValue)
+					floatValues.add (Float.parseFloat (text.replace("\"", "")));
+			} 
 		}
 	}
 }

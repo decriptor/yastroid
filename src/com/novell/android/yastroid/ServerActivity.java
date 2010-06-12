@@ -93,9 +93,9 @@ public class ServerActivity extends ListActivity {
 				try {
 					// TODO: Clicking this message should show you full details of the status
 					int healthSummary = yastServer.getStatusModule ().getHealthSummary ();
-					if (healthSummary == Health.Error)
+					if (healthSummary == Health.ERROR)
 						healthStr = "Cannot read system status";
-					else if (healthSummary == Health.Unhealthy)
+					else if (healthSummary == Health.UNHEALTHY)
 						healthStr = "System is not healthy";
 				}  catch (Exception e) {
 					System.out.println(e.getMessage());

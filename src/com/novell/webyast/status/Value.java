@@ -6,7 +6,7 @@ public class Value {
 	private int interval;
 	private String column;
 	private int start;
-	public Collection<Float> values;
+	private Collection<Float> values;
 	
 	public Value (int interval, String column, int start, Collection<Float> values)
 	{

@@ -39,6 +39,7 @@ public class Metric {
 		this.host = host;
 		this.plugin = plugin;
 		this.pluginInstance = pluginInstance;
+		this.type = type;
 		this.typeInstance = typeInstance;
 		this.limits = limits;
 		this.values = values;
@@ -64,7 +65,7 @@ public class Metric {
 		return limits;
 	}
 
-	public String getType_instance() {
+	public String getTypeInstance() {
 		return typeInstance;
 	}
 
@@ -76,8 +77,7 @@ public class Metric {
 		return type;
 	}
 	
-	private Collection<Value> getValues ()
-	{
+	public Collection<Value> getValues () {
 		return values;
 	}
 	

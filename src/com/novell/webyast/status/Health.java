@@ -11,9 +11,15 @@ package com.novell.webyast.status;
  */
 public class Health {
 	
-	public static final int Error = 0;
-	public static final int Healthy = 1;
-	public static final int Unhealthy = 2;
+	public static final int ERROR = 0;
+	public static final int HEALTHY = 1;
+	public static final int UNHEALTHY = 2;
+	
+	// FIXME: These values are temporal, ids are translated
+	public static final String NETWORK_ID = "Network";
+	public static final String CPU_ID = "CPU";
+	public static final String DISK_ID = "Disk";
+	public static final String MEMORY_ID = "Memory";
 	
 	private int maxLimit;
 	private int minLimit;
