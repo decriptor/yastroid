@@ -12,7 +12,7 @@
     <string name="server_add_activity">Add WebYaST Server</string>
     <string name="system_status_activity">System Status</string>
     <string name="display_resource_activity">Resource Status</string>
-	<string name="no_modules_found">No YaST Modules Found</string>
+	<string name="server_unreachable">WebYaST Server Unreachable</string>
 	<string name="server_activity">Server Maintenance</string>
 	<string name="add_server_title">WebYaST Server Settings</string>
 	<string name="add_server_name">Name</string>
@@ -25,6 +25,7 @@
 	<string name="time_prompt">Select Display Length</string>
 	<string name="system_messages_activity">System Messages</string>
 	<string name="no_messages_found">No System Messages Found</string>
+	<string name="webyast_Server_info">WebYaST Server Info</string>
 	<string-array name="times_array"><item>5 Minutes</item>
 	<item>15 Minutes</item>
 	<item>1 Hour</item>
