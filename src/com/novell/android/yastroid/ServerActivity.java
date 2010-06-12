@@ -12,11 +12,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class ServerActivity extends ListActivity {
 
 	private ProgressDialog moduleListProgress;
+	private Server yastServer;
 	private ArrayList<String> moduleList = new ArrayList<String>();
 
 	/*
@@ -26,34 +28,34 @@ public class ServerActivity extends ListActivity {
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.server);
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.module_list_row,
-				moduleList));
+		yastServer = new Server(getIntent().getExtras());
 
-		// TODO: Can we use lv.addHeaderView to make a nicer header than what we
-		// do in server.xml?
+		View headerView = getLayoutInflater().inflate(
+		        R.layout.server_header, null);
+		
+		TextView serverName = (TextView)headerView.findViewById(R.id.server_name);
+		TextView serverHost = (TextView)headerView.findViewById(R.id.server_address);
+		//TextView serverUptime = (TextView)headerView.findViewById(R.id.server_uptime);
+		serverName.setText(yastServer.getName());
+		serverHost.setText(yastServer.getHostname());
+		//serverUptime.setText("Uptime: " + "8 days, 8 Hours");
+
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
+		lv.addHeaderView(headerView);
+
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.module_list_row,
+				moduleList));
 
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Bundle b;
-				
-				b = getIntent().getExtras();
-				//b.putInt("SERVER_ID", b.getInt("SERVER_ID"));
-				//b.putString("SERVER_NAME", b.getString("SERVER_NAME"));
-				//b.putString("SERVER_SCHEME", b.getString("SERVER_SCHEME"));
-				//b.putString("SERVER_HOSTNAME", b.getString("SERVER_HOSTNAME"));
-				//b.putInt("SERVER_PORT", b.getInt("SERVER_PORT"));
-				//b.putString("SERVER_USER", b.getString("SERVER_USER"));
-				//b.putString("SERVER_PASS", b.getString("SERVER_PASS"));
 				if (position == 1) {
 					Intent intent = new Intent(ServerActivity.this, SystemStatusActivity.class);
-					intent.putExtras(b);
-					startActivity(intent);
+					intent.putExtras(getIntent().getExtras());
 				}
 			}
 		});
@@ -65,15 +67,6 @@ public class ServerActivity extends ListActivity {
 				// TODO: Add icons for each module, which change dynamically
 				// (for example, green icon when system is healthy, red
 				// otherwise)
-				Bundle b = getIntent().getExtras();
-				Server yastServer =
-					new Server (b.getInt("SERVER_ID"),
-							b.getString("SERVER_NAME"),
-							b.getString("SERVER_SCHEME"),
-							b.getString("SERVER_HOSTNAME"),
-							b.getInt("SERVER_PORT"),
-							b.getString("SERVER_USER"),
-							b.getString("SERVER_PASS"));
 				
 				int availableUpdates = 0;
 				try {
