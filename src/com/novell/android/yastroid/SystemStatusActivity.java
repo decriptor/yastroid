@@ -13,10 +13,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 
 public class SystemStatusActivity extends ListActivity {
 	private StatusListAdapter statusListAdapter;
+	private Runnable systemStatusView;
+	private ProgressDialog systemStatusListProgress = null;
+	private StatusModule statusModule;
+	private	Collection<Graph> graphs;
+	private Collection<Log> logs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +30,23 @@ public class SystemStatusActivity extends ListActivity {
 		setContentView(R.layout.system_status);
 		statusListAdapter = new StatusListAdapter(this, R.layout.system_status_list_item, new ArrayList<SystemStatus>());
 		setListAdapter(statusListAdapter);
-		buildList();
-		statusListAdapter.notifyDataSetChanged();
+		systemStatusView = new Runnable() {
+			@Override
+			public void run() {
+				buildList();
+			}
+		};
+		
+		Thread thread = new Thread(null, systemStatusView, "SystemStatusListBackground");
+		thread.start();
+		systemStatusListProgress = ProgressDialog.show(this, "Please wait...",
+				"Retrieving data...", true);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//buildList();
 	}
 	
 	@Override
@@ -63,12 +84,8 @@ public class SystemStatusActivity extends ListActivity {
 	
 	protected void buildList() {
 		Intent statusIntent;
-		SystemStatus status;
 		Server yastServer;
-		StatusModule statusModule;
-		int statusID;
 		Bundle b;
-		Collection<Graph> graphs;
 		
 		statusIntent = getIntent();
 		b = statusIntent.getExtras();
@@ -79,6 +96,22 @@ public class SystemStatusActivity extends ListActivity {
 		} catch(SAXException ex) {
 			graphs = null;
 		}
+		
+		try {
+			logs = statusModule.getLogs();
+		} catch(SAXException ex) {
+			// Unable to get logs
+			logs = null;
+			System.out.println(ex.getMessage());
+		}
+		runOnUiThread(returnRes);
+	}
+	
+	private void populateAdapter() {
+		SystemStatus status;
+		int statusID;
+
+		statusListAdapter.clear();
 		if(statusModule.isHealthy(Metric.NETWORK, graphs))
 			statusID = SystemStatus.STATUS_GREEN;
 		else
@@ -104,23 +137,25 @@ public class SystemStatusActivity extends ListActivity {
 		status = new SystemStatus(this.getApplication(), SystemStatus.CPU_STATUS, statusID);
 		statusListAdapter.add(status);
 
-		// TODO: Use a ProgressDialog
-		try {
-			Collection<Log> logs = yastServer.getStatusModule ().getLogs ();
-			if (logs == null) {
-				status = new SystemStatus(getApplication(), "Cannot get logs from server");
-				statusListAdapter.add(status);
-			} else {
-				for (Log l : logs) {
-					status = new SystemStatus (getApplication(), l.getDescription());
-					statusListAdapter.add(status);
-				}
-			}
-		} catch (Exception e) {
-			// Unable to get logs
-			status = new SystemStatus(getApplication(), "Cannot read messages");
+		// Display Logs
+		if (logs == null) {
+			status = new SystemStatus(getApplication(), "Cannot get logs from server");
 			statusListAdapter.add(status);
-			System.out.println(e.getMessage());
+		} else {
+			for (Log l : logs) {
+				status = new SystemStatus (getApplication(), l.getDescription());
+				statusListAdapter.add(status);
+			}
 		}
+		statusListAdapter.notifyDataSetChanged();
 	}
+
+	private Runnable returnRes = new Runnable() {
+		@Override
+		public void run() {
+			populateAdapter();
+			systemStatusListProgress.dismiss();
+		}
+	};
+
 }
