@@ -7,9 +7,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.content.*;
+import android.database.sqlite.SQLiteDatabase;
 
 public class Yastroid extends Activity {
-	SharedPreferences settings;
+	
+	private SharedPreferences settings;
+	private SQLiteDatabase database;
+	private YastroidOpenHelper dbhelper;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,8 +29,15 @@ public class Yastroid extends Activity {
         	//Toast.makeText(Yastroid.this, "Credentials are either not set or invalid", Toast.LENGTH_SHORT).show();
         }
         
-        Intent intent = new Intent(Yastroid.this, ServerListActivity.class);
-        //Intent intent = new Intent(Yastroid.this, SystemStatusActivity.class);
+        // Force database upgrade if needed
+        dbhelper = new YastroidOpenHelper(this);
+        database = dbhelper.getWritableDatabase();
+        database.close();
+        
+        // Preliminary Group work. The ability to add/delete groups needs
+        // to be finish.  Adding servers to groups is still completely missing.
+        Intent intent = new Intent(Yastroid.this, GroupListActivity.class);
+        //Intent intent = new Intent(Yastroid.this, ServerListActivity.class);
         startActivity(intent);
     }
         
