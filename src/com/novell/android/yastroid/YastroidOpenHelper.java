@@ -78,6 +78,6 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 		db.execSQL("ALTER TABLE servers ADD COLUMN grp INTEGER;");
 		db.execSQL(CREATE_GROUP_TABLE);
 		db.execSQL(DEFAULT_GROUP);
-		db.execSQL("UPDATE " + SERVERS_TABLE_NAME + " SET " + SERVERS_GROUP + "'0';");
+		db.execSQL("UPDATE " + SERVERS_TABLE_NAME + " SET " + SERVERS_GROUP + "='" + GROUP_DEFAULT_ALL + "';");
 	}
 }
