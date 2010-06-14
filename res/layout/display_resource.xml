@@ -26,13 +26,6 @@
   	android:layout_height="wrap_content"
   	android:prompt="@string/time_prompt"
   />
-  <TextView
-    android:id="@+id/SpinnerResult"
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  	android:layout_marginTop="10dip"
-  	android:text="@string/time_prompt"
-  />
   <com.novell.android.yastroid.CustomGraphView
     android:id="@+id/graph_view"
   	android:layout_width="fill_parent"

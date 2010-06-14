@@ -230,8 +230,8 @@ public class DisplayResourceActivity extends Activity {
             /*
              * Set the value of the text field in the UI
              */
-            TextView resultText = (TextView)findViewById(R.id.SpinnerResult);
-            resultText.setText("Display a graph here of the last " + DisplayResourceActivity.this.mSelection);
+            //TextView resultText = (TextView)findViewById(R.id.SpinnerResult);
+            //resultText.setText("Display a graph here of the last " + DisplayResourceActivity.this.mSelection);
         }
 
         /**
