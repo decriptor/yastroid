@@ -31,10 +31,21 @@ public class ServerListActivity extends ListActivity {
 	private ProgressDialog serverListProgress = null;
 	private ServerListAdapter serverAdapter;
 	private Runnable serverView;
+	
+	private Intent groupIntent;
+	private Bundle b;
+	private int groupId = 0;
+	private String groupName = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		groupIntent = getIntent();
+		b = groupIntent.getExtras();
+		groupId = b.getInt("GROUP_ID");
+		groupName = b.getString("GROUP_NAME");
+
 		setContentView(R.layout.serverlist);
 		getListView().setOnCreateContextMenuListener(this);
 
@@ -132,7 +143,7 @@ public class ServerListActivity extends ListActivity {
 		database = dbhelper.getReadableDatabase();
 		try {
 			Cursor sc = database.query(SERVERS_TABLE_NAME, new String[] {
-					"_id","name", "scheme", "hostname", "port", "user", "pass" },
+					SERVERS_GROUP + "=" + groupId,"name", "scheme", "hostname", "port", "user", "pass" },
 					null, null, null, null, null);
 
 			sc.moveToFirst();

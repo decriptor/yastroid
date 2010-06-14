@@ -20,6 +20,7 @@
         <activity android:name=".DisplayResourceActivity" android:label="@string/display_resource_activity" />
         <activity android:name=".SystemMessagesActivity" android:label="@string/system_messages_activity" />
         <activity android:name=".GroupListActivity" android:label="@string/group_list_activity" />
+        <activity android:name=".GroupAddActivity" android:label="@string/group_add_activity" />
 
     </application>
     <uses-sdk android:minSdkVersion="3" />

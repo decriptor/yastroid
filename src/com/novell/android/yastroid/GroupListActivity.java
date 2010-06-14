@@ -69,22 +69,22 @@ public class GroupListActivity extends ListActivity {
 				ServerListActivity.class);
 		Group g = groupList.get(position);
 		intent.putExtra("GROUP_ID", g.getId());
+		intent.putExtra("GROUP_NAME", g.getName());
 		startActivity(intent);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.serverlistmenu, menu);
+		inflater.inflate(R.menu.grouplistmenu, menu);
 		return true;
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.add_server:
-//			Intent intent = new Intent(GroupListActivity.this,
-//					GroupAddActivity.class);
-//			startActivity(intent);
+		case R.id.add_group:
+			Intent intent = new Intent(GroupListActivity.this, GroupAddActivity.class);
+			startActivity(intent);
 			return true;
 		}
 		return false;
@@ -105,7 +105,7 @@ public class GroupListActivity extends ListActivity {
 		switch (item.getItemId()) {
 		case 0: {
 			Group g = groupList.get(info.position);
-			//deleteGroup(g.getId());
+			deleteGroup(g.getId());
 			return true;
 		}
 		default:
@@ -114,9 +114,9 @@ public class GroupListActivity extends ListActivity {
 	}
 
 	private void deleteGroup(long id) {
-		//database = dbhelper.getWritableDatabase();
-		//database.delete(SERVERS_TABLE_NAME, "_id=" + id, null);
-		//database.close();
+		database = dbhelper.getWritableDatabase();
+		database.delete(GROUP_TABLE_NAME, "_id=" + id, null);
+		database.close();
 		getGroups();
 	}
 

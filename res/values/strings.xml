@@ -12,7 +12,8 @@
     <string name="server_add_activity">Add WebYaST Server</string>
     <string name="system_status_activity">System Status</string>
     <string name="display_resource_activity">Resource Status</string>
-    <string name="group_list_activity">Group List Activity</string>
+    <string name="group_list_activity">Groups</string>
+    <string name="group_add_activity">Add Group</string>
 	<string name="server_unreachable">WebYaST Server Unreachable</string>
 	<string name="no_groups_found">No groups found</string>
 	<string name="server_activity">Server Maintenance</string>
@@ -23,6 +24,10 @@
 	<string name="add_server_user">User</string>
 	<string name="add_server_password">Password</string>
 	<string name="add_server_button">Add</string>
+	<string name="add_group_name">Name</string>
+	<string name="add_group_description">Description</string>
+	<string name="add_group_icon">Icon</string>
+	<string name="add_group_button">Add</string>
 	<string name="time_label">Show last:</string>
 	<string name="time_prompt">Select Display Length</string>
 	<string name="system_messages_activity">System Messages</string>
