@@ -60,11 +60,18 @@ public class GroupListAdapter extends ArrayAdapter<Group> {
 	
 	private int getServerCount(int id) {
 		database = dbhelper.getWritableDatabase();
+		Cursor sc;
 		int count = 0;
 		try {
-			Cursor sc = database.query(SERVERS_TABLE_NAME, new String[] {
+			if (id == GROUP_DEFAULT_ALL) {
+				sc = database.query(SERVERS_TABLE_NAME, new String[] {
+						"_id", },
+						null, null, null, null, null);
+			} else {
+				sc = database.query(SERVERS_TABLE_NAME, new String[] {
 					"_id", },
 					"_id=" + id, null, null, null, null);
+			}
 
 			count = sc.getCount();
 			sc.close();

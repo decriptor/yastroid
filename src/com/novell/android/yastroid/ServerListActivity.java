@@ -32,8 +32,6 @@ public class ServerListActivity extends ListActivity {
 	private ServerListAdapter serverAdapter;
 	private Runnable serverView;
 	
-	private Intent groupIntent;
-	private Bundle b;
 	private int groupId = 0;
 	private String groupName = null;
 
@@ -41,8 +39,8 @@ public class ServerListActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		groupIntent = getIntent();
-		b = groupIntent.getExtras();
+		Intent groupIntent = getIntent();
+		Bundle b = groupIntent.getExtras();
 		groupId = b.getInt("GROUP_ID");
 		groupName = b.getString("GROUP_NAME");
 
@@ -103,6 +101,7 @@ public class ServerListActivity extends ListActivity {
 		case R.id.add_server:
 			Intent intent = new Intent(ServerListActivity.this,
 					ServerAddActivity.class);
+			intent.putExtra("GROUP_ID", groupId);
 			startActivity(intent);
 			return true;
 		}
@@ -141,10 +140,17 @@ public class ServerListActivity extends ListActivity {
 
 	private void getServers() {
 		database = dbhelper.getReadableDatabase();
+		Cursor sc;
 		try {
-			Cursor sc = database.query(SERVERS_TABLE_NAME, new String[] {
-					SERVERS_GROUP + "=" + groupId,"name", "scheme", "hostname", "port", "user", "pass" },
-					null, null, null, null, null);
+			if (groupId == GROUP_DEFAULT_ALL) {
+				sc = database.query(SERVERS_TABLE_NAME, new String[] {
+						"_id", "name", "scheme", "hostname", "port", "user", "pass" },
+						null, null, null, null, null);
+			} else {
+				sc = database.query(SERVERS_TABLE_NAME, new String[] {
+						"_id", "name", "scheme", "hostname", "port", "user", "pass" },
+						SERVERS_GROUP + "=" + groupId, null, null, null, null);
+			}
 
 			sc.moveToFirst();
 			Server s;

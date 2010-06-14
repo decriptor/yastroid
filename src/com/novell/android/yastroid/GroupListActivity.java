@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class GroupListActivity extends ListActivity {
 
@@ -114,10 +115,15 @@ public class GroupListActivity extends ListActivity {
 	}
 
 	private void deleteGroup(long id) {
-		database = dbhelper.getWritableDatabase();
-		database.delete(GROUP_TABLE_NAME, "_id=" + id, null);
-		database.close();
-		getGroups();
+		if(id == GROUP_DEFAULT_ALL) {
+			Toast.makeText(GroupListActivity.this, "Can't delete the default group", Toast.LENGTH_SHORT).show();
+		}
+		else {
+			database = dbhelper.getWritableDatabase();
+			database.delete(GROUP_TABLE_NAME, "_id=" + id, null);
+			database.close();
+			getGroups();
+		}
 	}
 
 	private void getGroups() {
