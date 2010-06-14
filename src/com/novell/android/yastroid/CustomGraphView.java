@@ -20,6 +20,7 @@ public class CustomGraphView extends View {
 	private String[] verlabels;
 	private String title;
 	private boolean type;
+	private boolean parmsSet=false;
 
 	public CustomGraphView(Context context) {
 		super(context);
@@ -48,10 +49,13 @@ public class CustomGraphView extends View {
 		this.verlabels = verlabels;
 	this.type = type;
 	paint = new Paint();
+	parmsSet = true;
 }
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		if (!parmsSet)
+			return;
 		float border = 20;
 		float horstart = border * 2;
 		float height = getHeight();

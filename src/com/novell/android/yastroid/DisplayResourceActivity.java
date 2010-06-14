@@ -7,9 +7,11 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.novell.webyast.status.Metric;
+import com.novell.webyast.status.StatusModule;
 import com.novell.webyast.status.Value;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +28,12 @@ public class DisplayResourceActivity extends Activity {
     protected int mPos;
     protected String mSelection;
     protected int length = 5; // default length (in minutes)
+	float[] values = new float[] { 0f, 3f, 2f, 3f, 3f, 1f, 5f, 2f, 4f, 4f, 3f, 2f};
+	int timeStamp = 0;
+	int timeStampStart = 0;
+    Metric metric;
+    Runnable graphView;
+	private ProgressDialog fetchMetricDataProgress = null;
 
     /**
      * ArrayAdapter connects the spinner widget to array-based data.
@@ -37,28 +45,25 @@ public class DisplayResourceActivity extends Activity {
      */
     public static final int DEFAULT_POSITION = 2;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-		super.onCreate(savedInstanceState);
-
-		float[] values = new float[] { 0f, 3f, 2f, 3f, 3f, 1f, 5f, 2f, 4f, 4f, 3f, 2f};
-		int timeStamp = 0;
-		int timeStampStart = 0;
-        
-        Bundle b = getIntent().getExtras();
-        String resource_type = b.getString("RESOURCE_TYPE");
+    public void fetchMetricData() {
+		Bundle b;
+		Server yastServer;
+		String resource_type;
+		StatusModule statusModule;
+	    Collection<Metric> networkMetrics;
+		
+		b = getIntent().getExtras();
+		resource_type = b.getString("RESOURCE_TYPE");
+		yastServer = new Server(b);
+		metric = null;
+                // TODO: figure out how many data points we want to graph on this small screen
 
 		if (resource_type.equals("Network"))  {
-			// TODO: figure out how many data points we want to graph on this small screen
-			// TODO: Use a ProgressDialog
-			Server yastServer =	new Server (b);
-		
-			Metric metric = null;
-			try {		
-				Collection<Metric> networkMetrics = yastServer.getStatusModule ().getMetric(Metric.NETWORK);
-				// FIXME: We are using "eth0" in the meantime, but we should be able to show the other interfaces
-				// Also, each interface has different types, here we are hard-coding "if_packets" (aka, rx and tx)
+			try {
+				statusModule = yastServer.getStatusModule();
+				networkMetrics = statusModule.getMetric(Metric.NETWORK);
+                                // FIXME: We are using "eth0" in the meantime, but we should be able to show the other interfaces
+                                // Also, each interface has different types, here we are hard-coding "if_packets" (aka, rx and tx)
 				String id = null;
 				for (Metric m : networkMetrics) {
 					if (m.getTypeInstance () != null && m.getTypeInstance().compareTo("eth0") == 0
@@ -67,29 +72,52 @@ public class DisplayResourceActivity extends Activity {
 						break;
 					}
 				}
-				timeStamp = (int) (new Date ().getTime () / 1000);
-				timeStampStart = timeStamp - (60 * length);
-				metric = yastServer.getStatusModule ().getMetricData(id, 
-						timeStampStart,
-						timeStamp);
-				
+                                timeStamp = (int) (new Date ().getTime () / 1000);
+                                timeStampStart = timeStamp - (60 * length);
+                                metric = statusModule.getMetricData(id, 
+                                                timeStampStart,
+                                                timeStamp);
 				if (metric != null) {
-					// FIXME: GraphArrayList<E>orts one value only,
-					ArrayList<Value> xmlValues = (ArrayList<Value>) metric.getValues ();
-					// FIXME: We are using the first value, however the graph should show all the values available, for
-					// example "if_packets" has "tx" and "rx" values.
-					Float [] fvalues = xmlValues.get(0).getValues ().toArray(new Float[0]);
-					values = new float [fvalues.length];
-					for (int x=0; x<fvalues.length; x++) {
-						values[x] = fvalues[x].floatValue();
-					}
+				// FIXME: GraphArrayList<E>orts one value only,
+		        		ArrayList<Value> xmlValues = (ArrayList<Value>) metric.getValues ();
+                                        // FIXME: We are using the first value, however the graph should show all the values available, for
+                                        // example "if_packets" has "tx" and "rx" values.
+			            Float [] fvalues = xmlValues.get(0).getValues ().toArray(new Float[0]);
+                                    values = new float [fvalues.length];
+			            for (int x=0; x<fvalues.length; x++) {
+			            	values[x] = fvalues[x].floatValue();
+			            }
 				}
-				
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		
+		runOnUiThread(returnRes);
+    }
+
+	private Runnable returnRes = new Runnable() {
+		@Override
+		public void run() {
+			buildGraph();
+			fetchMetricDataProgress.dismiss();
+		}
+	};
+
+	private void buildGraph() {
+		CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
+        gv.setCustomGraphViewParms(values, "MByte/s", 
+        		getHorizontalLabels (timeStamp, length), getVerticalLabels(values), CustomGraphView.LINE);        
+		mAdapter.notifyDataSetChanged();
+	}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+        
+        Bundle b = getIntent().getExtras();
+        String resource_type = b.getString("RESOURCE_TYPE");
+
         setContentView(R.layout.display_resource);
 
         TextView v = (TextView) findViewById(R.id.resource_type);
@@ -105,9 +133,16 @@ public class DisplayResourceActivity extends Activity {
         OnItemSelectedListener spinnerListener = new myOnItemSelectedListener(this,this.mAdapter);
         spinner.setOnItemSelectedListener(spinnerListener);
         
-        CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
-        gv.setCustomGraphViewParms(values, "MByte/s", 
-        		getHorizontalLabels (timeStamp, length), getVerticalLabels(values), CustomGraphView.LINE);        
+        graphView = new Runnable() {
+			@Override
+			public void run() {
+				fetchMetricData();
+			}
+		};
+		Thread thread = new Thread(graphView, "GraphBackground");
+		thread.start();
+		fetchMetricDataProgress = ProgressDialog.show(this, "Please wait...",
+				"Building graph...", true);
     }
     
     private String[] getHorizontalLabels (int timeStamp, int length)
