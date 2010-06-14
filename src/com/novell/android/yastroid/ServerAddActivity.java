@@ -73,6 +73,7 @@ public class ServerAddActivity extends Activity {
 			values.put(SERVERS_PORT, port);
 			values.put(SERVERS_USER, user);
 			values.put(SERVERS_PASS, pass);
+			values.put(SERVERS_GROUP, 0);	// 0 is the default 'All' group
 			
 			database.insert(SERVERS_TABLE_NAME, "null", values);
 			database.close();

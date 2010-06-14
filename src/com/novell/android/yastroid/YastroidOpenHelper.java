@@ -12,7 +12,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 	private static final String TAG = "YaSTroidDatabase";
 
 	private static final String DATABASE_NAME = "yastroid";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	static final String SERVERS_TABLE_NAME = "servers";
 	static final String SERVERS_NAME = "name";
 	static final String SERVERS_SCHEME = "scheme";
@@ -20,18 +20,37 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 	static final String SERVERS_PORT = "port";
 	static final String SERVERS_USER = "user";
 	static final String SERVERS_PASS = "pass";
+	static final String SERVERS_GROUP = "grp";
+	static final String GROUP_TABLE_NAME = "groups";
+	static final String GROUP_NAME = "name";
+	static final String GROUP_DESCRIPTION = "description";
+	static final String GROUP_ICON = "icon";
+	
 
-	private static final String CREATE_TABLES = "CREATE TABLE "
+	private static final String CREATE_SERVER_TABLE = "CREATE TABLE "
 			+ SERVERS_TABLE_NAME + " ("
-			+ "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT, "
-			+ "scheme TEXT, " + "hostname TEXT, " + "port INTEGER, "
-			+ "user TEXT, " + "pass TEXT);";
-	// +
-	// "CREATE TABLE group (_id INTEGER PRIMARY KEY AUTOINCREMENTE, name TEXT, serverID INTEGER";
+			+ "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ SERVERS_NAME + " TEXT, "
+			+ SERVERS_SCHEME + " TEXT, "
+			+ SERVERS_HOST + " TEXT, "
+			+ SERVERS_PORT + " INTEGER, "
+			+ SERVERS_USER + " TEXT, "
+			+ SERVERS_PASS + " TEXT, "
+			+ SERVERS_GROUP + " INTEGER);";
+	private static final String CREATE_GROUP_TABLE = "CREATE TABLE "
+			+ GROUP_TABLE_NAME + " ("
+			+ "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ GROUP_NAME + " TEXT, "
+			+ GROUP_DESCRIPTION + " TEXT, "
+			+ GROUP_ICON + " INTEGER);";
+	
+	private static final String DEFAULT_GROUP = "INSERT INTO "
+			+ GROUP_TABLE_NAME
+			+ "(name,description,icon) VALUES ('All', 'All servers', '0');";
 
 	private static final String ADD_SERVER = "INSERT INTO "
 			+ SERVERS_TABLE_NAME
-			+ "(name,scheme,hostname,port,user,pass) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy');";
+			+ "(name,scheme,hostname,port,user,pass,grp) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy','0');";
 
 	public YastroidOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,7 +58,9 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL(CREATE_TABLES);
+		db.execSQL(CREATE_SERVER_TABLE);
+		db.execSQL(CREATE_GROUP_TABLE);
+		db.execSQL(DEFAULT_GROUP);
 		// Demo data
 		db.execSQL(ADD_SERVER);
 	}
@@ -53,7 +74,9 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 		// than the new version.
 		// ie. db.execSQL("alter table " + TASKS_TABLE + " add column " +
 		// TASK_ADDRESS + " text");
-		db.execSQL("DROP TABLE servers");
-		onCreate(db);
+		db.execSQL("ALTER TABLE servers ADD COLUMN grp INTEGER;");
+		db.execSQL(CREATE_GROUP_TABLE);
+		db.execSQL(DEFAULT_GROUP);
+		db.execSQL("UPDATE " + SERVERS_TABLE_NAME + " SET " + SERVERS_GROUP + "'0';");
 	}
 }

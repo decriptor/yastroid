@@ -12,7 +12,9 @@
     <string name="server_add_activity">Add WebYaST Server</string>
     <string name="system_status_activity">System Status</string>
     <string name="display_resource_activity">Resource Status</string>
+    <string name="group_list_activity">Group List Activity</string>
 	<string name="server_unreachable">WebYaST Server Unreachable</string>
+	<string name="no_groups_found">No groups found</string>
 	<string name="server_activity">Server Maintenance</string>
 	<string name="add_server_title">WebYaST Server Settings</string>
 	<string name="add_server_name">Name</string>
