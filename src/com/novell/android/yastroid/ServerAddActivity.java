@@ -3,10 +3,8 @@ package com.novell.android.yastroid;
 import static com.novell.android.yastroid.YastroidOpenHelper.*;
 
 import java.net.URI;
-import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 public class ServerAddActivity extends Activity {
 
 	private SQLiteDatabase database;
-	private ArrayList<Server> serverList = null;
 	private Button addButton;
 
 	@Override
