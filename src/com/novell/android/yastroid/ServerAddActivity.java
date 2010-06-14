@@ -6,6 +6,7 @@ import java.net.URI;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ public class ServerAddActivity extends Activity {
 
 	private SQLiteDatabase database;
 	private Button addButton;
+	private int groupId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,11 @@ public class ServerAddActivity extends Activity {
 
 		YastroidOpenHelper helper = new YastroidOpenHelper(this);
 		database = helper.getWritableDatabase();
-		
+
+		Intent groupIntent = getIntent();
+		Bundle b = groupIntent.getExtras();
+		groupId = b.getInt("GROUP_ID");
+
 		this.addButton = (Button)this.findViewById(R.id.button_add_server);
 		this.addButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -38,6 +44,7 @@ public class ServerAddActivity extends Activity {
 			}
 		});
 	}
+	
 
 	private boolean addServer() {
 		boolean result = false;
@@ -70,7 +77,7 @@ public class ServerAddActivity extends Activity {
 			values.put(SERVERS_PORT, port);
 			values.put(SERVERS_USER, user);
 			values.put(SERVERS_PASS, pass);
-			values.put(SERVERS_GROUP, 0);	// 0 is the default 'All' group
+			values.put(SERVERS_GROUP, groupId);
 			
 			database.insert(SERVERS_TABLE_NAME, "null", values);
 			database.close();

@@ -25,6 +25,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 	static final String GROUP_NAME = "name";
 	static final String GROUP_DESCRIPTION = "description";
 	static final String GROUP_ICON = "icon";
+	static final int GROUP_DEFAULT_ALL = 1;
 	
 
 	private static final String CREATE_SERVER_TABLE = "CREATE TABLE "
@@ -50,7 +51,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 
 	private static final String ADD_SERVER = "INSERT INTO "
 			+ SERVERS_TABLE_NAME
-			+ "(name,scheme,hostname,port,user,pass,grp) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy','0');";
+			+ "(name,scheme,hostname,port,user,pass,grp) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy','" + GROUP_DEFAULT_ALL +"');";
 
 	public YastroidOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
