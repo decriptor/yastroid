@@ -103,9 +103,9 @@ public class StatusModule {
 		try {
 			String startStop = "";
 			if (start > 0)
-				startStop = "start=" + start;
+				startStop = "?start=" + start;
 			if (stop > 0)
-				startStop = (startStop.compareTo("") == 0 ? "" : "&") + "stop=" + stop;
+				startStop += (startStop.compareTo("") == 0 ? "?" : "&") + "stop=" + stop;
 			
 			xmlData = new RestClient ().getMethod (server, "/metrics/" + id + startStop);
 		} catch (Exception e) {

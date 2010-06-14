@@ -1,7 +1,10 @@
 package com.novell.android.yastroid;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import com.novell.webyast.status.Metric;
 import com.novell.webyast.status.Value;
@@ -22,6 +25,7 @@ public class DisplayResourceActivity extends Activity {
      */
     protected int mPos;
     protected String mSelection;
+    protected int length = 5; // default length (in minutes)
 
     /**
      * ArrayAdapter connects the spinner widget to array-based data.
@@ -39,27 +43,22 @@ public class DisplayResourceActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		float[] values = new float[] { 0f, 3f, 2f, 3f, 3f, 1f, 5f, 2f, 4f, 4f, 3f, 2f};
-		//      float[] fake_values = new float[] { 2.0f, 1.5f, 2.5f, 1.0f , 3.0f, 3.1f, 3.2f };
-		String[] verlabels = new String[] { "6", "4", "2", "0" };
-		String[] horlabels = new String[] { "2:00", "2:01", "2:02", "2:03", "2:04"};
+		int timeStamp = 0;
+		int timeStampStart = 0;
         
         Bundle b = getIntent().getExtras();
         String resource_type = b.getString("RESOURCE_TYPE");
 
 		if (resource_type.equals("Network"))  {
-			// TODO: figure out how many data points we want to graph on this small screen - hardcoded right now to 12
-			// TODO: compute the verlabels from the min/max of the real data
-			// TODO: compute the horlabels form the time vals of the real data
+			// TODO: figure out how many data points we want to graph on this small screen
 			// TODO: Use a ProgressDialog
-			Server yastServer =	new Server (b.getInt("SERVER_ID"),	b.getString("SERVER_NAME"),
-				b.getString("SERVER_SCHEME"), b.getString("SERVER_HOSTNAME"), b.getInt("SERVER_PORT"),
-				b.getString("SERVER_USER"),	b.getString("SERVER_PASS"));
+			Server yastServer =	new Server (b);
 		
 			Metric metric = null;
 			try {		
 				Collection<Metric> networkMetrics = yastServer.getStatusModule ().getMetric(Metric.NETWORK);
 				// FIXME: We are using "eth0" in the meantime, but we should be able to show the other interfaces
-				// Also, each interface has different types, we are hard-coding "if_packets"
+				// Also, each interface has different types, here we are hard-coding "if_packets" (aka, rx and tx)
 				String id = null;
 				for (Metric m : networkMetrics) {
 					if (m.getTypeInstance () != null && m.getTypeInstance().compareTo("eth0") == 0
@@ -68,17 +67,24 @@ public class DisplayResourceActivity extends Activity {
 						break;
 					}
 				}
-				metric = yastServer.getStatusModule ().getMetricData(id, 0, 0);
+				timeStamp = (int) (new Date ().getTime () / 1000);
+				timeStampStart = timeStamp - (60 * length);
+				metric = yastServer.getStatusModule ().getMetricData(id, 
+						timeStampStart,
+						timeStamp);
+				
 				if (metric != null) {
-				// FIXME: GraphArrayList<E>orts one value only,
-		        		ArrayList<Value> xmlValues = (ArrayList<Value>) metric.getValues ();
-			            Float [] fvalues = xmlValues.get(0).getValues ().toArray(new Float[0]);
-			            for (int x=0; x<fvalues.length; x++) {
-			            	values[x] = fvalues[x].floatValue();
-			            	if (x>10)
-			            		break;
-			            }
+					// FIXME: GraphArrayList<E>orts one value only,
+					ArrayList<Value> xmlValues = (ArrayList<Value>) metric.getValues ();
+					// FIXME: We are using the first value, however the graph should show all the values available, for
+					// example "if_packets" has "tx" and "rx" values.
+					Float [] fvalues = xmlValues.get(0).getValues ().toArray(new Float[0]);
+					values = new float [fvalues.length];
+					for (int x=0; x<fvalues.length; x++) {
+						values[x] = fvalues[x].floatValue();
+					}
 				}
+				
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -100,9 +106,44 @@ public class DisplayResourceActivity extends Activity {
         spinner.setOnItemSelectedListener(spinnerListener);
         
         CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
-        gv.setCustomGraphViewParms(values, "MByte/s", horlabels, verlabels, CustomGraphView.LINE);
+        gv.setCustomGraphViewParms(values, "MByte/s", 
+        		getHorizontalLabels (timeStamp, length), getVerticalLabels(values), CustomGraphView.LINE);        
+    }
+    
+    private String[] getHorizontalLabels (int timeStamp, int length)
+    {
+    	long tStop = timeStamp * 1000L;
+    	long tStart = (timeStamp - (60L * length)) * 1000;
+    	int quarter = (int) ((tStop - tStart) / 4);
+    	
+    	return new String[] {
+    			new SimpleDateFormat ("HH:mm").format (new Date (tStart)),
+    			new SimpleDateFormat ("HH:mm").format (new Date (tStart + quarter)),
+    			new SimpleDateFormat ("HH:mm").format (new Date (tStart + (quarter * 2))),
+    			new SimpleDateFormat ("HH:mm").format (new Date (tStop))
+    	};
     }
 
+    private String[] getVerticalLabels (float[] values)
+    {    	
+    	float maximum = 0;
+    	float minimum = 0; 
+    	for (float f : values) {
+    		if (f > maximum)
+    			maximum = f;
+    		else if (f < minimum)
+    			minimum = f;
+    	}
+
+    	float quarter = (maximum - minimum) / 4;
+    	
+        return new String[] {
+        		String.format("%.1f", maximum),
+        		String.format("%.1f", minimum + (quarter * 2)),
+        		String.format("%.1f", minimum + quarter),
+        		String.format("%.1f", minimum)
+        	};
+    }
 
     /**
      *  A callback listener that implements the
@@ -150,6 +191,7 @@ public class DisplayResourceActivity extends Activity {
 
             DisplayResourceActivity.this.mPos = pos;
             DisplayResourceActivity.this.mSelection = parent.getItemAtPosition(pos).toString();
+            // TODO: Update this.length and redraw graph
             /*
              * Set the value of the text field in the UI
              */
