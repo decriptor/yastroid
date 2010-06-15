@@ -34,6 +34,7 @@ public class DisplayResourceActivity extends Activity {
     Metric metric;
     Runnable graphView;
 	private ProgressDialog fetchMetricDataProgress = null;
+	protected boolean data_pull_finished = false;
 
     /**
      * ArrayAdapter connects the spinner widget to array-based data.
@@ -106,7 +107,8 @@ public class DisplayResourceActivity extends Activity {
 	private void buildGraph() {
 		CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
         gv.setCustomGraphViewParms(values, "MByte/s", 
-        		getHorizontalLabels (timeStamp, length), getVerticalLabels(values), CustomGraphView.LINE);        
+        		getHorizontalLabels (timeStamp, length), getVerticalLabels(values), CustomGraphView.LINE);
+        data_pull_finished = true;
 		mAdapter.notifyDataSetChanged();
 	}
 
@@ -224,9 +226,24 @@ public class DisplayResourceActivity extends Activity {
          */
         public void onItemSelected(AdapterView<?> parent, View v, int pos, long row) {
 
+        	if(!data_pull_finished)
+        		return;
             DisplayResourceActivity.this.mPos = pos;
             DisplayResourceActivity.this.mSelection = parent.getItemAtPosition(pos).toString();
-            // TODO: Update this.length and redraw graph
+            // TODO: Figure out how to convert our random strings into real corresponding lengths.
+            if (pos == 0)
+            	DisplayResourceActivity.this.length = 5;
+            else if (pos == 1)
+            	DisplayResourceActivity.this.length = 15;
+            else if (pos == 2)
+            	DisplayResourceActivity.this.length = 60;
+            else
+            	DisplayResourceActivity.this.length = 720;
+            
+    		Thread thread = new Thread(graphView, "GraphBackground");
+    		thread.start();
+    		fetchMetricDataProgress = ProgressDialog.show(DisplayResourceActivity.this, "Please wait...",
+    				"Rebuilding graph...", true);
             /*
              * Set the value of the text field in the UI
              */
