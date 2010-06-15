@@ -14,7 +14,6 @@
     <string name="display_resource_activity">Resource Status</string>
     <string name="group_list_activity">Groups</string>
     <string name="group_add_activity">Add Group</string>
-	<string name="server_unreachable">WebYaST Server Unreachable</string>
 	<string name="no_groups_found">No groups found</string>
 	<string name="server_activity">Server Maintenance</string>
 	<string name="add_server_title">WebYaST Server Settings</string>

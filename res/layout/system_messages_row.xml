@@ -22,6 +22,7 @@
 			android:id="@+id/bottomtext"
 			android:singleLine="true"
 			android:ellipsize="marquee"
+			android:textColor="#000000"
 		/>
 	</LinearLayout>
 </LinearLayout>

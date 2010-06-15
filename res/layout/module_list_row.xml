@@ -21,6 +21,7 @@
 			android:id="@+id/module_name"
 			android:padding="10dp"
 			android:textSize="16sp"
+			android:textColor="#000000"
 		/>
 	</LinearLayout>
 </LinearLayout>

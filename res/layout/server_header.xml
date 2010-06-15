@@ -2,21 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent"
+	android:background="#eeeeee">
 	<TextView
 		android:id="@+id/server_name"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
-		android:textSize="30sp"/>
+		android:textSize="30sp"
+		android:textColor="#000000"/>
 	<TextView
 		android:id="@+id/server_address"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
-		android:textSize="16sp" />
+		android:textSize="16sp"
+		android:textColor="#000000" />
 	<!--TextView
 		android:id="@+id/server_uptime"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" /-->
+		android:layout_height="wrap_content"
+		android:textColor="#000000" /-->
 </LinearLayout>		
