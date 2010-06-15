@@ -50,6 +50,7 @@ public class CustomGraphView extends View {
 	this.type = type;
 	paint = new Paint();
 	parmsSet = true;
+	invalidate();
 }
 
 	@Override

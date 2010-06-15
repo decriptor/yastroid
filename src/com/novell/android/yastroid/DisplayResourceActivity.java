@@ -34,7 +34,7 @@ public class DisplayResourceActivity extends Activity {
     Metric metric;
     Runnable graphView;
 	private ProgressDialog fetchMetricDataProgress = null;
-	protected boolean data_pull_finished = false;
+	protected boolean data_pull_in_progress = false;
 
     /**
      * ArrayAdapter connects the spinner widget to array-based data.
@@ -108,7 +108,7 @@ public class DisplayResourceActivity extends Activity {
 		CustomGraphView gv = (CustomGraphView) findViewById(R.id.graph_view);
         gv.setCustomGraphViewParms(values, "MByte/s", 
         		getHorizontalLabels (timeStamp, length), getVerticalLabels(values), CustomGraphView.LINE);
-        data_pull_finished = true;
+        data_pull_in_progress = false;
 		mAdapter.notifyDataSetChanged();
 	}
 
@@ -135,6 +135,7 @@ public class DisplayResourceActivity extends Activity {
         OnItemSelectedListener spinnerListener = new myOnItemSelectedListener(this,this.mAdapter);
         spinner.setOnItemSelectedListener(spinnerListener);
         
+        data_pull_in_progress = true;
         graphView = new Runnable() {
 			@Override
 			public void run() {
@@ -226,8 +227,9 @@ public class DisplayResourceActivity extends Activity {
          */
         public void onItemSelected(AdapterView<?> parent, View v, int pos, long row) {
 
-        	if(!data_pull_finished)
+        	if(data_pull_in_progress)
         		return;
+        	data_pull_in_progress = true;
             DisplayResourceActivity.this.mPos = pos;
             DisplayResourceActivity.this.mSelection = parent.getItemAtPosition(pos).toString();
             // TODO: Figure out how to convert our random strings into real corresponding lengths.
