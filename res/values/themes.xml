@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="Theme.yastroid" parent="@android:Theme.Light">
+	<style name="Theme.yastroid" parent="@android:Theme.Black">
 		<!-- Colors -->
 		<!-- Text -->
 		<!-- Window -->
