@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Theme.yastroid" parent="@android:Theme.Light">
+		<!-- Colors -->
+		<!-- Text -->
+		<!-- Window -->
+		<!-- Components -->
+        <item name="android:listViewStyle">@style/Widget.ListView</item>
+	</style>
+</resources>

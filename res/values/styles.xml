@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.ListView" parent="android:Widget.ListView">
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:divider">@drawable/list_item_divider</item>
+    </style>
+</resources>
