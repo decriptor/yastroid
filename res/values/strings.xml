@@ -16,7 +16,6 @@
     <string name="group_add_activity">Add Group</string>
 	<string name="no_groups_found">No groups found</string>
 	<string name="server_activity">Server Maintenance</string>
-	<string name="add_server_title">WebYaST Server Settings</string>
 	<string name="add_server_name">Name</string>
 	<string name="add_server_hostname">Hostname</string>
 	<string name="add_server_port">Port</string>

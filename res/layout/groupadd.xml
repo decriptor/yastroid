@@ -2,18 +2,14 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:background="#ffffff">
-	<TextView
-	android:id="@+id/txt_server_title"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:textSize="24sp"
-	android:text="@string/add_server_title" />
+	android:background="#ffffff"
+	android:textColor="#000000">
 	<TableRow>
 		<TextView 
 		android:id="@+id/txt_group_name"
 		android:width="120px"
 		android:text="@string/add_group_name"
+		android:textColor="#000000"
 		/>
 		<EditText android:id="@+id/edit_group_name"
 		android:width="200px"
@@ -24,6 +20,7 @@
 		android:id="@+id/txt_group_description"
 		android:width="120px"
 		android:text="@string/add_group_description"
+		android:textColor="#000000"
 		/>
 		<EditText 
 		android:id="@+id/edit_group_description"
@@ -34,6 +31,7 @@
 		android:id="@+id/txt_group_icon"
 		android:width="120px"
 		android:text="@string/add_group_icon"
+		android:textColor="#000000"
 		/>
 		<EditText 
 		android:id="@+id/edit_group_icon"
