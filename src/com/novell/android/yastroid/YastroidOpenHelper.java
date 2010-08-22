@@ -14,6 +14,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "yastroid";
 	private static final int DATABASE_VERSION = 4;
 	static final String SERVERS_TABLE_NAME = "servers";
+	static final String SERVERS_ID = "_id";
 	static final String SERVERS_NAME = "name";
 	static final String SERVERS_SCHEME = "scheme";
 	static final String SERVERS_HOST = "hostname";
@@ -30,7 +31,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 
 	private static final String CREATE_SERVER_TABLE = "CREATE TABLE "
 			+ SERVERS_TABLE_NAME + " ("
-			+ "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ SERVERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ SERVERS_NAME + " TEXT, "
 			+ SERVERS_SCHEME + " TEXT, "
 			+ SERVERS_HOST + " TEXT, "
@@ -49,9 +50,9 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 			+ GROUP_TABLE_NAME
 			+ "(name,description,icon) VALUES ('All', 'All servers', '0');";
 
-	private static final String ADD_SERVER = "INSERT INTO "
-			+ SERVERS_TABLE_NAME
-			+ "(name,scheme,hostname,port,user,pass,grp) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy','" + GROUP_DEFAULT_ALL +"');";
+//	private static final String ADD_SERVER = "INSERT INTO "
+//			+ SERVERS_TABLE_NAME
+//			+ "(name,scheme,hostname,port,user,pass,grp) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy','" + GROUP_DEFAULT_ALL +"');";
 
 	public YastroidOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -63,7 +64,7 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_GROUP_TABLE);
 		db.execSQL(DEFAULT_GROUP);
 		// Demo data
-		db.execSQL(ADD_SERVER);
+		//db.execSQL(ADD_SERVER);
 	}
 
 	@Override
@@ -75,9 +76,9 @@ public class YastroidOpenHelper extends SQLiteOpenHelper {
 		// than the new version.
 		// ie. db.execSQL("alter table " + TASKS_TABLE + " add column " +
 		// TASK_ADDRESS + " text");
-		db.execSQL("ALTER TABLE servers ADD COLUMN grp INTEGER;");
-		db.execSQL(CREATE_GROUP_TABLE);
-		db.execSQL(DEFAULT_GROUP);
-		db.execSQL("UPDATE " + SERVERS_TABLE_NAME + " SET " + SERVERS_GROUP + "='" + GROUP_DEFAULT_ALL + "';");
+		//db.execSQL("ALTER TABLE servers ADD COLUMN grp INTEGER;");
+		//db.execSQL(CREATE_GROUP_TABLE);
+		//db.execSQL(DEFAULT_GROUP);
+		//db.execSQL("UPDATE " + SERVERS_TABLE_NAME + " SET " + SERVERS_GROUP + "='" + GROUP_DEFAULT_ALL + "';");
 	}
 }

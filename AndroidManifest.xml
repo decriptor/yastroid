@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.novell.android.yastroid"
       android:versionCode="1"
-      android:versionName="1.0">
+      android:versionName="1.0.1">
     <uses-permission
     		android:name="android.permission.INTERNET" />
     <application android:icon="@drawable/icon"
@@ -20,6 +20,7 @@
         <activity android:name=".ServerListActivity" android:label="@string/server_list_activity" />
         <activity android:name=".ServerActivity" android:label="@string/server_activity" />
         <activity android:name=".ServerAddActivity" android:label="@string/server_add_activity"/>
+        <activity android:name=".ServerEditActivity" android:label="@string/server_edit_activity"/>
         <activity android:name=".DisplayResourceActivity" android:label="@string/display_resource_activity" />
         <activity android:name=".SystemMessagesActivity" android:label="@string/system_messages_activity" />
         <activity android:name=".GroupListActivity" android:label="@string/group_list_activity" />

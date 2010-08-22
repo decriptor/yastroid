@@ -46,7 +46,7 @@ public class GroupAddActivity extends Activity {
 			String icon = ((EditText)findViewById(R.id.edit_group_icon)).getText().toString();
 			
 			
-			if (name.length() == 0 || description.length() == 0 || icon.length() == 0) {
+			if (name.length() == 0 || description.length() == 0/* || icon.length() == 0*/) {
 				Toast.makeText(GroupAddActivity.this, "One or more fields are empty", Toast.LENGTH_SHORT).show();
 				return false;
 			}

@@ -10,6 +10,7 @@
     <string name="system_msgs_status_text">System Messages</string>
     <string name="server_list_activity">WebYaST Servers</string>
     <string name="server_add_activity">Add WebYaST Server</string>
+    <string name="server_edit_activity">Edit WebYaST Server</string>
     <string name="system_status_activity">System Status</string>
     <string name="display_resource_activity">Resource Status</string>
     <string name="group_list_activity">Groups</string>
@@ -22,6 +23,7 @@
 	<string name="add_server_user">User</string>
 	<string name="add_server_password">Password</string>
 	<string name="add_server_button">Add</string>
+	<string name="save_server_button">Save</string>
 	<string name="add_group_name">Name</string>
 	<string name="add_group_description">Description</string>
 	<string name="add_group_icon">Icon</string>

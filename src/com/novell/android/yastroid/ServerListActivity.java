@@ -18,8 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView; //import android.widget.Toast;
-
+import android.widget.ListView;
 import com.novell.android.yastroid.Server;
 
 public class ServerListActivity extends ListActivity {
@@ -112,7 +111,8 @@ public class ServerListActivity extends ListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-			menu.add(0, 0, 0, "Delete");
+			menu.add(0, 0, 0, "Edit");
+			menu.add(0, 1, 0, "Delete");
 	}
 
 	@Override
@@ -122,6 +122,14 @@ public class ServerListActivity extends ListActivity {
 		
 		switch (item.getItemId()) {
 		case 0: {
+			Server s = serverList.get(info.position);
+			Intent intent = new Intent(ServerListActivity.this,
+					ServerEditActivity.class);
+			intent.putExtra("SERVER_ID", s.getId());
+			startActivity(intent);
+			return true;
+		}
+		case 1: {
 			Server s = serverList.get(info.position);
 			deleteServer(s.getId());
 			return true;
@@ -144,11 +152,11 @@ public class ServerListActivity extends ListActivity {
 		try {
 			if (groupId == GROUP_DEFAULT_ALL) {
 				sc = database.query(SERVERS_TABLE_NAME, new String[] {
-						"_id", "name", "scheme", "hostname", "port", "user", "pass" },
+						"_id", "name", "scheme", "hostname", "port", "user", "pass", "grp" },
 						null, null, null, null, null);
 			} else {
 				sc = database.query(SERVERS_TABLE_NAME, new String[] {
-						"_id", "name", "scheme", "hostname", "port", "user", "pass" },
+						"_id", "name", "scheme", "hostname", "port", "user", "pass", "grp" },
 						SERVERS_GROUP + "=" + groupId, null, null, null, null);
 			}
 
@@ -159,7 +167,7 @@ public class ServerListActivity extends ListActivity {
 				do {
 					s = new Server(sc.getInt(0), sc.getString(1), sc.getString(2), sc
 							.getString(3), sc.getInt(4), sc.getString(5), sc
-							.getString(6));
+							.getString(6), sc.getInt(7));
 					serverList.add(s);
 				} while (sc.moveToNext());
 			}
