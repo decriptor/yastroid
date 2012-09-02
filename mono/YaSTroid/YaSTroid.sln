@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YaSTroid", "YaSTroid\YaSTroid.csproj", "{AE7626DB-5114-4B89-B502-32DA747C75CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE7626DB-5114-4B89-B502-32DA747C75CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE7626DB-5114-4B89-B502-32DA747C75CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE7626DB-5114-4B89-B502-32DA747C75CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE7626DB-5114-4B89-B502-32DA747C75CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = YaSTroid\YaSTroid.csproj
+	EndGlobalSection
+EndGlobal
