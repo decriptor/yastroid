@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="#ffffff"
+	android:textColor="#000000">
+	<TableRow>
+		<TextView 
+		android:id="@+id/txt_group_name"
+		android:width="120px"
+		android:text="@string/add_group_name"
+		android:textColor="#000000"
+		/>
+		<EditText android:id="@+id/edit_group_name"
+		android:width="200px"
+		/>
+	</TableRow>
+	<TableRow>
+		<TextView
+		android:id="@+id/txt_group_description"
+		android:width="120px"
+		android:text="@string/add_group_description"
+		android:textColor="#000000"
+		/>
+		<EditText 
+		android:id="@+id/edit_group_description"
+		/>
+	</TableRow>
+	<TableRow>
+		<TextView 
+		android:id="@+id/txt_group_icon"
+		android:width="120px"
+		android:text="@string/add_group_icon"
+		android:textColor="#000000"
+		/>
+		<EditText 
+		android:id="@+id/edit_group_icon"
+		/>
+	</TableRow>
+	<Button
+	android:id="@+id/button_add_group"
+	android:text="@string/add_group_button"
+	/>
+</TableLayout>

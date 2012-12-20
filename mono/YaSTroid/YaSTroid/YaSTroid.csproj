@@ -16,6 +16,7 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AssemblyName>YaSTroid</AssemblyName>
     <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -40,23 +41,84 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity1.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomGraphView.cs" />
+    <Compile Include="DisplayResourceActivity.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="GroupAddActivity.cs" />
+    <Compile Include="GroupListActivity.cs" />
+    <Compile Include="GroupListAdapter.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="ModuleAdapter.cs" />
+    <Compile Include="Preferences.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="ServerActivity.cs" />
+    <Compile Include="ServerAddActivity.cs" />
+    <Compile Include="ServerEditActivity.cs" />
+    <Compile Include="ServerHelper.cs" />
+    <Compile Include="ServerListActivity.cs" />
+    <Compile Include="ServerListAdapter.cs" />
+    <Compile Include="StatusListAdapter.cs" />
+    <Compile Include="SystemMessage.cs" />
+    <Compile Include="SystemMessagesActivity.cs" />
+    <Compile Include="SystemMessagesAdapter.cs" />
+    <Compile Include="SystemStatus.cs" />
+    <Compile Include="SystemStatusActivity.cs" />
+    <Compile Include="Yastroid.cs" />
+    <Compile Include="YastroidOpenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="GraphView\GraphView.java" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
-    <AndroidResource Include="Resources\values\Strings.xml" />
-    <AndroidResource Include="Resources\drawable\Icon.png" />
+    <AndroidResource Include="Resources\drawable\list_item_divider.xml" />
+    <AndroidResource Include="Resources\drawable\status_green.png" />
+    <AndroidResource Include="Resources\drawable\status_red.png" />
+    <AndroidResource Include="Resources\drawable\yast_system.png" />
+    <AndroidResource Include="Resources\drawable\yastroid_icon.png" />
+    <AndroidResource Include="Resources\drawable\icon.png" />
+    <AndroidResource Include="Resources\values\strings.xml" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\values\themes.xml" />
+    <AndroidResource Include="Resources\menu\grouplistmenu.xml" />
+    <AndroidResource Include="Resources\menu\menu.xml" />
+    <AndroidResource Include="Resources\menu\serverlistmenu.xml" />
+    <AndroidResource Include="Resources\xml\preferences.xml" />
+    <AndroidResource Include="Resources\layout\display_resource.axml" />
+    <AndroidResource Include="Resources\layout\groupadd.axml" />
+    <AndroidResource Include="Resources\layout\grouplist.axml" />
+    <AndroidResource Include="Resources\layout\grouplistrow.axml" />
+    <AndroidResource Include="Resources\layout\main.axml" />
+    <AndroidResource Include="Resources\layout\module_list_row.axml" />
+    <AndroidResource Include="Resources\layout\server.axml" />
+    <AndroidResource Include="Resources\layout\server_header.axml" />
+    <AndroidResource Include="Resources\layout\serveradd.axml" />
+    <AndroidResource Include="Resources\layout\serveredit.axml" />
+    <AndroidResource Include="Resources\layout\serverlist.axml" />
+    <AndroidResource Include="Resources\layout\serverlistrow.axml" />
+    <AndroidResource Include="Resources\layout\system_messages.axml" />
+    <AndroidResource Include="Resources\layout\system_messages_row.axml" />
+    <AndroidResource Include="Resources\layout\system_status.axml" />
+    <AndroidResource Include="Resources\layout\system_status_list_item.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\WebYaST\WebYaST.csproj">
+      <Project>{4413959A-ADCB-434A-9139-F62848FE0EAD}</Project>
+      <Name>WebYaST</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GraphView\" />
+    <Folder Include="Resources\values\" />
+    <Folder Include="Resources\xml\" />
+    <Folder Include="Resources\menu\" />
+  </ItemGroup>
 </Project>

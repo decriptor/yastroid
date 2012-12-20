@@ -1,4 +1,5 @@
 default.properties
+obj
 bin
 gen
 .settings
