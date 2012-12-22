@@ -70,12 +70,12 @@
     <Compile Include="SystemStatusActivity.cs" />
     <Compile Include="Yastroid.cs" />
     <Compile Include="YastroidOpenHelper.cs" />
+    <Compile Include="GraphView\GraphView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
-    <None Include="GraphView\GraphView.java" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\list_item_divider.xml" />

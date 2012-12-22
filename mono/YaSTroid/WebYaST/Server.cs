@@ -2,6 +2,7 @@ using System;
 
 using WebYaST.Status;
 using WebYaST.Update;
+using System.Text;
 
 namespace WebYaST
 {
@@ -29,7 +30,6 @@ namespace WebYaST
 		{
 			return new StatusModule (this);
 		}
-
 	}
 }
 

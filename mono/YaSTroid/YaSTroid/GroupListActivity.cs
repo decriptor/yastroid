@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Util;
 using System;
+using Android.Database;
 
 namespace YaSTroid
 {
@@ -19,9 +20,9 @@ namespace YaSTroid
 
 		ProgressDialog groupListProgress = null;
 		GroupListAdapter groupAdapter;
-		Runnable groupView;
+		//Runnable groupView;
 
-		public override void OnCreate(Bundle savedInstanceState)
+		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.grouplist);
@@ -40,8 +41,9 @@ namespace YaSTroid
 //				}
 //			};
 			
-			Thread thread = new Thread(null, groupView, "ServerListBackground");
-			thread.start();
+//			Thread thread = new Thread(null, groupView, "ServerListBackground");
+//			thread.start();
+			getGroups();
 			groupListProgress = ProgressDialog.Show(this, "Please wait...",
 					"Retrieving groups...", true);
 		}
@@ -64,8 +66,7 @@ namespace YaSTroid
 
 		public override bool OnCreateOptionsMenu (IMenu menu)
 		{
-			return base.OnCreateOptionsMenu (menu);
-			MenuInflater inflater = getMenuInflater();
+			MenuInflater inflater = MenuInflater;
 			inflater.Inflate(Resource.Menu.grouplistmenu, menu);
 			return true;
 		}
@@ -80,9 +81,9 @@ namespace YaSTroid
 			return false;
 		}
 
-		public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuInfo menuInfo)
+		public override void OnCreateContextMenu (IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
 		{
-			base.OnCreateContextMenu(menu, v, menuInfo);
+			base.OnCreateContextMenu (menu, v, menuInfo);
 				menu.Add(0, 0, 0, "Delete");
 		}
 
@@ -102,59 +103,55 @@ namespace YaSTroid
 		}
 
 		private void deleteGroup(long id) {
-			if(id == GROUP_DEFAULT_ALL) {
+			if(id == YastroidOpenHelper.GROUP_DEFAULT_ALL) {
 				Toast.MakeText(this, "Can't delete the default group", ToastLength.Short).Show();
 			}
 			else {
-				database = dbhelper.getWritableDatabase();
-				database.Delete(GROUP_TABLE_NAME, "_id=" + id, null);
+				database = dbhelper.WritableDatabase;
+				database.Delete(YastroidOpenHelper.GROUP_TABLE_NAME, "_id=" + id, null);
 				database.Close();
 				getGroups();
 			}
 		}
 
 		private void getGroups() {
-			database = dbhelper.getWritableDatabase();
+			database = dbhelper.WritableDatabase;
 			try {
-				Cursor sc = database.query(GROUP_TABLE_NAME, new string[] {
-						"_id",GROUP_NAME, GROUP_DESCRIPTION, GROUP_ICON },
+				ICursor sc = database.Query(YastroidOpenHelper.GROUP_TABLE_NAME, new string[] {
+					"_id",YastroidOpenHelper.GROUP_NAME, YastroidOpenHelper.GROUP_DESCRIPTION, YastroidOpenHelper.GROUP_ICON },
 						null, null, null, null, null);
 
-				sc.moveToFirst();
+				sc.MoveToFirst();
 				Group g;
-				groupList = new ArrayList<Group>();
-				if (!sc.isAfterLast()) {
+				groupList = new List<Group>();
+				if (!sc.IsAfterLast) {
 					do {
 						g = new Group(sc.GetInt(0), sc.GetString(1), sc.GetString(2), sc
 								.GetInt(3));
-						groupList.add(g);
-					} while (sc.moveToNext());
+						groupList.Add(g);
+					} while (sc.MoveToNext());
 				}
-				sc.close();
+				sc.Close();
 				database.Close();
 				Log.Info("ARRAY", "" + groupList.Count);
 			} catch (Exception e) {
 				Log.Error("BACKGROUND_PROC", e.Message);
 			}
-			RunOnUiThread(returnRes);
+
+			RunOnUiThread(() =>
+			{
+				groupAdapter.Clear();
+				if (groupList != null && groupList.Count > 0) {
+					groupAdapter.NotifyDataSetChanged();
+					for (int i = 0; i < groupList.Count; i++)
+						groupAdapter.Add(groupList[i]);
+				} else {
+					// Add button 'Add new group'
+				}
+				groupListProgress.Dismiss();
+				groupAdapter.NotifyDataSetChanged();
+
+			});
 		}
-
-//		private Runnable returnRes = new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				groupAdapter.clear();
-//				if (groupList != null && groupList.size() > 0) {
-//					groupAdapter.notifyDataSetChanged();
-//					for (int i = 0; i < groupList.size(); i++)
-//						groupAdapter.add(groupList.get(i));
-//				} else {
-//					// Add button 'Add new group'
-//				}
-//				groupListProgress.dismiss();
-//				groupAdapter.notifyDataSetChanged();
-//			}
-//		};
-
 	}
 }

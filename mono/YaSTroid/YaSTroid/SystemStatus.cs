@@ -20,14 +20,14 @@ namespace YaSTroid
 		
 		public SystemStatus(Application app, int systemType, int status)
 		{
-			this.app = app;
+			app = app;
 			setSystemType(systemType);
 			setStatus(status);
 		}
 		
-		public SystemStatus(Application app, int systemType)
+		public SystemStatus(Application app, int systemType) : this(app, systemType, 0)
 		{
-			this(app, systemType, 0);
+
 		}
 		
 		public SystemStatus(Application app, string name)

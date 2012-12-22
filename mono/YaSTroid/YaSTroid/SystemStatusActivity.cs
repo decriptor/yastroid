@@ -12,19 +12,19 @@ namespace YaSTroid
 	[Activity (Label = "SystemStatusActivity")]
 	public class SystemStatusActivity : ListActivity
 	{
-		StatusListAdapter statusListAdapter;
-		Runnable systemStatusView;
+		StatusListAdapter _adapter;
+		//Runnable systemStatusView;
 		ProgressDialog systemStatusListProgress = null;
 		StatusModule statusModule;
 		List<Graph> graphs;
 		List<Log> logs;
-		
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.system_status);
-			statusListAdapter = new StatusListAdapter(this, Resource.Layout.system_status_list_item, new List<SystemStatus>());
-			ListAdapter = statusListAdapter;
+			_adapter = new StatusListAdapter(this, Resource.Layout.system_status_list_item, new List<SystemStatus>());
+			ListAdapter = _adapter;
 //			systemStatusView = new Runnable() {
 //				@Override
 //				public void run() {
@@ -32,8 +32,9 @@ namespace YaSTroid
 //				}
 //			};
 			
-			Thread thread = new Thread(null, systemStatusView, "SystemStatusListBackground");
-			thread.start();
+//			Thread thread = new Thread(null, systemStatusView, "SystemStatusListBackground");
+//			thread.start();
+			buildList();
 			systemStatusListProgress = ProgressDialog.Show(this, "Please wait...",
 					"Retrieving data...", true);
 		}
@@ -44,15 +45,17 @@ namespace YaSTroid
 			//buildList();
 		}
 
-		protected override void OnListItemClick(ListView l, View v, int position, long id) {
+		protected override void OnListItemClick(ListView l, View v, int position, long id)
+		{
 			Intent statusIntent = null;
 			SystemStatus systemStatus = null;
 			
 			base.OnListItemClick(l, v, position, id);
-			systemStatus = (SystemStatus)ListView.GetItemAtPosition(position);
+			systemStatus = _adapter.GetItem(position) as SystemStatus;//  ListView.GetItemAtPosition(position) as SystemStatus;
 	        statusIntent = new Intent(this, typeof(DisplayResourceActivity));
 			statusIntent.PutExtras(Intent.Extras);
-			switch (systemStatus.getSystemType()) {
+			switch (systemStatus.getSystemType())
+			{
 			case SystemStatus.NETWORK_STATUS:
 		        statusIntent.PutExtra("RESOURCE_TYPE", GetString(Resource.String.network_status_text));
 		        break;
@@ -69,7 +72,7 @@ namespace YaSTroid
 		    	statusIntent = null;
 			//case SystemStatus.SYSTEM_MSGS_STATUS:
 		        //statusIntent = new Intent(SystemStatusActivity.this, SystemMessagesActivity.class);
-		        //break;
+		        break;
 			}
 			if (statusIntent != null) {
 				StartActivity(statusIntent);
@@ -99,7 +102,10 @@ namespace YaSTroid
 				logs = null;
 				Console.WriteLine(ex.Message);
 			}
-			RunOnUiThread(returnRes);
+			RunOnUiThread(() => {
+				populateAdapter();
+				systemStatusListProgress.Dismiss();
+			});
 		}
 		
 		private void populateAdapter()
@@ -107,52 +113,43 @@ namespace YaSTroid
 			SystemStatus status;
 			int statusID;
 
-			statusListAdapter.Clear();
+			_adapter.Clear();
 			if(statusModule.isHealthy(Metric.NETWORK, graphs))
 				statusID = SystemStatus.STATUS_GREEN;
 			else
 				statusID = SystemStatus.STATUS_RED;
 			status = new SystemStatus(Application, SystemStatus.NETWORK_STATUS, statusID);
-			statusListAdapter.Add(status);
+			_adapter.Add(status);
 			if(statusModule.isHealthy(Metric.MEMORY, graphs))
 				statusID = SystemStatus.STATUS_GREEN;
 			else
 				statusID = SystemStatus.STATUS_RED;
 			status = new SystemStatus(Application, SystemStatus.MEMORY_STATUS, statusID);
-			statusListAdapter.Add(status);
+			_adapter.Add(status);
 			if(statusModule.isHealthy(Metric.DISK, graphs))
 				statusID = SystemStatus.STATUS_GREEN;
 			else
 				statusID = SystemStatus.STATUS_RED;
 			status = new SystemStatus(Application, SystemStatus.DISK_STATUS, statusID);
-			statusListAdapter.Add(status);
+			_adapter.Add(status);
 			if(statusModule.isHealthy(Metric.CPU, graphs))
 				statusID = SystemStatus.STATUS_GREEN;
 			else
 				statusID = SystemStatus.STATUS_RED;
 			status = new SystemStatus(Application, SystemStatus.CPU_STATUS, statusID);
-			statusListAdapter.Add(status);
+			_adapter.Add(status);
 
 			// Display Logs
 			if (logs == null) {
 				status = new SystemStatus(Application, "Cannot get logs from server");
-				statusListAdapter.Add(status);
+				_adapter.Add(status);
 			} else {
 				foreach (Log l in logs) {
 					status = new SystemStatus (Application, l.getDescription());
-					statusListAdapter.Add(status);
+					_adapter.Add(status);
 				}
 			}
-			statusListAdapter.NotifyDataSetChanged();
+			_adapter.NotifyDataSetChanged();
 		}
-
-//		private Runnable returnRes = new Runnable() {
-//			@Override
-//			public void run() {
-//				populateAdapter();
-//				systemStatusListProgress.dismiss();
-//			}
-//		};
-
 	}
 }

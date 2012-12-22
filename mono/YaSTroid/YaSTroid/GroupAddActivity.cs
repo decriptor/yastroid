@@ -14,13 +14,13 @@ namespace YaSTroid
 		SQLiteDatabase database;
 		Button addButton;
 
-		public override void OnCreate(Bundle savedInstanceState)
+		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.groupadd);
 
 			YastroidOpenHelper helper = new YastroidOpenHelper(this);
-			database = helper.getWritableDatabase();
+			database = helper.WritableDatabase;
 			
 			addButton = FindViewById<Button>(Resource.Id.button_add_group);
 			addButton.Click += (sender, e) => {
@@ -46,18 +46,18 @@ namespace YaSTroid
 				}
 
 				ContentValues values = new ContentValues();
-				values.Put(GROUP_NAME, name);
-				values.Put(GROUP_DESCRIPTION, description);
-				values.Put(GROUP_ICON, icon);
+				values.Put(YastroidOpenHelper.GROUP_NAME, name);
+				values.Put(YastroidOpenHelper.GROUP_DESCRIPTION, description);
+				values.Put(YastroidOpenHelper.GROUP_ICON, icon);
 				
-				database.Insert(GROUP_TABLE_NAME, "null", values);
+				database.Insert(YastroidOpenHelper.GROUP_TABLE_NAME, "null", values);
 				database.Close();
 				Log.Info("addGroup", name + " group has been added.");
 				result = true;
 			} catch (Exception e) {
 				Log.Error("addGroup", e.Message);
 			}
-			Toast.MakeText(GroupAddActivity, "Group Added", ToastLength.Short).Show();
+			Toast.MakeText(this, "Group Added", ToastLength.Short).Show();
 			return result;
 		}
 	}

@@ -1,12 +1,14 @@
 
 using System;
 using System.Text;
+using System.Net;
+using System.IO;
 
 namespace WebYaST
 {
 	class RestClient
 	{
-		public string GetMethod(string scheme, string hostname, int port, string resourcePath, string user, string pass)
+		public string GetMethod(Server server, string resourcePath)
 		{
 //			Authenticator.setDefault(new Authenticator() {
 //				protected PasswordAuthentication getPasswordAuthentication() {
@@ -14,6 +16,37 @@ namespace WebYaST
 //				}
 //			});
 
+
+			UriBuilder uri = new UriBuilder(server.Scheme, server.Hostname, server.Port);
+			uri.Path = resourcePath;
+			uri.UserName = server.User;
+			uri.Password = server.Password;
+
+			var credentials = new CredentialCache();
+			credentials.Add(uri.Uri, "Basic", new NetworkCredential(server.User, server.Password));
+
+			HttpWebRequest webRequest = HttpWebRequest.Create (uri.Uri) as HttpWebRequest;
+			webRequest.ContentType = "text/html";
+			webRequest.Method = "GET";
+			webRequest.Accept = "*/*";
+			webRequest.UserAgent = "Mozilla/5.0 ( compatible ) ";
+			webRequest.AllowAutoRedirect = true;
+			webRequest.Credentials = credentials;
+
+
+			webRequest.BeginGetResponse ((ar) =>
+			{
+				var request = (HttpWebRequest)ar.AsyncState;
+
+				using (var response = (HttpWebResponse)request.EndGetResponse(ar))
+				{
+					Stream receiveStream = response.GetResponseStream();
+					StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+
+					response.Close();
+					readStream.Close();
+				}
+			}, webRequest);
 //			HttpURLConnection c = (HttpURLConnection) new URL(scheme, hostname, port, resourcePath).openConnection();
 //			//URLEncoder.encode(resourcePath, "UTF8")
 //			c.setAllowUserInteraction(true);
@@ -34,13 +67,7 @@ namespace WebYaST
 //			br.close();
 //			return sb.tostring();
 			return null;
-		}
-		
-		public string GetMethod (Server server, string resourcePath)
-		{
-			return GetMethod(server.Scheme, server.Hostname, server.Port, resourcePath, server.User, server.Password);
-		}
-
+		}		
 	}
 }
 

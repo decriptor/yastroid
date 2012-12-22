@@ -1,26 +1,34 @@
+using System.Collections.Generic;
+
+using Android.App;
+using Android.Content;
 using Android.Views;
-using System.Runtime.Remoting.Contexts;
 using Android.Widget;
 
 namespace YaSTroid
 {
 	public class ServerListAdapter : ArrayAdapter<Server>
 	{
-		ArrayList<Server> servers;
 		Context context;
+		List<Server> servers;
 
-		public ServerListAdapter(Context context, int textViewResourceId, ArrayList<Server> servers) : base(context, textViewResourceId, servers)
+//		public ServerListAdapter(Activity context) : base()
+//		{
+//
+//		}
+//
+		public ServerListAdapter(Context context, int textViewResourceId, List<Server> servers) : base(context, textViewResourceId, servers)
 		{
 			this.servers = servers;
 			this.context = context;
 		}
 
-		public override View getView(int position, View convertView, ViewGroup parent)
+		public override View GetView(int position, View convertView, ViewGroup parent)
 		{
 			View serverView = convertView;
 			if (serverView == null)
 			{
-				LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LayoutInflaterService);
+				LayoutInflater vi = (LayoutInflater) context.GetSystemService(Context.LayoutInflaterService);
 				serverView = vi.Inflate(Resource.Layout.serverlistrow, null);
 			}
 

@@ -13,9 +13,9 @@ namespace YaSTroid
 
 		ProgressDialog messageListProgress = null;
 		SystemMessagesAdapter messageAdapter;
-		Runnable messageView;
+		//Runnable messageView;
 
-		public override void OnCreate(Bundle savedInstanceState)
+		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.system_messages);
@@ -31,8 +31,9 @@ namespace YaSTroid
 //				}
 //			};
 			
-			Thread thread = new Thread(null, messageView, "MessageListBackground");
-			thread.start();
+//			Thread thread = new Thread(null, messageView, "MessageListBackground");
+//			thread.start();
+			getMessages();
 			messageListProgress = ProgressDialog.Show(this, "Please wait...",
 					"Retrieving data...", true);
 		}
@@ -52,32 +53,34 @@ namespace YaSTroid
 	//		startActivity(intent);
 	//	}
 
-		private void getMessages() {
-			try {
+		void getMessages()
+		{
+			try
+			{
 				SystemMessage m;
 				messageList = new List<SystemMessage>();
 				m = new SystemMessage("this is a system log message", "module", "date");
 				messageList.Add(m);
 				Log.Info("ARRAY", "" + messageList.Count);
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				Log.Error("BACKGROUND_PROC", e.Message);
 			}
-			RunOnUiThread(returnRes);
-		}
 
-//		private Runnable returnRes = new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				messageAdapter.clear();
-//				if (messageList != null && messageList.size() > 0) {
-//					messageAdapter.notifyDataSetChanged();
-//					for (int i = 0; i < messageList.size(); i++)
-//						messageAdapter.add(messageList.get(i));
-//				}
-//				messageListProgress.dismiss();
-//				messageAdapter.notifyDataSetChanged();
-//			}
-//		};
+			RunOnUiThread(()=>
+			{
+				messageAdapter.Clear();
+				if (messageList != null && messageList.Count > 0)
+				{
+					messageAdapter.NotifyDataSetChanged();
+
+					for (int i = 0; i < messageList.Count; i++)
+						messageAdapter.Add(messageList[i]);
+				}
+				messageListProgress.Dismiss();
+				messageAdapter.NotifyDataSetChanged();
+			});
+		}
 	}
 }

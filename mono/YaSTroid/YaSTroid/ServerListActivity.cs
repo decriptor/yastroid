@@ -1,10 +1,14 @@
+using System;
+using System.Collections.Generic;
+
 using Android.App;
-using Android.OS;
+using Android.Content;
+using Android.Database;
 using Android.Database.Sqlite;
+using Android.OS;
 using Android.Util;
 using Android.Views;
-using Android.Content;
-using System.Collections.Generic;
+using Android.Widget;
 
 namespace YaSTroid
 {
@@ -13,16 +17,17 @@ namespace YaSTroid
 	{
 		SQLiteDatabase database;
 		YastroidOpenHelper dbhelper;
-		List<Server> serverList = null;
+		List<Server> serverList;
 
-		ProgressDialog serverListProgress = null;
+		ProgressDialog serverListProgress;
 		ServerListAdapter serverAdapter;
-		Runnable serverView;
+//		Runnable serverView;
 		
 		int groupId = 0;
-		string groupName = null;
+		string groupName;
 
-		public override void OnCreate(Bundle savedInstanceState) {
+		protected override void OnCreate(Bundle savedInstanceState)
+		{
 			base.OnCreate(savedInstanceState);
 
 			Intent groupIntent = Intent;
@@ -46,8 +51,9 @@ namespace YaSTroid
 	//			}
 	//		};
 			
-			Thread thread = new Thread(null, serverView, "ServerListBackground");
-			thread.start();
+//			Thread thread = new Thread(null, serverView, "ServerListBackground");
+//			thread.start();
+			getServers();
 			serverListProgress = ProgressDialog.Show(this, "Please wait...",
 					"Retrieving data...", true);
 		}
@@ -93,26 +99,25 @@ namespace YaSTroid
 
 		public override void OnCreateContextMenu (IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
 		{
-				menu.add(0, 0, 0, "Edit");
-				menu.add(0, 1, 0, "Delete");
+				menu.Add(0, 0, 0, "Edit");
+				menu.Add(0, 1, 0, "Delete");
 		}
 
 		public override bool OnContextItemSelected (IMenuItem item)
 		{
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
-					.getMenuInfo();
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.MenuInfo;
 			
-			switch (item.getItemId()) {
+			switch (item.ItemId) {
 			case 0: {
-				Server s = serverList.get(info.position);
+				Server s = serverList[info.Position];
 				Intent intent = new Intent(this,
 						typeof(ServerEditActivity));
-				intent.putExtra("SERVER_ID", s.getId());
-				startActivity(intent);
+				intent.PutExtra("SERVER_ID", s.getId());
+				StartActivity(intent);
 				return true;
 			}
 			case 1: {
-				Server s = serverList.get(info.position);
+				Server s = serverList[info.Position];
 				deleteServer(s.getId());
 				return true;
 			}
@@ -123,45 +128,60 @@ namespace YaSTroid
 
 		private void deleteServer(long id)
 		{
-			database = dbhelper.getWritableDatabase();
-			database.delete(SERVERS_TABLE_NAME, "_id=" + id, null);
-			database.close();
+			database = dbhelper.WritableDatabase;
+			database.Delete(YastroidOpenHelper.SERVERS_TABLE_NAME, "_id=" + id, null);
+			database.Close();
 			getServers();
 		}
 
 		private void getServers()
 		{
-			database = dbhelper.getReadableDatabase();
-			Cursor sc;
+			database = dbhelper.ReadableDatabase;
+			ICursor sc;
 			try {
-				if (groupId == GROUP_DEFAULT_ALL) {
-					sc = database.query(SERVERS_TABLE_NAME, new string[] {
+				if (groupId == YastroidOpenHelper.GROUP_DEFAULT_ALL) {
+					sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME, new string[] {
 							"_id", "name", "scheme", "hostname", "port", "user", "pass", "grp" },
 							null, null, null, null, null);
 				} else {
-					sc = database.query(SERVERS_TABLE_NAME, new string[] {
+					sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME, new string[] {
 							"_id", "name", "scheme", "hostname", "port", "user", "pass", "grp" },
-							SERVERS_GROUP + "=" + groupId, null, null, null, null);
+							YastroidOpenHelper.SERVERS_GROUP + "=" + groupId, null, null, null, null);
 				}
 
-				sc.moveToFirst();
+				sc.MoveToFirst();
 				Server s;
-				serverList = new ArrayList<Server>();
-				if (!sc.isAfterLast()) {
+				serverList = new List<Server>();
+				if (!sc.IsAfterLast)
+				{
 					do {
 						s = new Server(sc.GetInt(0), sc.GetString(1), sc.GetString(2), sc
 								.GetString(3), sc.GetInt(4), sc.GetString(5), sc
 								.GetString(6), sc.GetInt(7));
-						serverList.add(s);
-					} while (sc.moveToNext());
+						serverList.Add(s);
+					} while (sc.MoveToNext());
 				}
-				sc.close();
-				database.close();
-				Log.i("ARRAY", "" + serverList.size());
+				sc.Close();
+				database.Close();
+				Log.Info("ARRAY", "" + serverList.Count);
 			} catch (Exception e) {
-				Log.e("BACKGROUND_PROC", e.getMessage());
+				Log.Error("BACKGROUND_PROC", e.Message);
 			}
-			RunOnUiThread(returnRes);
+
+			RunOnUiThread(() =>
+			{
+				serverAdapter.Clear();
+				if (serverList != null && serverList.Count > 0)
+					{
+					serverAdapter.NotifyDataSetChanged();
+					for (int i = 0; i < serverList.Count; i++)
+						serverAdapter.Add(serverList[i]);
+				} else {
+					// Add button 'Add new Server'
+				}
+				serverListProgress.Dismiss();
+				serverAdapter.NotifyDataSetChanged();
+			});
 		}
 
 //		private Runnable returnRes = new Runnable() {

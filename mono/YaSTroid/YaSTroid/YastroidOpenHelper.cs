@@ -7,24 +7,24 @@ namespace YaSTroid
 	public class YastroidOpenHelper : SQLiteOpenHelper
 	{
 
-		const string TAG = "YaSTroidDatabase";
+		public const string TAG = "YaSTroidDatabase";
 
-		const string DATABASE_NAME = "yastroid";
-		const int DATABASE_VERSION = 4;
-		const string SERVERS_TABLE_NAME = "servers";
-		const string SERVERS_ID = "_id";
-		const string SERVERS_NAME = "name";
-		const string SERVERS_SCHEME = "scheme";
-		const string SERVERS_HOST = "hostname";
-		const string SERVERS_PORT = "port";
-		const string SERVERS_USER = "user";
-		const string SERVERS_PASS = "pass";
-		const string SERVERS_GROUP = "grp";
-		const string GROUP_TABLE_NAME = "groups";
-		const string GROUP_NAME = "name";
-		const string GROUP_DESCRIPTION = "description";
-		const string GROUP_ICON = "icon";
-		const int GROUP_DEFAULT_ALL = 1;
+		public const string DATABASE_NAME = "yastroid";
+		public const int DATABASE_VERSION = 4;
+		public const string SERVERS_TABLE_NAME = "servers";
+		public const string SERVERS_ID = "_id";
+		public const string SERVERS_NAME = "name";
+		public const string SERVERS_SCHEME = "scheme";
+		public const string SERVERS_HOST = "hostname";
+		public const string SERVERS_PORT = "port";
+		public const string SERVERS_USER = "user";
+		public const string SERVERS_PASS = "pass";
+		public const string SERVERS_GROUP = "grp";
+		public const string GROUP_TABLE_NAME = "groups";
+		public const string GROUP_NAME = "name";
+		public const string GROUP_DESCRIPTION = "description";
+		public const string GROUP_ICON = "icon";
+		public const int GROUP_DEFAULT_ALL = 1;
 		
 
 		const string CREATE_SERVER_TABLE = "CREATE TABLE "

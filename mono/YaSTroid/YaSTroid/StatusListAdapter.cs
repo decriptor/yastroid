@@ -1,21 +1,22 @@
 using Android.Content;
 using Android.Views;
 using Android.Widget;
+using System.Collections.Generic;
 
 namespace YaSTroid
 {
 	public class StatusListAdapter : ArrayAdapter<SystemStatus>
 	{
-		private ArrayList<SystemStatus> statii;
-		private Context context;
+		List<SystemStatus> statii;
+		Context context;
 		
-		public StatusListAdapter(Context context, int textViewResourceId, ArrayList<SystemStatus> statii) : base(context, textViewResourceId, statii)
+		public StatusListAdapter(Context context, int textViewResourceId, List<SystemStatus> statii) : base(context, textViewResourceId, statii)
 		{
 			this.statii = statii;
 			this.context = context;
 		}
 		
-		public override View getView(int position, View convertView, ViewGroup parent)
+		public override View GetView(int position, View convertView, ViewGroup parent)
 		{
 			View systemStatusView = convertView;
 			TextView name;

@@ -15,15 +15,15 @@ namespace YaSTroid
 			this.groupid = groupid;
 		}
 		
-		public Server(Bundle b) {
-			this(b.GetInt("SERVER_ID"),
+		public Server(Bundle b) : this (b.GetInt("SERVER_ID"),
 				b.GetString("SERVER_NAME"),
 				b.GetString("SERVER_SCHEME"),
 				b.GetString("SERVER_HOSTNAME"),
 				b.GetInt("SERVER_PORT"),
 				b.GetString("SERVER_USER"),
 				b.GetString("SERVER_PASS"),
-				b.GetInt("SERVER_GID"));
+				b.GetInt("SERVER_GID"))
+		{
 		}
 		
 		public string getName() {

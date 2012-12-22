@@ -16,7 +16,7 @@ namespace YaSTroid
 		Server yastServer;
 		List<Module> moduleList = null;
 		ModuleAdapter moduleAdapter;
-		Runnable moduleView;
+		//Runnable moduleView;
 
 		/*
 		 * (non-Javadoc)
@@ -53,8 +53,9 @@ namespace YaSTroid
 //				}
 //			};
 			
-			Thread thread = new Thread(null, moduleView, "ModuleListBackground");
-			thread.start();
+//			Thread thread = new Thread(null, moduleView, "ModuleListBackground");
+//			thread.start();
+			getModules();
 			moduleListProgress = ProgressDialog.Show(this, "Please wait...", "Building Module list...", true);
 		}
 
@@ -64,13 +65,13 @@ namespace YaSTroid
 			//getModules();
 		}
 
-		protected override void OnListItemClick (Android.Widget.ListView l, View v, int position, long id)
+		protected override void OnListItemClick (ListView l, View v, int position, long id)
 		{
 			base.OnListItemClick (l, v, position, id);
 			Intent intent = null;
 			// Ignore first item showing the server name and IP
 			if (position != 0) {
-				Module m = moduleList.get(position - 1);
+				Module m = moduleList[position - 1];
 				String n = m.getName();
 				
 				if (n == "UPDATE") {
@@ -137,22 +138,17 @@ namespace YaSTroid
 			if (systemHealth != null)
 				moduleList.Add(systemHealth);
 			
-			RunOnUiThread(returnRes);
+			RunOnUiThread(() => {
+				moduleAdapter.Clear();
+				if (moduleList != null && moduleList.Count > 0) {
+					moduleAdapter.NotifyDataSetChanged();
+					for (int i = 0; i < moduleList.Count; i++) {
+						moduleAdapter.Add(moduleList[i]);
+					}
+				}
+				moduleListProgress.Dismiss();
+				moduleAdapter.NotifyDataSetChanged();
+			});
 		}
-		
-//		private Runnable returnRes = new Runnable() {
-//			@Override
-//			public void run() {
-//				moduleAdapter.clear();
-//				if (moduleList != null && moduleList.size() > 0) {
-//					moduleAdapter.notifyDataSetChanged();
-//					for (int i = 0; i < moduleList.size(); i++) {
-//						moduleAdapter.add(moduleList.get(i));
-//					}
-//				}
-//				moduleListProgress.dismiss();
-//				moduleAdapter.notifyDataSetChanged();
-//			}
-//		};
 	}
 }

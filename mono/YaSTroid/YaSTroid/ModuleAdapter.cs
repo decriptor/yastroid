@@ -15,9 +15,9 @@ namespace YaSTroid
 			this.modules = modules;
 			this.context = context;
 		}
-		
-		public override View getView(int position, View convertView, ViewGroup parent) {
-			
+
+		public override View GetView (int position, View convertView, ViewGroup parent)
+		{
 			View moduleView = convertView;
 			if (moduleView == null) {
 				LayoutInflater vi = (LayoutInflater) context.GetSystemService(Context.LayoutInflaterService);
@@ -25,7 +25,7 @@ namespace YaSTroid
 			}
 			
 			
-			Module m = modules.get(position);
+			Module m = modules[position];
 			if (m != null) {
 				ImageView icon = moduleView.FindViewById<ImageView>(Resource.Id.module_icon);
 				TextView name = moduleView.FindViewById<TextView>(Resource.Id.module_name);

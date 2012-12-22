@@ -1,21 +1,23 @@
 using Android.Views;
 using Android.Content;
 using Android.Widget;
+using System.Collections.Generic;
 
 namespace YaSTroid
 {
-	public class SystemMessagesAdapter : ArrayAdapter<SystemMessage> {
+	public class SystemMessagesAdapter : ArrayAdapter<SystemMessage>
+	{
 
-	private ArrayList<SystemMessage> messages;
-	private Context context;
+	List<SystemMessage> messages;
+	Context context;
 
-	public SystemMessagesAdapter(Context context, int textViewResourceId, ArrayList<SystemMessage> messages) : base(context, textViewResourceId, messages)
+	public SystemMessagesAdapter(Context context, int textViewResourceId, List<SystemMessage> messages) : base(context, textViewResourceId, messages)
 	{
 		this.messages = messages;
 		this.context = context;
 	}
 
-	public override View getView(int position, View convertView, ViewGroup parent) {
+	public override View GetView(int position, View convertView, ViewGroup parent) {
 		View messageView = convertView;
 		if (messageView == null) {
 			LayoutInflater vi = (LayoutInflater) context.GetSystemService(Context.LayoutInflaterService);

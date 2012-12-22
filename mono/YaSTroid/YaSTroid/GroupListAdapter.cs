@@ -5,6 +5,7 @@ using Android.Content;
 using Android.Views;
 using System.Collections.Generic;
 using System;
+using Android.Database;
 
 namespace YaSTroid
 {
@@ -32,7 +33,7 @@ namespace YaSTroid
 				groupView = vi.Inflate(Resource.Layout.grouplistrow, null);
 			}
 
-			Group g = groups.get(position);
+			Group g = groups[position];
 			ImageView icon = groupView.FindViewById<ImageView>(Resource.Id.module_icon);
 
 			if (icon != null) {
@@ -53,22 +54,22 @@ namespace YaSTroid
 		
 		private int getServerCount(int id)
 		{
-			database = dbhelper.getWritableDatabase();
-			Cursor sc;
+			database = dbhelper.WritableDatabase;
+			ICursor sc;
 			int count = 0;
 			try {
-				if (id == GROUP_DEFAULT_ALL) {
-					sc = database.query(SERVERS_TABLE_NAME, new string[] {
+				if (id == YastroidOpenHelper.GROUP_DEFAULT_ALL) {
+					sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME, new string[] {
 							"_id", },
 							null, null, null, null, null);
 				} else {
-					sc = database.query(SERVERS_TABLE_NAME, new string[] {
+					sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME, new string[] {
 						"_id", },
 						"_id=" + id, null, null, null, null);
 				}
 
-				count = sc.getCount();
-				sc.close();
+				count = sc.Count;
+				sc.Close();
 				database.Close();
 			} catch (Exception e) {
 				Log.Error("getServerCount", e.Message);
