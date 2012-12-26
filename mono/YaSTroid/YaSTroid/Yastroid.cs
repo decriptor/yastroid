@@ -35,7 +35,7 @@ namespace YaSTroid
 	        
 	        // Preliminary Group work. The ability to add/delete groups needs
 	        // to be finish.  Adding servers to groups is still completely missing.
-	        Intent intent = new Intent(this, typeof(GroupListActivity));
+	        Intent intent = new Intent(this, typeof(ServerGroupListActivity));
 	        //Intent intent = new Intent(this, ServerListActivity.class);
 	        StartActivity(intent);
 	    }

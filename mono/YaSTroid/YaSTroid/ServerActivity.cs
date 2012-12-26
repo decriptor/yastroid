@@ -55,8 +55,8 @@ namespace YaSTroid
 			
 //			Thread thread = new Thread(null, moduleView, "ModuleListBackground");
 //			thread.start();
-			getModules();
 			moduleListProgress = ProgressDialog.Show(this, "Please wait...", "Building Module list...", true);
+			getModules();
 		}
 
 		protected override void OnResume ()

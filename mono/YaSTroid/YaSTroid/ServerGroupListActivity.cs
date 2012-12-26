@@ -1,37 +1,37 @@
-using Android.App;
-using Android.OS;
-using Android.Widget;
-using Android.Views;
-using Android.Database.Sqlite;
-using System.Collections.Generic;
-using Android.Content;
-using Android.Util;
 using System;
+using System.Collections.Generic;
+
+using Android.App;
+using Android.Content;
 using Android.Database;
+using Android.Database.Sqlite;
+using Android.OS;
+using Android.Util;
+using Android.Views;
+using Android.Widget;
 
 namespace YaSTroid
 {
-	[Activity (Label = "GroupListActivity")]
-	public class GroupListActivity : ListActivity
+	[Activity (Label = "ServerGroupListActivity")]
+	public class ServerGroupListActivity : ListActivity
 	{
-		SQLiteDatabase database;
-		YastroidOpenHelper dbhelper;
-		List<Group> groupList = null;
+		SQLiteDatabase _database;
+		YastroidOpenHelper _dbhelper;
+		List<ServerGroupItem> _serverList;
 
-		ProgressDialog groupListProgress = null;
-		GroupListAdapter groupAdapter;
-		//Runnable groupView;
+		ProgressDialog groupListProgress;
+		ServerGroupListAdapter groupAdapter;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-			SetContentView(Resource.Layout.grouplist);
+			SetContentView(Resource.Layout.server_group_list);
 			ListView.SetOnCreateContextMenuListener(this);
 
-			dbhelper = new YastroidOpenHelper(this);
+			_dbhelper = new YastroidOpenHelper(this);
 
-			groupList = new List<Group>();
-			groupAdapter = new GroupListAdapter(this,Resource.Layout.grouplistrow, groupList);
+			_serverList = new List<ServerGroupItem>();
+			groupAdapter = new ServerGroupListAdapter(this, Resource.Layout.server_group_item, _serverList);
 			ListAdapter = groupAdapter;
 
 //			groupView = new Runnable() {
@@ -43,9 +43,9 @@ namespace YaSTroid
 			
 //			Thread thread = new Thread(null, groupView, "ServerListBackground");
 //			thread.start();
-			getGroups();
 			groupListProgress = ProgressDialog.Show(this, "Please wait...",
 					"Retrieving groups...", true);
+			getGroups();
 		}
 
 		protected override void OnResume ()
@@ -58,9 +58,9 @@ namespace YaSTroid
 		{
 			base.OnListItemClick (l, v, position, id);
 			Intent intent = new Intent(this, typeof(ServerListActivity));
-			Group g = groupList[position];
-			intent.PutExtra("GROUP_ID", g.getId());
-			intent.PutExtra("GROUP_NAME", g.getName());
+			ServerGroupItem g = _serverList[position];
+			intent.PutExtra("GROUP_ID", g.Id);
+			intent.PutExtra("GROUP_NAME", g.Name);
 			StartActivity(intent);
 		}
 
@@ -93,8 +93,8 @@ namespace YaSTroid
 			
 			switch (item.ItemId) {
 			case 0: {
-				Group g = groupList[info.Position];
-				deleteGroup(g.getId());
+				ServerGroupItem g = _serverList[info.Position];
+				deleteGroup(g.Id);
 				return true;
 			}
 			default:
@@ -102,38 +102,40 @@ namespace YaSTroid
 			}
 		}
 
-		private void deleteGroup(long id) {
+		void deleteGroup(long id)
+		{
 			if(id == YastroidOpenHelper.GROUP_DEFAULT_ALL) {
 				Toast.MakeText(this, "Can't delete the default group", ToastLength.Short).Show();
 			}
 			else {
-				database = dbhelper.WritableDatabase;
-				database.Delete(YastroidOpenHelper.GROUP_TABLE_NAME, "_id=" + id, null);
-				database.Close();
+				_database = _dbhelper.WritableDatabase;
+				_database.Delete(YastroidOpenHelper.GROUP_TABLE_NAME, "_id=" + id, null);
+				_database.Close();
 				getGroups();
 			}
 		}
 
-		private void getGroups() {
-			database = dbhelper.WritableDatabase;
+		void getGroups()
+		{
+			_database = _dbhelper.WritableDatabase;
 			try {
-				ICursor sc = database.Query(YastroidOpenHelper.GROUP_TABLE_NAME, new string[] {
+				ICursor sc = _database.Query(YastroidOpenHelper.GROUP_TABLE_NAME, new string[] {
 					"_id",YastroidOpenHelper.GROUP_NAME, YastroidOpenHelper.GROUP_DESCRIPTION, YastroidOpenHelper.GROUP_ICON },
 						null, null, null, null, null);
 
 				sc.MoveToFirst();
-				Group g;
-				groupList = new List<Group>();
+				ServerGroupItem g;
+				_serverList = new List<ServerGroupItem>();
 				if (!sc.IsAfterLast) {
 					do {
-						g = new Group(sc.GetInt(0), sc.GetString(1), sc.GetString(2), sc
+						g = new ServerGroupItem(sc.GetInt(0), sc.GetString(1), sc.GetString(2), sc
 								.GetInt(3));
-						groupList.Add(g);
+						_serverList.Add(g);
 					} while (sc.MoveToNext());
 				}
 				sc.Close();
-				database.Close();
-				Log.Info("ARRAY", "" + groupList.Count);
+				_database.Close();
+				Log.Info("ARRAY", "" + _serverList.Count);
 			} catch (Exception e) {
 				Log.Error("BACKGROUND_PROC", e.Message);
 			}
@@ -141,10 +143,10 @@ namespace YaSTroid
 			RunOnUiThread(() =>
 			{
 				groupAdapter.Clear();
-				if (groupList != null && groupList.Count > 0) {
+				if (_serverList != null && _serverList.Count > 0) {
 					groupAdapter.NotifyDataSetChanged();
-					for (int i = 0; i < groupList.Count; i++)
-						groupAdapter.Add(groupList[i]);
+					for (int i = 0; i < _serverList.Count; i++)
+						groupAdapter.Add(_serverList[i]);
 				} else {
 					// Add button 'Add new group'
 				}

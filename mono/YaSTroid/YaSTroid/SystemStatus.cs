@@ -20,7 +20,7 @@ namespace YaSTroid
 		
 		public SystemStatus(Application app, int systemType, int status)
 		{
-			app = app;
+			this.app = app;
 			setSystemType(systemType);
 			setStatus(status);
 		}

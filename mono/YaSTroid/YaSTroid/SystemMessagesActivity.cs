@@ -33,9 +33,8 @@ namespace YaSTroid
 			
 //			Thread thread = new Thread(null, messageView, "MessageListBackground");
 //			thread.start();
+			messageListProgress = ProgressDialog.Show(this, "Please wait...", "Retrieving data...", true);
 			getMessages();
-			messageListProgress = ProgressDialog.Show(this, "Please wait...",
-					"Retrieving data...", true);
 		}
 
 		protected override void OnResume() {

@@ -116,20 +116,20 @@ namespace YaSTroid
 			// aapt resource value: 0x7f090003
 			public const int graph_view = 2131296259;
 			
+			// aapt resource value: 0x7f09000f
+			public const int group_description = 2131296271;
+			
 			// aapt resource value: 0x7f09000d
-			public const int group_description = 2131296269;
-			
-			// aapt resource value: 0x7f09000b
-			public const int group_icon = 2131296267;
-			
-			// aapt resource value: 0x7f09000c
-			public const int group_name = 2131296268;
+			public const int group_icon = 2131296269;
 			
 			// aapt resource value: 0x7f09000e
-			public const int module_icon = 2131296270;
+			public const int group_name = 2131296270;
 			
-			// aapt resource value: 0x7f09000f
-			public const int module_name = 2131296271;
+			// aapt resource value: 0x7f09000b
+			public const int module_icon = 2131296267;
+			
+			// aapt resource value: 0x7f09000c
+			public const int module_name = 2131296268;
 			
 			// aapt resource value: 0x7f090024
 			public const int preferences = 2131296292;
@@ -200,19 +200,19 @@ namespace YaSTroid
 			public const int groupadd = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int grouplist = 2130903042;
+			public const int main = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int grouplistrow = 2130903043;
+			public const int module_list_row = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int main = 2130903044;
+			public const int server = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int module_list_row = 2130903045;
+			public const int server_group_item = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int server = 2130903046;
+			public const int server_group_list = 2130903046;
 			
 			// aapt resource value: 0x7f030007
 			public const int server_header = 2130903047;

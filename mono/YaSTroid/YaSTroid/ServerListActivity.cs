@@ -53,9 +53,8 @@ namespace YaSTroid
 			
 //			Thread thread = new Thread(null, serverView, "ServerListBackground");
 //			thread.start();
+			serverListProgress = ProgressDialog.Show(this, "Please wait...", "Retrieving data...", true);
 			getServers();
-			serverListProgress = ProgressDialog.Show(this, "Please wait...",
-					"Retrieving data...", true);
 		}
 
 		protected override void OnResume()

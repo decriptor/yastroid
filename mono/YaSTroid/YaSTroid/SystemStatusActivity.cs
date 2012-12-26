@@ -34,9 +34,8 @@ namespace YaSTroid
 			
 //			Thread thread = new Thread(null, systemStatusView, "SystemStatusListBackground");
 //			thread.start();
+			systemStatusListProgress = ProgressDialog.Show(this, "Please wait...", "Retrieving data...", true);
 			buildList();
-			systemStatusListProgress = ProgressDialog.Show(this, "Please wait...",
-					"Retrieving data...", true);
 		}
 
 		protected override void OnResume()
