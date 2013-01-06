@@ -16,48 +16,48 @@ namespace YaSTroid
 	public class ServerGroupListActivity : ListActivity
 	{
 		SQLiteDatabase _database;
-		YastroidOpenHelper _dbhelper;
-		List<ServerGroupItem> _serverList;
+		YastroidDatabase _dbhelper;
+		ICursor _cursor;
 
 		ProgressDialog groupListProgress;
-		ServerGroupListAdapter groupAdapter;
+		ServerGroupCursorAdapter _groupCursorAdapter;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.server_group_list);
+			_dbhelper = new YastroidDatabase(this);
+			_cursor = _dbhelper.ReadableDatabase.RawQuery("SELECT * FROM "+YastroidDatabase.GROUP_TABLE_NAME, null);
+			StartManagingCursor(_cursor);
 			ListView.SetOnCreateContextMenuListener(this);
 
-			_dbhelper = new YastroidOpenHelper(this);
+			_dbhelper = new YastroidDatabase(this);
 
-			_serverList = new List<ServerGroupItem>();
-			groupAdapter = new ServerGroupListAdapter(this, Resource.Layout.server_group_item, _serverList);
-			ListAdapter = groupAdapter;
+			_groupCursorAdapter = new ServerGroupCursorAdapter(this, _cursor);
+			ListView.Adapter = ListAdapter = _groupCursorAdapter;
 
-//			groupView = new Runnable() {
-//				@Override
-//				public void run() {
-//					getGroups();
-//				}
-//			};
-			
-//			Thread thread = new Thread(null, groupView, "ServerListBackground");
-//			thread.start();
 			groupListProgress = ProgressDialog.Show(this, "Please wait...",
 					"Retrieving groups...", true);
 			getGroups();
 		}
 
+		protected override void OnDestroy ()
+		{
+			StopManagingCursor(_cursor);
+			base.OnDestroy ();
+		}
+
 		protected override void OnResume ()
 		{
 			base.OnResume ();
-			getGroups();
+			StartManagingCursor(_cursor);
 		}
 
 		protected override void OnListItemClick (ListView l, View v, int position, long id)
 		{
 			base.OnListItemClick (l, v, position, id);
-			Intent intent = new Intent(this, typeof(ServerListActivity));
+			_cursor.MoveToPosition(position);
+			var intent = new Intent(this, typeof(ServerListActivity));
 			ServerGroupItem g = _serverList[position];
 			intent.PutExtra("GROUP_ID", g.Id);
 			intent.PutExtra("GROUP_NAME", g.Name);
@@ -71,7 +71,8 @@ namespace YaSTroid
 			return true;
 		}
 
-		public bool onOptionsItemSelected(IMenuItem item) {
+		public bool OnOptionsItemSelected(IMenuItem item)
+		{
 			switch (item.ItemId) {
 			case Resource.Id.add_group:
 				Intent intent = new Intent(this, typeof(GroupAddActivity));
@@ -104,12 +105,12 @@ namespace YaSTroid
 
 		void deleteGroup(long id)
 		{
-			if(id == YastroidOpenHelper.GROUP_DEFAULT_ALL) {
+			if(id == YastroidDatabase.GROUP_DEFAULT_ALL) {
 				Toast.MakeText(this, "Can't delete the default group", ToastLength.Short).Show();
 			}
 			else {
 				_database = _dbhelper.WritableDatabase;
-				_database.Delete(YastroidOpenHelper.GROUP_TABLE_NAME, "_id=" + id, null);
+				_database.Delete(YastroidDatabase.GROUP_TABLE_NAME, "_id=" + id, null);
 				_database.Close();
 				getGroups();
 			}
@@ -119,8 +120,8 @@ namespace YaSTroid
 		{
 			_database = _dbhelper.WritableDatabase;
 			try {
-				ICursor sc = _database.Query(YastroidOpenHelper.GROUP_TABLE_NAME, new string[] {
-					"_id",YastroidOpenHelper.GROUP_NAME, YastroidOpenHelper.GROUP_DESCRIPTION, YastroidOpenHelper.GROUP_ICON },
+				ICursor sc = _database.Query(YastroidDatabase.GROUP_TABLE_NAME, new string[] {
+					"_id",YastroidDatabase.GROUP_NAME, YastroidDatabase.GROUP_DESCRIPTION, YastroidDatabase.GROUP_ICON },
 						null, null, null, null, null);
 
 				sc.MoveToFirst();
@@ -142,16 +143,16 @@ namespace YaSTroid
 
 			RunOnUiThread(() =>
 			{
-				groupAdapter.Clear();
+				_groupCursorAdapter.Clear();
 				if (_serverList != null && _serverList.Count > 0) {
-					groupAdapter.NotifyDataSetChanged();
+					_groupCursorAdapter.NotifyDataSetChanged();
 					for (int i = 0; i < _serverList.Count; i++)
-						groupAdapter.Add(_serverList[i]);
+						_groupCursorAdapter.Add(_serverList[i]);
 				} else {
 					// Add button 'Add new group'
 				}
 				groupListProgress.Dismiss();
-				groupAdapter.NotifyDataSetChanged();
+				_groupCursorAdapter.NotifyDataSetChanged();
 
 			});
 		}

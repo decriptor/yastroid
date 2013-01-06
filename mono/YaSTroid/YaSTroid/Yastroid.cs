@@ -11,7 +11,7 @@ namespace YaSTroid
 	{
 		ISharedPreferences settings;
 		SQLiteDatabase database;
-		YastroidOpenHelper dbhelper;
+		YastroidDatabase dbhelper;
 	    /** Called when the activity is first created. */
 
 		protected override void OnCreate (Bundle savedInstanceState)
@@ -29,7 +29,7 @@ namespace YaSTroid
 	        }
 	        
 	        // Force database upgrade if needed
-	        dbhelper = new YastroidOpenHelper(this);
+	        dbhelper = new YastroidDatabase(this);
 	        database = dbhelper.WritableDatabase;
 	        database.Close();
 	        

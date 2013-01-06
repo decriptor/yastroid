@@ -9,13 +9,13 @@ namespace YaSTroid
 	public class ServerHelper
 	{
 		SQLiteDatabase database;
-		YastroidOpenHelper dbhelper;
+		YastroidDatabase dbhelper;
 		Context context;
 
 		ServerHelper(Context context)
 		{
 			this.context = context;
-			dbhelper = new YastroidOpenHelper(context);
+			dbhelper = new YastroidDatabase(context);
 
 		}
 
@@ -24,7 +24,7 @@ namespace YaSTroid
 			database = dbhelper.ReadableDatabase;
 			Server s = null;
 			try {
-				ICursor sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME,
+				ICursor sc = database.Query(YastroidDatabase.SERVERS_TABLE_NAME,
 						new string[] { "_id", "name", "scheme", "hostname", "port",
 								"user", "pass", "grp" }, "_id="+id, null, null, null, null);
 

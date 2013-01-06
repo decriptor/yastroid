@@ -13,7 +13,7 @@ namespace YaSTroid
 	public class ServerEditActivity : Activity
 	{
 		SQLiteDatabase database;
-		YastroidOpenHelper dbhelper;
+		YastroidDatabase dbhelper;
 		Button saveButton;
 		Server s;
 
@@ -22,7 +22,7 @@ namespace YaSTroid
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.serveredit);
 
-			dbhelper = new YastroidOpenHelper(this);
+			dbhelper = new YastroidDatabase(this);
 
 			Intent serverIntent = Intent;
 			Bundle b = serverIntent.Extras;
@@ -41,9 +41,9 @@ namespace YaSTroid
 			database = dbhelper.ReadableDatabase;
 			ICursor sc;
 			try {
-				sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME, new string[] {
+				sc = database.Query(YastroidDatabase.SERVERS_TABLE_NAME, new string[] {
 							"_id", "name", "scheme", "hostname", "port", "user", "pass", "grp" },
-							YastroidOpenHelper.SERVERS_ID + "=" + serverId, null, null, null, null);
+							YastroidDatabase.SERVERS_ID + "=" + serverId, null, null, null, null);
 
 				sc.MoveToFirst();
 				s = new Server(sc.GetInt(0), sc.GetString(1), sc.GetString(2), sc
@@ -91,18 +91,18 @@ namespace YaSTroid
 				}
 
 				ContentValues values = new ContentValues();
-				values.Put(YastroidOpenHelper.SERVERS_NAME, name);
-				values.Put(YastroidOpenHelper.SERVERS_SCHEME, scheme);
-				values.Put(YastroidOpenHelper.SERVERS_HOST, host);
-				values.Put(YastroidOpenHelper.SERVERS_PORT, port);
-				values.Put(YastroidOpenHelper.SERVERS_USER, user);
+				values.Put(YastroidDatabase.SERVERS_NAME, name);
+				values.Put(YastroidDatabase.SERVERS_SCHEME, scheme);
+				values.Put(YastroidDatabase.SERVERS_HOST, host);
+				values.Put(YastroidDatabase.SERVERS_PORT, port);
+				values.Put(YastroidDatabase.SERVERS_USER, user);
 				if(pass.Length == 0 )
-					values.Put(YastroidOpenHelper.SERVERS_PASS, s.Password);
+					values.Put(YastroidDatabase.SERVERS_PASS, s.Password);
 				else
-					values.Put(YastroidOpenHelper.SERVERS_PASS, pass);
-				values.Put(YastroidOpenHelper.SERVERS_GROUP, s.getGroupId());
+					values.Put(YastroidDatabase.SERVERS_PASS, pass);
+				values.Put(YastroidDatabase.SERVERS_GROUP, s.getGroupId());
 
-				database.Update(YastroidOpenHelper.SERVERS_TABLE_NAME, values, YastroidOpenHelper.SERVERS_ID + "=" + s.getId(), null);
+				database.Update(YastroidDatabase.SERVERS_TABLE_NAME, values, YastroidDatabase.SERVERS_ID + "=" + s.getId(), null);
 				database.Close();
 				Log.Info("ARRAY", "WebYaST server " + name + " has been updated.");
 				result = true;

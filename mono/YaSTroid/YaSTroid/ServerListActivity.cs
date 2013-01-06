@@ -16,7 +16,7 @@ namespace YaSTroid
 	public class ServerListActivity : ListActivity
 	{
 		SQLiteDatabase database;
-		YastroidOpenHelper dbhelper;
+		YastroidDatabase dbhelper;
 		List<Server> serverList;
 
 		ProgressDialog serverListProgress;
@@ -38,7 +38,7 @@ namespace YaSTroid
 			SetContentView(Resource.Layout.serverlist);
 			ListView.SetOnCreateContextMenuListener(this);
 
-			dbhelper = new YastroidOpenHelper(this);
+			dbhelper = new YastroidDatabase(this);
 
 			serverList = new List<Server>();
 			serverAdapter = new ServerListAdapter(this, Resource.Layout.serverlistrow, serverList);
@@ -128,7 +128,7 @@ namespace YaSTroid
 		private void deleteServer(long id)
 		{
 			database = dbhelper.WritableDatabase;
-			database.Delete(YastroidOpenHelper.SERVERS_TABLE_NAME, "_id=" + id, null);
+			database.Delete(YastroidDatabase.SERVERS_TABLE_NAME, "_id=" + id, null);
 			database.Close();
 			getServers();
 		}
@@ -138,14 +138,14 @@ namespace YaSTroid
 			database = dbhelper.ReadableDatabase;
 			ICursor sc;
 			try {
-				if (groupId == YastroidOpenHelper.GROUP_DEFAULT_ALL) {
-					sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME, new string[] {
+				if (groupId == YastroidDatabase.GROUP_DEFAULT_ALL) {
+					sc = database.Query(YastroidDatabase.SERVERS_TABLE_NAME, new string[] {
 							"_id", "name", "scheme", "hostname", "port", "user", "pass", "grp" },
 							null, null, null, null, null);
 				} else {
-					sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME, new string[] {
+					sc = database.Query(YastroidDatabase.SERVERS_TABLE_NAME, new string[] {
 							"_id", "name", "scheme", "hostname", "port", "user", "pass", "grp" },
-							YastroidOpenHelper.SERVERS_GROUP + "=" + groupId, null, null, null, null);
+							YastroidDatabase.SERVERS_GROUP + "=" + groupId, null, null, null, null);
 				}
 
 				sc.MoveToFirst();

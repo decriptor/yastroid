@@ -20,7 +20,7 @@ namespace YaSTroid
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.serveradd);
 
-			YastroidOpenHelper helper = new YastroidOpenHelper(this);
+			YastroidDatabase helper = new YastroidDatabase(this);
 			database = helper.WritableDatabase;
 
 			Intent groupIntent = Intent;
@@ -60,15 +60,15 @@ namespace YaSTroid
 				}
 
 				ContentValues values = new ContentValues();
-				values.Put(YastroidOpenHelper.SERVERS_NAME, name);
-				values.Put(YastroidOpenHelper.SERVERS_SCHEME, scheme);
-				values.Put(YastroidOpenHelper.SERVERS_HOST, host);
-				values.Put(YastroidOpenHelper.SERVERS_PORT, port);
-				values.Put(YastroidOpenHelper.SERVERS_USER, user);
-				values.Put(YastroidOpenHelper.SERVERS_PASS, pass);
-				values.Put(YastroidOpenHelper.SERVERS_GROUP, groupId);
+				values.Put(YastroidDatabase.SERVERS_NAME, name);
+				values.Put(YastroidDatabase.SERVERS_SCHEME, scheme);
+				values.Put(YastroidDatabase.SERVERS_HOST, host);
+				values.Put(YastroidDatabase.SERVERS_PORT, port);
+				values.Put(YastroidDatabase.SERVERS_USER, user);
+				values.Put(YastroidDatabase.SERVERS_PASS, pass);
+				values.Put(YastroidDatabase.SERVERS_GROUP, groupId);
 				
-				database.Insert(YastroidOpenHelper.SERVERS_TABLE_NAME, "null", values);
+				database.Insert(YastroidDatabase.SERVERS_TABLE_NAME, "null", values);
 				database.Close();
 				Log.Info("ARRAY", "WebYaST server " + name + " has been added.");
 				result = true;

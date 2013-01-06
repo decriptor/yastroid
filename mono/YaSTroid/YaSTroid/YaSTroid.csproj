@@ -66,11 +66,11 @@
     <Compile Include="SystemStatus.cs" />
     <Compile Include="SystemStatusActivity.cs" />
     <Compile Include="Yastroid.cs" />
-    <Compile Include="YastroidOpenHelper.cs" />
     <Compile Include="GraphView\GraphView.cs" />
     <Compile Include="ServerGroupItem.cs" />
     <Compile Include="ServerGroupListActivity.cs" />
-    <Compile Include="ServerGroupListAdapter.cs" />
+    <Compile Include="YastroidDatabase.cs" />
+    <Compile Include="ServerGroupCursorAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

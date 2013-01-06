@@ -4,13 +4,13 @@ using Android.Content;
 
 namespace YaSTroid
 {
-	public class YastroidOpenHelper : SQLiteOpenHelper
+	public class YastroidDatabase : SQLiteOpenHelper
 	{
 
 		public const string TAG = "YaSTroidDatabase";
 
-		public const string DATABASE_NAME = "yastroid";
-		public const int DATABASE_VERSION = 4;
+		public const string DatabaseName = "yastroid";
+		public const int DatabaseVersion = 4;
 		public const string SERVERS_TABLE_NAME = "servers";
 		public const string SERVERS_ID = "_id";
 		public const string SERVERS_NAME = "name";
@@ -37,6 +37,7 @@ namespace YaSTroid
 				+ SERVERS_USER + " TEXT, "
 				+ SERVERS_PASS + " TEXT, "
 				+ SERVERS_GROUP + " INTEGER);";
+
 		const string CREATE_GROUP_TABLE = "CREATE TABLE "
 				+ GROUP_TABLE_NAME + " ("
 				+ "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -52,7 +53,7 @@ namespace YaSTroid
 	//			+ SERVERS_TABLE_NAME
 	//			+ "(name,scheme,hostname,port,user,pass,grp) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy','" + GROUP_DEFAULT_ALL +"');";
 
-		public YastroidOpenHelper(Context context) : base(context, DATABASE_NAME, null, DATABASE_VERSION)
+		public YastroidDatabase(Context context) : base(context, DatabaseName, null, DatabaseVersion)
 		{
 		}
 

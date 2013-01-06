@@ -19,7 +19,7 @@ namespace YaSTroid
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.groupadd);
 
-			YastroidOpenHelper helper = new YastroidOpenHelper(this);
+			YastroidDatabase helper = new YastroidDatabase(this);
 			database = helper.WritableDatabase;
 			
 			addButton = FindViewById<Button>(Resource.Id.button_add_group);
@@ -46,11 +46,11 @@ namespace YaSTroid
 				}
 
 				ContentValues values = new ContentValues();
-				values.Put(YastroidOpenHelper.GROUP_NAME, name);
-				values.Put(YastroidOpenHelper.GROUP_DESCRIPTION, description);
-				values.Put(YastroidOpenHelper.GROUP_ICON, icon);
+				values.Put(YastroidDatabase.GROUP_NAME, name);
+				values.Put(YastroidDatabase.GROUP_DESCRIPTION, description);
+				values.Put(YastroidDatabase.GROUP_ICON, icon);
 				
-				database.Insert(YastroidOpenHelper.GROUP_TABLE_NAME, "null", values);
+				database.Insert(YastroidDatabase.GROUP_TABLE_NAME, "null", values);
 				database.Close();
 				Log.Info("addGroup", name + " group has been added.");
 				result = true;
