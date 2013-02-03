@@ -1,16 +1,17 @@
 using Android.Util;
 using Android.Database.Sqlite;
 using Android.Content;
+using Android.Database;
 
 namespace YaSTroid
 {
 	public class YastroidDatabase : SQLiteOpenHelper
 	{
-
 		public const string TAG = "YaSTroidDatabase";
 
-		public const string DatabaseName = "yastroid";
-		public const int DatabaseVersion = 4;
+		const string DatabaseName = "yastroid";
+		const int DatabaseVersion = 4;
+
 		public const string SERVERS_TABLE_NAME = "servers";
 		public const string SERVERS_ID = "_id";
 		public const string SERVERS_NAME = "name";
@@ -49,7 +50,7 @@ namespace YaSTroid
 				+ GROUP_TABLE_NAME
 				+ "(name,description,icon) VALUES ('All', 'All servers', '0');";
 
-	//	private static final string ADD_SERVER = "INSERT INTO "
+	//	static const string ADD_SERVER = "INSERT INTO "
 	//			+ SERVERS_TABLE_NAME
 	//			+ "(name,scheme,hostname,port,user,pass,grp) VALUES ('webyast1', 'http', '137.65.132.194', '4984','root','sandy','" + GROUP_DEFAULT_ALL +"');";
 
@@ -59,16 +60,16 @@ namespace YaSTroid
 
 		public override void OnCreate(SQLiteDatabase db)
 		{
-			db.ExecSQL(CREATE_SERVER_TABLE);
 			db.ExecSQL(CREATE_GROUP_TABLE);
 			db.ExecSQL(DEFAULT_GROUP);
+			db.ExecSQL(CREATE_SERVER_TABLE);
 			// Demo data
 			//db.execSQL(ADD_SERVER);
 		}
 
-		public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.Warn(TAG, "Upgrading database from version " + oldVersion + "to "
-					+ newVersion);
+		public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+		{
+			Log.Info(TAG, "Upgrading database from version " + oldVersion + "to " + newVersion);
 			// Any changes to the database structure should occur here.
 			// This is called if the DATABASE_VERSION installed is older
 			// than the new version.
@@ -78,6 +79,11 @@ namespace YaSTroid
 			//db.execSQL(CREATE_GROUP_TABLE);
 			//db.execSQL(DEFAULT_GROUP);
 			//db.execSQL("UPDATE " + SERVERS_TABLE_NAME + " SET " + SERVERS_GROUP + "='" + GROUP_DEFAULT_ALL + "';");
+		}
+
+		public ICursor FetchAllServerGroups ()
+		{
+			return ReadableDatabase.RawQuery("SELECT * FROM "+YastroidDatabase.GROUP_TABLE_NAME, null);
 		}
 	}
 }

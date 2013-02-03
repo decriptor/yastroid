@@ -8,6 +8,7 @@ using System;
 
 namespace YaSTroid
 {
+	// FIXME Turn this into a dialog or something?
 	[Activity (Label = "GroupAddActivity")]
 	public class GroupAddActivity : Activity
 	{

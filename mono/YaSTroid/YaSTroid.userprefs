@@ -1,16 +1,24 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="YaSTroid/ServerGroupListActivity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="YaSTroid/Groups/ServerGroupListFragment.cs">
     <Files>
-      <File FileName="YaSTroid/ServerGroupItem.cs" Line="1" Column="1" />
-      <File FileName="YaSTroid/ServerGroupListActivity.cs" Line="97" Column="52" />
-      <File FileName="YaSTroid/ServerGroupCursorAdapter.cs" Line="41" Column="93" />
+      <File FileName="YaSTroid/Yastroid.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/YastroidDatabase.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/Groups/ServerGroupAdapter.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/Groups/ServerGroupListFragment.cs" Line="37" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
+          <Node name="WebYaST" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
           <Node name="YaSTroid" expanded="True">
-            <Node name="ServerGroupListActivity.cs" selected="True" />
+            <Node name="References" expanded="True">
+              <Node name="WebYaST" selected="True" />
+            </Node>
+            <Node name="Groups" expanded="True" />
+            <Node name="Servers" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -29,4 +37,5 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.YaSTroid AndroidDeviceId-Debug="015d2109c8201411" MonoForAntroid.PreferredDevice="3.7in WVGA (Nexus One)" />
 </Properties>

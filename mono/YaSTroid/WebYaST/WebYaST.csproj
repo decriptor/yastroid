@@ -61,4 +61,6 @@
     <Compile Include="Status\SingleGraph.cs" />
     <Compile Include="Status\Value.cs" />
   </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
 </Project>

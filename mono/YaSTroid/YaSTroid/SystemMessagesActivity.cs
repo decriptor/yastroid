@@ -3,17 +3,17 @@ using Android.OS;
 using Android.Util;
 using System;
 using System.Collections.Generic;
+using Android.Content;
 
 namespace YaSTroid
 {
 	[Activity (Label = "SystemMessagesActivity")]
 	public class SystemMessagesActivity : ListActivity
 	{
-		List<SystemMessage> messageList = null;
+		List<SystemMessage> messageList;
 
-		ProgressDialog messageListProgress = null;
+		ProgressDialog messageListProgress;
 		SystemMessagesAdapter messageAdapter;
-		//Runnable messageView;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -24,15 +24,6 @@ namespace YaSTroid
 			messageAdapter = new SystemMessagesAdapter(this, Resource.Layout.system_messages_row, messageList);
 			ListAdapter = messageAdapter;
 
-//			messageView = new Runnable() {
-//				@Override
-//				public void run() {
-//					getMessages();
-//				}
-//			};
-			
-//			Thread thread = new Thread(null, messageView, "MessageListBackground");
-//			thread.start();
 			messageListProgress = ProgressDialog.Show(this, "Please wait...", "Retrieving data...", true);
 			getMessages();
 		}
@@ -42,15 +33,14 @@ namespace YaSTroid
 			getMessages();
 		}
 
-	//	@Override
-	//	protected void onListItemClick(ListView l, View v, int position, long id) {
-	//		base.onListItemClick(l, v, position, id);
-	//		Intent intent = new Intent(ServerListActivity.this,
-	//				ServerActivity.class);
-	//		Server s = messageList.get(position);
-	//		intent.putExtra("SERVER_PASS", s.getPass());
-	//		startActivity(intent);
-	//	}
+//		protected override void OnListItemClick (Android.Widget.ListView l, Android.Views.View v, int position, long id)
+//		{
+//			base.OnListItemClick (l, v, position, id);
+//			var intent = new Intent (this, typeof(ServerActivity));
+//			var s = messageList [position];
+//			intent.PutExtra ("SERVER_PASS", s.getPass());
+//			StartActivity (intent);
+//		}
 
 		void getMessages()
 		{

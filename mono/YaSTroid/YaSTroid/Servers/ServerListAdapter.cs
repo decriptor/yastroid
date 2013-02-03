@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 
-using Android.App;
 using Android.Content;
 using Android.Views;
 using Android.Widget;
 
-namespace YaSTroid
+namespace YaSTroid.Servers
 {
 	public class ServerListAdapter : ArrayAdapter<Server>
 	{
