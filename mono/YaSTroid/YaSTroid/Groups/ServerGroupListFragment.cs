@@ -1,11 +1,11 @@
+using System.Collections.Generic;
+
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Database;
-using Android.Widget;
-using System;
 using Android.Util;
 using Android.Views;
+using Android.Widget;
 
 namespace YaSTroid.Groups
 {
@@ -13,8 +13,8 @@ namespace YaSTroid.Groups
 	public class ServerGroupListFragment : ListFragment
 	{
 		YastroidDatabase _dbhelper;
-
-		ServerGroupAdapter _groupCursorAdapter;
+		List<ServerGroupItem> _groups;
+		ServerGroupListAdapter _groupAdapter;
 
 		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
@@ -23,8 +23,9 @@ namespace YaSTroid.Groups
 			SetEmptyText("No server groups found");
 			SetHasOptionsMenu(true);
 
-			_groupCursorAdapter = new ServerGroupAdapter(Activity, );
-			ListAdapter = _groupCursorAdapter;
+			_groups = GetServerGroups ();
+			_groupAdapter = new ServerGroupListAdapter(Activity);
+			ListAdapter = _groupAdapter;
 
 			SetListShown(true);
 		}
