@@ -27,3 +27,6 @@ For example
 NOTE:
 	I've started a new job where I'm developing on android using mono for android.
 	So, as a way to improve my skills I'm porting yastroid over to m4a.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/decriptor/yastroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
