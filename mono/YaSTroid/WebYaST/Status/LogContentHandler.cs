@@ -1,93 +1,109 @@
+
+//import java.util.ArrayList;
+//import java.util.Collection;
+//
+//import org.xml.sax.Attributes;
+//import org.xml.sax.SAXException;
+//import org.xml.sax.helpers.DefaultHandler;
+using System;
+using Android.App;
+using Org.Xml.Sax.Helpers;
 using System.Collections.Generic;
+using Org.Xml.Sax;
 
-namespace WebYaST.Status
+namespace YaSTroid.WebYaST.Status
 {
-	public class LogContentHandler
+	public class LogContentHandler : DefaultHandler
 	{
-		List<Log> logs;
+		private List<Log> logs;
 
-		bool inLog;
-		bool inId;
-		bool inPath;
-		bool inDescription;
-		bool inContent;
-		bool inValue;
-		bool inPosition;
+		private bool inLog;
+		private bool inId;
+		private bool inPath;
+		private bool inDescription;
+		private bool inContent;
+		private bool inValue;
+		private bool inPosition;
 		
-		string id;
-		string path;
-		string description;
-		int contentPosition;
-		string contentValue;
+		private string id;
+		private string path;
+		private string description;
+		private int contentPosition;
+		private string contentValue;
 		
 		public List<Log> getLogs ()
 		{
 			return logs;
 		}
 
-//		public void startElement (string uri, string localName, string qName, Attributes atts)
-//		{
-//			base.startElement (uri, localName, qName, atts);
-//			
-//			if (localName.compareTo ("log") == 0)
-//				inLog = true;
-//				if (logs == null)
-//					logs = new ArrayList<Log> ();
-//			else if (localName.compareTo ("id") == 0 && inLog)
-//				inId = true;
-//			else if (localName.compareTo ("path") == 0 && inLog)
-//				inPath = true;
-//			else if (localName.compareTo ("description") == 0 && inLog)
-//				inDescription = true;
-//			else if (localName.compareTo ("content") == 0 && inLog)
-//				inContent = true;
-//			else if (localName.compareTo ("value") == 0 && inContent)
-//				inValue = true;
-//			else if (localName.compareTo ("position") == 0 && inContent)
-//				inPosition = true;
-//		}
-
-		public void endElement (string uri, string localName, string qName)
+		public void startElement (string uri, string localName, string qName, IAttributes atts)// throws SAXException
 		{
-//			base.endElement (uri, localName, qName);
-//			
-//			if (localName.compareTo ("log") == 0) {
-//				inLog = false;
-//				logs.add (new Log (id, path, description, contentPosition, contentValue));
-//				id = path = description = contentValue = null;
-//				contentPosition = 0;
-//			} else if (localName.compareTo ("id") == 0 && inLog)
-//				inId = false;
-//			else if (localName.compareTo ("path") == 0 && inLog)
-//				inPath = false;
-//			else if (localName.compareTo ("description") == 0 && inLog)
-//				inDescription = false;
-//			else if (localName.compareTo ("content") == 0 && inLog)
-//				inContent = false;
-//			else if (localName.compareTo ("value") == 0 && inContent)
-//				inValue = false;
-//			else if (localName.compareTo ("position") == 0 && inContent)
-//				inPosition = false;
+			base.StartElement (uri, localName, qName, atts);
+			
+			if (localName.CompareTo ("log") == 0)
+				inLog = true;
+				if (logs == null)
+					logs = new List<Log> ();
+			else if (localName.CompareTo ("id") == 0 && inLog)
+				inId = true;
+			else if (localName.CompareTo ("path") == 0 && inLog)
+				inPath = true;
+			else if (localName.CompareTo ("description") == 0 && inLog)
+				inDescription = true;
+			else if (localName.CompareTo ("content") == 0 && inLog)
+				inContent = true;
+			else if (localName.CompareTo ("value") == 0 && inContent)
+				inValue = true;
+			else if (localName.CompareTo ("position") == 0 && inContent)
+				inPosition = true;
+		}
+
+		public void endElement (string uri, string localName, string qName)// throws SAXException
+		{
+			base.EndElement (uri, localName, qName);
+			
+			if (localName.CompareTo ("log") == 0) {
+				inLog = false;
+				logs.Add (new Log (id, path, description, contentPosition, contentValue));
+				id = path = description = contentValue = null;
+				contentPosition = 0;
+			} else if (localName.CompareTo ("id") == 0 && inLog)
+				inId = false;
+			else if (localName.CompareTo ("path") == 0 && inLog)
+				inPath = false;
+			else if (localName.CompareTo ("description") == 0 && inLog)
+				inDescription = false;
+			else if (localName.CompareTo ("content") == 0 && inLog)
+				inContent = false;
+			else if (localName.CompareTo ("value") == 0 && inContent)
+				inValue = false;
+			else if (localName.CompareTo ("position") == 0 && inContent)
+				inPosition = false;
 		}
 		
-		public void characters (char[] ch, int start, int length)
+		public void characters (char[] ch, int start, int length)// throws SAXException
 		{
-//			base.characters (ch, start, length);
-//			string text = new string (ch, start, length);
-//
-//			if (inLog) {
-//				if (inId)
-//					id = text;
-//				else if (inPath)
-//					path = text;
-//				else if (inDescription)
-//					description = text;
-//				else if (inContent) {
-//					if (inValue)
-//						contentValue = text;
-//					else if (inPosition)
-//						contentPosition = Integer.parseInt (text);
-//				}
+			base.Characters (ch, start, length);
+			String text = new string (ch, start, length);
+
+			if (inLog) {
+				if (inId)
+					id = text;
+				else if (inPath)
+					path = text;
+				else if (inDescription)
+					description = text;
+				else if (inContent) {
+					if (inValue)
+						contentValue = text;
+					else if (inPosition) {
+						int result;
+						Int32.TryParse (text, out result);
+						contentPosition = result;
+					}
+				}
+			}
+
 		}
 	}
 }

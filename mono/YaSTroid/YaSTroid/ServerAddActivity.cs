@@ -1,45 +1,48 @@
-using Android.App;
-using Android.OS;
-using Android.Database.Sqlite;
-using Android.Widget;
-using Android.Content;
-using Android.Util;
 using System;
+using Android.App;
+using Android.Content;
+using Android.Database.Sqlite;
+using Android.OS;
+using Android.Util;
+using Android.Widget;
+using Java.Net;
 
 namespace YaSTroid
 {
-	[Activity (Label = "ServerAddActivity")]
+	[Activity (Label = "ServerActivity")]
 	public class ServerAddActivity : Activity
 	{
-		SQLiteDatabase database;
-		Button addButton;
-		int groupId;
+		private SQLiteDatabase database;
+		private Button addButton;
+		private int groupId;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.serveradd);
 
-			YastroidDatabase helper = new YastroidDatabase(this);
+			YastroidOpenHelper helper = new YastroidOpenHelper(this);
 			database = helper.WritableDatabase;
 
 			Intent groupIntent = Intent;
 			Bundle b = groupIntent.Extras;
 			groupId = b.GetInt("GROUP_ID");
 
-			addButton = FindViewById<Button>(Resource.Id.button_add_server);
-			addButton.Click += (sender, e) => {
-				if(addServer())
-					Finish();
-			};
+			this.addButton = FindViewById<Button>(Resource.Id.button_add_server);
+			this.addButton.Click += (sender, e) => {
+				if (addServer ()) {
+					Finish ();
+				}
+			};				
 		}
+		
 
 		private bool addServer()
 		{
 			bool result = false;
-			try {
-				
-				Uri uri = new Uri(FindViewById<EditText>(Resource.Id.edit_server_host).Text);
+			try
+			{	
+				URI uri = new URI(FindViewById<EditText>(Resource.Id.edit_server_host).Text);
 				string name = FindViewById<EditText>(Resource.Id.edit_server_name).Text;
 				string scheme = null;
 				string host = uri.Host;
@@ -49,7 +52,7 @@ namespace YaSTroid
 				
 				if (uri.Scheme == null) {
 					scheme = "http";
-					host = uri.Port.ToString();
+					host = uri.SchemeSpecificPart;
 				} else {
 					scheme = uri.Scheme;
 				}
@@ -60,15 +63,15 @@ namespace YaSTroid
 				}
 
 				ContentValues values = new ContentValues();
-				values.Put(YastroidDatabase.SERVERS_NAME, name);
-				values.Put(YastroidDatabase.SERVERS_SCHEME, scheme);
-				values.Put(YastroidDatabase.SERVERS_HOST, host);
-				values.Put(YastroidDatabase.SERVERS_PORT, port);
-				values.Put(YastroidDatabase.SERVERS_USER, user);
-				values.Put(YastroidDatabase.SERVERS_PASS, pass);
-				values.Put(YastroidDatabase.SERVERS_GROUP, groupId);
+				values.Put(YastroidOpenHelper.SERVERS_NAME, name);
+				values.Put(YastroidOpenHelper.SERVERS_SCHEME, scheme);
+				values.Put(YastroidOpenHelper.SERVERS_HOST, host);
+				values.Put(YastroidOpenHelper.SERVERS_PORT, port);
+				values.Put(YastroidOpenHelper.SERVERS_USER, user);
+				values.Put(YastroidOpenHelper.SERVERS_PASS, pass);
+				values.Put(YastroidOpenHelper.SERVERS_GROUP, groupId);
 				
-				database.Insert(YastroidDatabase.SERVERS_TABLE_NAME, "null", values);
+				database.Insert(YastroidOpenHelper.SERVERS_TABLE_NAME, "null", values);
 				database.Close();
 				Log.Info("ARRAY", "WebYaST server " + name + " has been added.");
 				result = true;

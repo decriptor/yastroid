@@ -1,73 +1,62 @@
+using System;
+using System.Collections.Generic;
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
-using System;
-using WebYaST.Status;
-using Android.Content;
 using Android.Widget;
-using System.Collections.Generic;
+using YaSTroid.WebYaST.Status;
+using System.Threading.Tasks;
 
 namespace YaSTroid
 {
 	[Activity (Label = "ServerActivity")]
 	public class ServerActivity : ListActivity
 	{
-		ProgressDialog moduleListProgress;
-		Server yastServer;
-		List<Module> moduleList = null;
-		ModuleAdapter moduleAdapter;
-		//Runnable moduleView;
+		private ProgressDialog moduleListProgress;
+		private Server yastServer;
+		private List<Module> moduleList = null;
+		private ModuleAdapter moduleAdapter;
+		private Task moduleView;
 
 		/*
 		 * (non-Javadoc)
 		 * 
 		 * @see android.app.Activity#onCreate(android.os.Bundle)
 		 */
-		protected override void OnCreate(Bundle savedInstanceState)
-		{
+		protected override void OnCreate(Bundle savedInstanceState) {
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.server);
-			yastServer = new Server(Intent.Extras);
+			yastServer = new Server (Intent.Extras);
 			
 			moduleList = new List<Module>();
 			this.moduleAdapter = new ModuleAdapter(this, Resource.Layout.module_list_row, moduleList);
 			
 			// Set the Header on this Activity
 			View header = LayoutInflater.Inflate(Resource.Layout.server_header, null);
-			TextView serverName = (TextView)header.FindViewById(Resource.Id.server_name);
-			TextView serverHost = (TextView)header.FindViewById(Resource.Id.server_address);
+			TextView serverName = header.FindViewById<TextView>(Resource.Id.server_name);
+			TextView serverHost = header.FindViewById<TextView>(Resource.Id.server_address);
 			//TextView serverUptime = (TextView)header.FindViewById(Resource.Id.server_uptime); // Not available yet
 			serverName.Text = yastServer.getName();
-			serverHost.Text = yastServer.Hostname;
+			serverHost.Text = yastServer.getHostname();
 			//serverUptime.setText("Uptime: " + "8 days, 8 Hours"); //Not available yet
 			
-			ListView lv = ListView;
-			lv.AddHeaderView(header);
-			ListAdapter = moduleAdapter;
-
-			
-//			moduleView = new Runnable() {
-//				@Override
-//				public void run() {
-//					getModules();
-//				}
-//			};
-			
-//			Thread thread = new Thread(null, moduleView, "ModuleListBackground");
-//			thread.start();
+			ListView.AddHeaderView(header);
+			ListAdapter = this.moduleAdapter;
+						
+			moduleView = new Task (getModules);
+			moduleView.Start ();
 			moduleListProgress = ProgressDialog.Show(this, "Please wait...", "Building Module list...", true);
-			getModules();
 		}
-
-		protected override void OnResume ()
+		
+		protected override void OnResume()
 		{
-			base.OnResume ();
+			base.OnResume();
 			//getModules();
 		}
-
-		protected override void OnListItemClick (ListView l, View v, int position, long id)
-		{
-			base.OnListItemClick (l, v, position, id);
+		
+		protected override void OnListItemClick(ListView l, View v, int position, long id) {
+			base.OnListItemClick(l, v, position, id);
 			Intent intent = null;
 			// Ignore first item showing the server name and IP
 			if (position != 0) {
@@ -86,10 +75,10 @@ namespace YaSTroid
 			}
 		}
 		
-		void getModules()
+		private void getModules()
 		{
 			moduleList = new List<Module>();
-			String moduleName = "SETME";
+			string moduleName = "SETME";
 			// Get Updates
 			Module update = null;
 			moduleName = "UPDATE";
@@ -100,11 +89,11 @@ namespace YaSTroid
 			// otherwise)
 			
 			try {
-				availableUpdates = yastServer.GetUpdateModule().getNumberOfAvailableUpdates();
+				availableUpdates = yastServer.getUpdateModule().getNumberOfAvailableUpdates();
 				update = new Module(moduleName, availableUpdates + " updates available", Resource.Drawable.yast_system);
 			}
 			catch (Exception e) {
-				Console.WriteLine(e.Message);
+				Android.Util.Log.Error("ServerActivity", e.Message);
 			}
 			if(update != null)
 				moduleList.Add(update);
@@ -119,8 +108,7 @@ namespace YaSTroid
 
 			try {
 				// TODO: Clicking this message should show you full details of the status
-				switch(yastServer.GetStatusModule().getHealthSummary())
-				{
+				switch(yastServer.getStatusModule().getHealthSummary()) {
 					case Health.ERROR:
 					systemHealth = new Module(moduleName, "Cannot read system status", Resource.Drawable.status_red);
 						break;
@@ -133,12 +121,13 @@ namespace YaSTroid
 				}
 			} 
 			catch (Exception e) {
-				Console.WriteLine(e.Message);
+				Android.Util.Log.Error("ServerActivity", e.Message);
 			}
 			if (systemHealth != null)
 				moduleList.Add(systemHealth);
-			
-			RunOnUiThread(() => {
+
+
+			Task returnRes = new Task (() => {
 				moduleAdapter.Clear();
 				if (moduleList != null && moduleList.Count > 0) {
 					moduleAdapter.NotifyDataSetChanged();
@@ -148,7 +137,9 @@ namespace YaSTroid
 				}
 				moduleListProgress.Dismiss();
 				moduleAdapter.NotifyDataSetChanged();
+
 			});
-		}
+			RunOnUiThread(returnRes.Start);
+		}		
 	}
 }

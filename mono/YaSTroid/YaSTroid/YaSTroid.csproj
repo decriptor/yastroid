@@ -3,44 +3,44 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AE7626DB-5114-4B89-B502-32DA747C75CD}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{F167675B-0836-4709-A910-BCC2A8576B5D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>YaSTroid</RootNamespace>
-    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <AndroidResgenClass>Resource</AndroidResgenClass>
-    <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>YaSTroid</AssemblyName>
-    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>False</ConsolePause>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>True</Optimize>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>False</ConsolePause>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
@@ -48,7 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomGraphView.cs" />
     <Compile Include="DisplayResourceActivity.cs" />
+    <Compile Include="Group.cs" />
     <Compile Include="GroupAddActivity.cs" />
+    <Compile Include="GroupListActivity.cs" />
+    <Compile Include="GroupListAdapter.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="ModuleAdapter.cs" />
     <Compile Include="Preferences.cs" />
@@ -57,6 +60,8 @@
     <Compile Include="ServerAddActivity.cs" />
     <Compile Include="ServerEditActivity.cs" />
     <Compile Include="ServerHelper.cs" />
+    <Compile Include="ServerListActivity.cs" />
+    <Compile Include="ServerListAdapter.cs" />
     <Compile Include="StatusListAdapter.cs" />
     <Compile Include="SystemMessage.cs" />
     <Compile Include="SystemMessagesActivity.cs" />
@@ -64,15 +69,7 @@
     <Compile Include="SystemStatus.cs" />
     <Compile Include="SystemStatusActivity.cs" />
     <Compile Include="Yastroid.cs" />
-    <Compile Include="GraphView\GraphView.cs" />
-    <Compile Include="YastroidDatabase.cs" />
-    <Compile Include="Groups\ServerGroupItem.cs" />
-    <Compile Include="Groups\ServerGroupListFragment.cs" />
-    <Compile Include="Servers\ServerListAdapter.cs" />
-    <Compile Include="Servers\ServerListFragment.cs" />
-    <Compile Include="Groups\ServerGroupAdapter.cs">
-      <DependentUpon>ServerGroupCursorAdapter.cs</DependentUpon>
-    </Compile>
+    <Compile Include="YastroidOpenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -86,41 +83,41 @@
     <AndroidResource Include="Resources\drawable\yast_system.png" />
     <AndroidResource Include="Resources\drawable\yastroid_icon.png" />
     <AndroidResource Include="Resources\drawable\icon.png" />
-    <AndroidResource Include="Resources\values\strings.xml" />
-    <AndroidResource Include="Resources\values\styles.xml" />
-    <AndroidResource Include="Resources\values\themes.xml" />
-    <AndroidResource Include="Resources\menu\menu.xml" />
-    <AndroidResource Include="Resources\xml\preferences.xml" />
     <AndroidResource Include="Resources\layout\display_resource.axml" />
     <AndroidResource Include="Resources\layout\groupadd.axml" />
+    <AndroidResource Include="Resources\layout\grouplist.axml" />
+    <AndroidResource Include="Resources\layout\grouplistrow.axml" />
     <AndroidResource Include="Resources\layout\main.axml" />
     <AndroidResource Include="Resources\layout\module_list_row.axml" />
     <AndroidResource Include="Resources\layout\server.axml" />
-    <AndroidResource Include="Resources\layout\server_header.axml" />
     <AndroidResource Include="Resources\layout\serveradd.axml" />
+    <AndroidResource Include="Resources\layout\server_header.axml" />
     <AndroidResource Include="Resources\layout\serveredit.axml" />
     <AndroidResource Include="Resources\layout\serverlist.axml" />
     <AndroidResource Include="Resources\layout\serverlistrow.axml" />
     <AndroidResource Include="Resources\layout\system_messages.axml" />
-    <AndroidResource Include="Resources\layout\system_messages_row.axml" />
     <AndroidResource Include="Resources\layout\system_status.axml" />
+    <AndroidResource Include="Resources\layout\system_messages_row.axml" />
     <AndroidResource Include="Resources\layout\system_status_list_item.axml" />
-    <AndroidResource Include="Resources\layout\server_group_item.axml" />
-    <AndroidResource Include="Resources\layout\server_group_list.axml" />
+    <AndroidResource Include="Resources\menu\grouplistmenu.xml" />
+    <AndroidResource Include="Resources\menu\menu.xml" />
+    <AndroidResource Include="Resources\menu\serverlistmenu.xml" />
+    <AndroidResource Include="Resources\values\strings.xml" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\values\themes.xml" />
+    <AndroidResource Include="Resources\xml\preferences.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\WebYaST\WebYaST.csproj">
-      <Project>{4413959A-ADCB-434A-9139-F62848FE0EAD}</Project>
-      <Name>WebYaST</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GraphView\" />
+    <Folder Include="Resources\layout\" />
+    <Folder Include="Resources\menu\" />
     <Folder Include="Resources\values\" />
     <Folder Include="Resources\xml\" />
-    <Folder Include="Resources\menu\" />
-    <Folder Include="Groups\" />
-    <Folder Include="Servers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebYaST\WebYaST.csproj">
+      <Project>{EF7D3659-C8E0-494A-9532-B2BCFC0D1CF3}</Project>
+      <Name>WebYaST</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

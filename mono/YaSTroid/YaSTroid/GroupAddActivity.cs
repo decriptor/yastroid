@@ -1,36 +1,40 @@
+using System;
 using Android.App;
-using Android.OS;
-using Android.Widget;
 using Android.Content;
 using Android.Database.Sqlite;
+using Android.OS;
 using Android.Util;
-using System;
+using Android.Widget;
+
 
 namespace YaSTroid
 {
-	// FIXME Turn this into a dialog or something?
 	[Activity (Label = "GroupAddActivity")]
 	public class GroupAddActivity : Activity
 	{
-		SQLiteDatabase database;
-		Button addButton;
+		private SQLiteDatabase database;
+		private Button addButton;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.groupadd);
 
-			YastroidDatabase helper = new YastroidDatabase(this);
+			YastroidOpenHelper helper = new YastroidOpenHelper(this);
 			database = helper.WritableDatabase;
 			
 			addButton = FindViewById<Button>(Resource.Id.button_add_group);
-			addButton.Click += (sender, e) => {
-				if(addGroup())
-					Finish();
-			};
+
+			addButton.Click += OnClickedHandler;
 		}
 
-		bool addGroup()
+		void OnClickedHandler (object sender, EventArgs e)
+		{
+			addGroup ();
+			Finish ();
+		}
+
+		private bool addGroup()
 		{
 			bool result = false;
 			try {
@@ -47,11 +51,11 @@ namespace YaSTroid
 				}
 
 				ContentValues values = new ContentValues();
-				values.Put(YastroidDatabase.GROUP_NAME, name);
-				values.Put(YastroidDatabase.GROUP_DESCRIPTION, description);
-				values.Put(YastroidDatabase.GROUP_ICON, icon);
+				values.Put(YastroidOpenHelper.GROUP_NAME, name);
+				values.Put(YastroidOpenHelper.GROUP_DESCRIPTION, description);
+				values.Put(YastroidOpenHelper.GROUP_ICON, icon);
 				
-				database.Insert(YastroidDatabase.GROUP_TABLE_NAME, "null", values);
+				database.Insert(YastroidOpenHelper.GROUP_TABLE_NAME, "null", values);
 				database.Close();
 				Log.Info("addGroup", name + " group has been added.");
 				result = true;

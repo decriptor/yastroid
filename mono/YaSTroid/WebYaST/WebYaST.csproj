@@ -3,64 +3,71 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4413959A-ADCB-434A-9139-F62848FE0EAD}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{EF7D3659-C8E0-494A-9532-B2BCFC0D1CF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>WebYaST</RootNamespace>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>WebYaST</AssemblyName>
     <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>False</ConsolePause>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>True</Optimize>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>False</ConsolePause>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Json" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="RestClient.cs" />
+    <Compile Include="Update\UpdateModule.cs" />
+    <Compile Include="Status\Value.cs" />
+    <Compile Include="Status\StatusModule.cs" />
+    <Compile Include="Status\SingleGraph.cs" />
+    <Compile Include="Status\MetricContentHandler.cs" />
+    <Compile Include="Status\Metric.cs" />
+    <Compile Include="Status\LogContentHandler.cs" />
+    <Compile Include="Status\Log.cs" />
+    <Compile Include="Status\Line.cs" />
+    <Compile Include="Status\Limit.cs" />
+    <Compile Include="Status\Health.cs" />
+    <Compile Include="Status\GraphContentHandler.cs" />
+    <Compile Include="Status\Graph.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Status\" />
     <Folder Include="Update\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="RestClient.cs" />
-    <Compile Include="Server.cs" />
-    <Compile Include="Update\UpdateModule.cs" />
-    <Compile Include="Status\StatusModule.cs" />
-    <Compile Include="Status\Graph.cs" />
-    <Compile Include="Status\GraphContentHandler.cs" />
-    <Compile Include="Status\Health.cs" />
-    <Compile Include="Status\Limit.cs" />
-    <Compile Include="Status\Line.cs" />
-    <Compile Include="Status\Log.cs" />
-    <Compile Include="Status\LogContentHandler.cs" />
-    <Compile Include="Status\Metric.cs" />
-    <Compile Include="Status\MetricContentHandler.cs" />
-    <Compile Include="Status\SingleGraph.cs" />
-    <Compile Include="Status\Value.cs" />
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
 </Project>

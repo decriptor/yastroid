@@ -1,10 +1,11 @@
+
 namespace YaSTroid
 {
 	public class SystemMessage
-	{
-		string message;
-		string module;
-		string date;
+	{	
+		private string message;
+		private string module;
+		private string date;
 
 		public SystemMessage( string message, string module, string date)
 		{
@@ -13,15 +14,18 @@ namespace YaSTroid
 			this.date = date;
 		}
 		
-		public string getMessage() {
+		public string getMessage()
+		{
 			return message;
 		}
 
-		public string getModule() {
+		public string getModule()
+		{
 			return module;
 		}
 
-		public string getDate() {
+		public string getDate()
+		{
 			return date;
 		}
 	}

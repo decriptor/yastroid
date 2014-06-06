@@ -1,11 +1,33 @@
+//
+//import java.util.ArrayList;
+//import java.util.Collection;
+//
+//import org.xml.sax.SAXException;
+//
+//import com.novell.webyast.RestClient;
+//import com.novell.webyast.Server;
 using System;
 using System.Collections.Generic;
 
-namespace WebYaST.Status
+
+namespace YaSTroid.WebYaST.Status
 {
+	//FIXME: JUnit this
+
+	/***
+	 * 
+	 * Gets status information.
+	 * 
+	 * - Graphs: health status
+	 * - Logs: retrieving logs - in progress
+	 * - Metrics: data to generate graphs - missing
+	 * 
+	 * @author Mario Carrion
+	 *
+	 */
 	public class StatusModule
-	{
-		Server server;
+	{	
+		private Server server;
 
 		public StatusModule (Server server)
 		{
@@ -19,12 +41,12 @@ namespace WebYaST.Status
 		 * @return
 		 * @throws SAXException
 		 */
-		public List<Metric> getMetrics ()
+		public List<Metric> getMetrics ()// throws SAXException
 		{
-			string xmlData = null;
-			
+			String xmlData = null;
+
 			try {
-				xmlData = new RestClient ().GetMethod (server, "/metrics");
+				xmlData = new RestClient ().getMethod (server, "/metrics");
 			} catch (Exception e) {
 				return null;
 			}
@@ -34,7 +56,7 @@ namespace WebYaST.Status
 			
 			return Metric.FromXmlData (xmlData);
 		}
-		
+
 		/*** 
 		 * Gets the metric specific metrics associated to the type
 		 * 
@@ -44,14 +66,14 @@ namespace WebYaST.Status
 		public List<Metric> getMetric (int metricType)
 		{
 			List<Metric> metrics = null;
-			
+
 			try {
 				metrics = getMetrics ();
 			} catch (Exception e) {
 				return null;
 			}
 			
-			string plugin = null;
+			String plugin = null;
 			switch (metricType) {
 			case Metric.CPU:
 				plugin = Metric.CPU_PLUGIN;
@@ -71,25 +93,25 @@ namespace WebYaST.Status
 			
 			List<Metric> collection = new List<Metric> ();
 			foreach (Metric m in metrics) {
-				if (m.getPlugin () == plugin)
+				if (m.getPlugin ().CompareTo (plugin) == 0)
 					collection.Add (m);
 			}
 			
 			return collection;
 		}
-		
-		public Metric getMetricData (string id, int start, int stop)
+
+		public Metric getMetricData (string id, int start, int stop)// throws SAXException
 		{
-			string xmlData = null;
-			
+			String xmlData = null;
+
 			try {
-				string startStop = "";
+				String startStop = "";
 				if (start > 0)
 					startStop = "?start=" + start;
 				if (stop > 0)
-					startStop += (startStop == "" ? "?" : "&") + "stop=" + stop;
+					startStop += (startStop.CompareTo("") == 0 ? "?" : "&") + "stop=" + stop;
 				
-				xmlData = new RestClient ().GetMethod (server, "/metrics/" + id + startStop);
+				xmlData = new RestClient ().getMethod (server, "/metrics/" + id + startStop);
 			} catch (Exception e) {
 				return null;
 			}
@@ -110,12 +132,12 @@ namespace WebYaST.Status
 		 * @return Collection of Graph objects
 		 * @throws SAXException
 		 */
-		public List<Graph> getGraphs ()
+		public List<Graph> getGraphs ()// throws SAXException
 		{
-			string xmlData = null;
-			
+			String xmlData = null;
+
 			try {
-				xmlData = new RestClient ().GetMethod (server, "/graphs?checklimits=true");
+				xmlData = new RestClient ().getMethod (server, "/graphs?checklimits=true");
 			} catch (Exception e) {
 				return null;
 			}
@@ -131,7 +153,7 @@ namespace WebYaST.Status
 			if (graphs == null)
 				return false;
 			
-			string id = null;
+			String id = null;
 			switch (element) {
 			case Metric.CPU:
 				id = Health.CPU_ID;
@@ -150,7 +172,7 @@ namespace WebYaST.Status
 			}
 			
 			foreach (Graph g in graphs) {
-				if (g.getId () == id) {
+				if (g.getId ().CompareTo (id) == 0) {
 					foreach (SingleGraph sg in g.getSingleGraphs()) {
 						foreach (Line l in sg.getLines())
 							if (l.isReached())
@@ -173,11 +195,12 @@ namespace WebYaST.Status
 			List<Health> fullHealth = getFullHealth ();
 			if (fullHealth == null)
 				return Health.ERROR;
-			if (fullHealth.Count == 0)
+			else if (fullHealth.Count == 0)
 				return Health.HEALTHY;
-			return Health.UNHEALTHY;
+			else 
+				return Health.UNHEALTHY;
 		}
-		
+
 		/***
 		 * Gets a collection of Health objects. The server is not healthy
 		 * when the collection is null or not empty.
@@ -199,15 +222,15 @@ namespace WebYaST.Status
 			}
 			if (graphs == null)
 				return null;
-			
+
 			foreach (Graph g in graphs) {
 				foreach (SingleGraph sg in g.getSingleGraphs()) {
 					foreach (Line l in sg.getLines()) {
 						if (l.isReached()) {
 							collection.Add (new Health (l.getMaxLimit(),
-							                            l.getMinLimit(),
-							                            sg.getHeadline(),
-							                            l.getLabel()));
+									                    l.getMinLimit(),
+									                    sg.getHeadline(),
+									                    l.getLabel()));
 						}
 					}
 				}
@@ -217,20 +240,20 @@ namespace WebYaST.Status
 		}
 		
 		/***
-	 * Gets all available logs. 
-	 * 
-	 * This doesn't return the content of the logs, it only
-	 * lists the available logs. To get the content use getLog()
-	 * 
-	 * @return collection of logs
-	 * @throws SAXException 
-	 */
-		public List<Log> getLogs ()
+		 * Gets all available logs. 
+		 * 
+		 * This doesn't return the content of the logs, it only
+		 * lists the available logs. To get the content use getLog()
+		 * 
+		 * @return collection of logs
+		 * @throws SAXException 
+		 */
+		public List<Log> getLogs ()// throws SAXException
 		{
-			string xmlData = null;
-			
+			String xmlData = null;
+
 			try {
-				xmlData = new RestClient ().GetMethod (server, "/logs");
+				xmlData = new RestClient ().getMethod (server, "/logs");
 			} catch (Exception e) {
 				return null;
 			}
@@ -255,9 +278,8 @@ namespace WebYaST.Status
 			
 			// FIXME: Returning canned response
 			return new Log ("system", "/var/log/messages", 
-			                "System messages", 2, "this is the content of the log");
+					"System messages", 2, "this is the content of the log");
 		}
 		
 	}
 }
-

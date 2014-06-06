@@ -1,11 +1,11 @@
 
-namespace WebYaST.Status
+namespace YaSTroid.WebYaST.Status
 {
 	public class Limit
 	{
-		string metricColumn;
-		int max;
-		int min;
+		private string metricColumn;
+		private int max;
+		private int min;
 		
 		public Limit (string metricColumn, int max, int min)
 		{

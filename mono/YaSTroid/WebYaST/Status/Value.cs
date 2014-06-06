@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 
-namespace WebYaST.Status
+namespace YaSTroid.WebYaST.Status
 {
 	public class Value
-	{
-		int interval;
-		string column;
-		int start;
-		List<float> values;
+		{
+		private int interval;
+		private string column;
+		private int start;
+		private List<float> values;
 		
 		public Value (int interval, string column, int start, List<float> values)
 		{
@@ -17,7 +17,7 @@ namespace WebYaST.Status
 			this.values = values;
 		}
 
-		public int GetInterval() {
+		public int getInterval() {
 			return interval;
 		}
 

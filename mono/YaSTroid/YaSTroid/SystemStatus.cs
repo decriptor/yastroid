@@ -12,11 +12,11 @@ namespace YaSTroid
 		public const int CPU_STATUS = 4;
 		public const int STATUS_GREEN = 100;
 		public const int STATUS_RED = 101;
-		Application app;
-		int systemType;
-		int status;
-		Drawable icon;
-		string name;
+		private Application app;
+		private int systemType;
+		private int status;
+		private Drawable icon;
+		private string name;
 		
 		public SystemStatus(Application app, int systemType, int status)
 		{
@@ -25,9 +25,8 @@ namespace YaSTroid
 			setStatus(status);
 		}
 		
-		public SystemStatus(Application app, int systemType) : this(app, systemType, 0)
+		public SystemStatus(Application app, int systemType) : this (app, systemType, 0)
 		{
-
 		}
 		
 		public SystemStatus(Application app, string name)
@@ -36,11 +35,12 @@ namespace YaSTroid
 			this.name = name;
 		}
 		
-		public void setSystemType(int type) {
+		public void setSystemType(int type)
+		{
 			this.systemType = type;
 			switch (type) {
 			case NETWORK_STATUS:
-				name = app.Resources.GetString(Resource.String.network_status_text);
+				name = app.Resources.GetString (Resource.String.network_status_text);
 				break;
 			case MEMORY_STATUS:
 				name = app.Resources.GetString(Resource.String.memory_status_text);

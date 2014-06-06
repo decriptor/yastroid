@@ -1,10 +1,11 @@
+
 namespace YaSTroid
 {
 	public class Module
 	{
-		string name;
-		string display;
-		int icon;
+		private string name;
+		private string display;
+		private int icon;
 
 		public Module( string name, string display, int icon )
 		{
@@ -13,17 +14,19 @@ namespace YaSTroid
 			this.icon = icon;
 		}
 		
-		public string getName() {
+		public string getName()
+		{
 			return name;
 		}
 		
-		public string getDisplay() {
+		public string getDisplay()
+		{
 			return display;
 		}
 
-		public int getIcon() {
+		public int getIcon()
+		{
 			return icon;
 		}
-
 	}
 }

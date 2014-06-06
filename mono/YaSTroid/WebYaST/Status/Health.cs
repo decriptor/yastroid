@@ -1,6 +1,10 @@
+using System;
 
-namespace WebYaST.Status
+
+namespace YaSTroid.WebYaST.Status
 {
+	// FIXME: JUnit this
+
 	/***
 	 * Represents the health of a particular element in the server.
 	 * Known elements are: Network, Memory, CPU and Disk. 
@@ -8,8 +12,8 @@ namespace WebYaST.Status
 	 * @author Mario Carrion
 	 *
 	 */
-	public class Health
-	{	
+	public class Health : IComparable
+	{
 		public const int ERROR = 0;
 		public const int HEALTHY = 1;
 		public const int UNHEALTHY = 2;
@@ -20,10 +24,10 @@ namespace WebYaST.Status
 		public const string DISK_ID = "Disk";
 		public const string MEMORY_ID = "Memory";
 		
-		int maxLimit;
-		int minLimit;
-		string headline;
-		string label;
+		private int maxLimit;
+		private int minLimit;
+		private string headline;
+		private string label;
 		
 		public Health (int maxLimit, int minLimit, string headline, string label)
 		{
@@ -87,24 +91,17 @@ namespace WebYaST.Status
 			return minLimit;
 		}
 		
-		/* (non-Javadoc)
-		 * 
-		 * 
-		 * 
-		 * @see java.lang.Object#equals(java.lang.Object)
-		 */
-		public override bool Equals(object o)
+		public int CompareTo (object obj)
 		{
-			bool retVal = false;
-			string compstring;
+			int retVal = -1;
+			string compString;
 			Health compHealth;
-			
-			if(o != null && o is Health)
-			{
-				compHealth = (Health)o;
+
+			if(obj != null && obj is Health) {
+				compHealth = (Health)obj;
 				if(compHealth != null) {
-					compstring = compHealth.getHeadline();
-					retVal = compstring.ToLower() == getHeadline().ToLower();
+					compString = compHealth.getHeadline();
+					retVal = compString.ToLower ().CompareTo (this.getHeadline().ToLower ());
 				}
 			}
 			return retVal;

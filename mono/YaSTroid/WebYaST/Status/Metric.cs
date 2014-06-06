@@ -1,9 +1,16 @@
-using System.Collections.Generic;
 
-namespace WebYaST.Status
+//import java.util.Collection;
+//
+//import org.xml.sax.SAXException;
+//
+//import android.util.Xml;
+using System.Collections.Generic;
+using Android.Util;
+
+namespace YaSTroid.WebYaST.Status
 {
 	public class Metric
-	{
+	{	
 		public const int NETWORK = 0;
 		public const int CPU = 1;
 		public const int DISK = 2;
@@ -14,21 +21,21 @@ namespace WebYaST.Status
 		public const string DISK_PLUGIN = "df";
 		public const string MEMORY_PLUGIN = "memory";
 		
-		string id;
-		string identifier;
-		string host;
-		string plugin;
-		string pluginInstance;
-		string type;
-		string typeInstance;
-		List<Limit> limits;
+		private string id;
+		private string identifier;
+		private string host;
+		private string plugin;
+		private string pluginInstance;
+		private string type;
+		private string typeInstance;
+		private List<Limit> limits;
 		
-		List<Value> values;
+		private List<Value> values;
 		
 		public Metric (string id, string identifier, string host, 
-		               string plugin, string pluginInstance, string type, 
-		               string typeInstance, List<Limit> limits,
-		               List<Value> values)
+				string plugin, string pluginInstance, string type, 
+			string typeInstance, List<Limit> limits,
+			List<Value> values)
 		{
 			this.id = id;
 			this.identifier = identifier;
@@ -40,31 +47,31 @@ namespace WebYaST.Status
 			this.limits = limits;
 			this.values = values;
 		}
-		
+
 		public string getIdentifier() {
 			return identifier;
 		}
-		
+
 		public string getHost() {
 			return host;
 		}
-		
+
 		public string getId() {
 			return id;
 		}
-		
+
 		public string getPlugin() {
 			return plugin;
 		}
-		
+
 		public List<Limit> getLimits() {
 			return limits;
 		}
-		
+
 		public string getTypeInstance() {
 			return typeInstance;
 		}
-		
+
 		public string getPluginInstance() {
 			return pluginInstance;
 		}
@@ -77,13 +84,11 @@ namespace WebYaST.Status
 			return values;
 		}
 		
-		public static List<Metric> FromXmlData (string xmlData)
+		public static List<Metric> FromXmlData (string xmlData)// throws SAXException
 		{
 			MetricContentHandler contentHandler = new MetricContentHandler ();
-			//Xml.parse (xmlData, contentHandler);
+			Xml.Parse (xmlData, contentHandler);
 			return contentHandler.getMetrics ();
 		}
-
 	}
-
 }

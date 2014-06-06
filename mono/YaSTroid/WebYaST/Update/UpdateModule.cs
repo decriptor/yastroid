@@ -1,24 +1,24 @@
-using System;
+//import com.novell.webyast.*;
+//import org.json.*;
+using Org.Json;
 
-namespace WebYaST.Update
+namespace YaSTroid.WebYaST.Update
 {
 	public class UpdateModule
 	{
-		Server server;
-		
+		private Server server;
+
 		public UpdateModule(Server server)
 		{
 			this.server = server;
 		}
-		
-		public int getNumberOfAvailableUpdates()
+
+		public int getNumberOfAvailableUpdates()// throws Exception
 		{
-			string jsonStr = new RestClient().GetMethod(server, "/patches.json");
-//			JSONArray updates = new JSONArray(jsonStr);
-//			
-//			return updates.length();
-			return 0;
+			string jsonStr = new RestClient().getMethod(server, "/patches.json");
+			JSONArray updates = new JSONArray(jsonStr);
+
+			return updates.Length();
 		}
 	}
 }
-

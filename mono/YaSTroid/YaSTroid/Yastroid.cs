@@ -1,92 +1,62 @@
 using Android.App;
+using Android.Content;
+using Android.Database.Sqlite;
 using Android.OS;
 using Android.Views;
-using Android.Database.Sqlite;
-using Android.Content;
-
-using YaSTroid.Groups;
-using YaSTroid.Servers;
 using Android.Widget;
 
 namespace YaSTroid
 {
-	[Activity (Label = "YaSTroid", MainLauncher = true)]
+	[Activity (Label = "Yastroid", MainLauncher = true)]
 	public class Yastroid : Activity
-	{
-		ISharedPreferences _settings;
-		ServerGroupListFragment _serverGroupListFragment;
-		ServerListFragment _serverListFragment;
+	{	
+		private ISharedPreferences settings;
+		private SQLiteDatabase database;
+		private YastroidOpenHelper dbhelper;
+	    /** Called when the activity is first created. */
 
-		protected override void OnCreate (Bundle savedInstanceState)
+		protected override void OnCreate(Bundle savedInstanceState)
 		{
-			base.OnCreate (savedInstanceState);
+			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.main);
-
-			ActionBar.SetDisplayHomeAsUpEnabled(true);
 	        
 	        // Initialize preferences
-	        _settings = GetPreferences(FileCreationMode.Private);
-	        string user = _settings.GetString("username", null);
-	        string pass = _settings.GetString("password", null);
+			settings = GetPreferences (FileCreationMode.Private);
+			string user = settings.GetString("username", null);
+			string pass = settings.GetString("password", null);
 	        
 	        if (user == null || pass == null) {
-	        	//Toast.makeText(Yastroid.this, "Credentials are either not set or invalid", Toast.LENGTH_SHORT).show();
+				Toast.MakeText(this, "Credentials are either not set or invalid", ToastLength.Short).Show();
 	        }
 	        
 	        // Force database upgrade if needed
-	        InitializeDatabase ();
+	        dbhelper = new YastroidOpenHelper(this);
+	        database = dbhelper.WritableDatabase;
+			database.Close();
 	        
-			_serverGroupListFragment = new ServerGroupListFragment();
-			FragmentManager.BeginTransaction ().Add (Resource.Id.server_group_fragment, _serverGroupListFragment, "GROUP_FRAGMENT").Commit();
-
-			_serverListFragment = new ServerListFragment();
-			FragmentManager.BeginTransaction().Add(Resource.Id.main_server_fragment, _serverListFragment, "SERVER_FRAGMENT").Commit();
+	        // Preliminary Group work. The ability to add/delete groups needs
+	        // to be finish.  Adding servers to groups is still completely missing.
+			Intent intent = new Intent (this, typeof(GroupListActivity));
+	        //Intent intent = new Intent(Yastroid.this, ServerListActivity.class);
+			StartActivity(intent);
 	    }
-
-		void InitializeDatabase ()
-		{
-			var dbhelper = new YastroidDatabase (this);
-			var database = dbhelper.WritableDatabase;
-			database.Close ();
-		}
-
-		public override bool OnCreateOptionsMenu (IMenu menu)
-		{
-			MenuInflater.Inflate(Resource.Menu.menu, menu);
-			//SearchView searchView = (SearchView)menu.FindItem(Resource.Id.menu_search).ActionView;
-			// TODO Configure the search info and add any event listeners
-	    	return base.OnCreateOptionsMenu(menu);
+	        
+		public override bool OnCreateOptionsMenu(IMenu menu)
+	    {
+			MenuInflater inflater = MenuInflater;
+			inflater.Inflate(Resource.Menu.menu, menu);
+	    	return true;
 	    }
 	    
-	    public bool onOptionsItemSelected(IMenuItem item)
+		public bool onOptionsItemSelected(IMenuItem item)
 	    {
-	    	switch (item.ItemId)
+			switch (item.ItemId)
 			{
-		    	case Resource.Id.preferences:
-		    		return true;
-				case Resource.Id.menu_add_group:
-					AddGroup();
-					return true;
-				case Resource.Id.menu_add_server:
-					AddServer();
-					return true;
+			case Resource.Id.preferences:
+	    		return true;
 	    	}
-
 	    	return false;
 	    }
-
-		void AddGroup()
-		{
-			var intent = new Intent(this, typeof(GroupAddActivity));
-			StartActivity(intent);
-		}
-
-		void AddServer ()
-		{
-			Intent intent = new Intent(this, typeof(ServerAddActivity));
-			int thisShouldBeTheCurrentlySelectedGroup = 0;
-			intent.PutExtra("GROUP_ID", thisShouldBeTheCurrentlySelectedGroup);
-			StartActivity(intent);
-		}
+	    
 	}
 }

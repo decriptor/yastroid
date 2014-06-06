@@ -1,30 +1,28 @@
-using Android.Database.Sqlite;
-using Android.Content;
 using System;
-using Android.Util;
+using Android.Content;
 using Android.Database;
+using Android.Database.Sqlite;
+using Android.Util;
 
 namespace YaSTroid
 {
 	public class ServerHelper
 	{
-		SQLiteDatabase database;
-		YastroidDatabase dbhelper;
-		Context context;
+		private SQLiteDatabase database;
+		private YastroidOpenHelper dbhelper;
+		private Context context;
 
-		ServerHelper(Context context)
-		{
+		ServerHelper(Context context) {
 			this.context = context;
-			dbhelper = new YastroidDatabase(context);
+			dbhelper = new YastroidOpenHelper(context);
 
 		}
 
-		public Server getServer(int id)
-		{
+		public Server getServer(int id) {
 			database = dbhelper.ReadableDatabase;
 			Server s = null;
 			try {
-				ICursor sc = database.Query(YastroidDatabase.SERVERS_TABLE_NAME,
+				ICursor sc = database.Query(YastroidOpenHelper.SERVERS_TABLE_NAME,
 						new string[] { "_id", "name", "scheme", "hostname", "port",
 								"user", "pass", "grp" }, "_id="+id, null, null, null, null);
 
@@ -40,5 +38,6 @@ namespace YaSTroid
 			}
 			return s;
 		}
+
 	}
 }

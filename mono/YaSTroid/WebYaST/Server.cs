@@ -1,35 +1,60 @@
-using System;
+using YaSTroid.WebYaST.Status;
+using YaSTroid.WebYaST.Update;
 
-using WebYaST.Status;
-using WebYaST.Update;
-using System.Text;
-
-namespace WebYaST
+namespace YaSTroid.WebYaST
 {
 	public class Server
-	{
-		public Server(string scheme, string hostname, int port, string user, string pass) {
-			Hostname = hostname;
-			User = user;
-			Password = pass;
-			Port = port;
-			Scheme = scheme;
+	{	
+		private string hostname;
+		private string user;
+		private string pass;
+		private int port;
+		private string scheme;
+		
+		public Server(string scheme, string hostname, int port, string user, string pass)
+		{
+			this.hostname = hostname;
+			this.user = user;
+			this.pass = pass;
+			this.port = port;
+			this.scheme = scheme;
 		}
 		
-		public string Hostname { get; private set; }
-		public int Port { get; private set; }
-		public string User { get; private set; }
-		public string Password { get; private set; }
-		public string Scheme { get; private set; }
+		public string getHostname()
+		{
+			return hostname;
+		}
+		
+		public int getPort()
+		{
+			return port;
+		}
+		
+		public string getScheme()
+		{
+			return scheme;
+		}
+		
+		public string getUser()
+		{
+			return user;
+		}
+		
+		public string getPass()
+		{
+			return pass;
+		}
 
-		public UpdateModule GetUpdateModule() {
+		// FIXME: JUnit this
+		public UpdateModule getUpdateModule()
+		{
 			return new UpdateModule (this);
 		}
-		
-		public StatusModule GetStatusModule ()
+
+		// FIXME: JUnit this
+		public StatusModule getStatusModule ()
 		{
 			return new StatusModule (this);
 		}
 	}
 }
-

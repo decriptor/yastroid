@@ -1,14 +1,14 @@
+using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
 using Android.Widget;
-using System.Collections.Generic;
 
 namespace YaSTroid
 {
 	public class StatusListAdapter : ArrayAdapter<SystemStatus>
 	{
-		List<SystemStatus> statii;
-		Context context;
+		public List<SystemStatus> statii;
+		private Context context;
 		
 		public StatusListAdapter(Context context, int textViewResourceId, List<SystemStatus> statii) : base(context, textViewResourceId, statii)
 		{
@@ -30,8 +30,8 @@ namespace YaSTroid
 			
 			systemStatus = statii[position];
 			if (systemStatus != null) {
-				name = systemStatusView.FindViewById<TextView>(Resource.Id.system_status_text);
-				icon = systemStatusView.FindViewById<ImageView>(Resource.Id.system_status_icon);
+				name = (TextView) systemStatusView.FindViewById(Resource.Id.system_status_text);
+				icon = (ImageView) systemStatusView.FindViewById(Resource.Id.system_status_icon);
 				if (name != null) {
 					name.Text = systemStatus.getName();
 				}

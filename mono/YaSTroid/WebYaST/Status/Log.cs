@@ -1,14 +1,22 @@
-using System.Collections.Generic;
 
-namespace WebYaST.Status
+//import java.util.Collection;
+//
+//import org.xml.sax.SAXException;
+//
+//import android.util.Xml;
+using System.Collections.Generic;
+using Android.Util;
+
+namespace YaSTroid.WebYaST.Status
 {
+	// FIXME: JUnit this
 	public class Log
 	{
-		string id;
-		string path;
-		string description;
-		int contentPosition;
-		string contentValue;
+		private string id;
+		private string path;
+		private string description;
+		private int contentPosition;
+		private string contentValue;
 
 		public Log (string id, string path, string description, 
 				int contentPosition, string contentValue)
@@ -45,10 +53,10 @@ namespace WebYaST.Status
 			return contentValue;
 		}
 		
-		public static List<Log> FromXmlData (string xmlData)
+		public static List<Log> FromXmlData (string xmlData)// throws SAXException
 		{
 			LogContentHandler contentHandler = new LogContentHandler ();
-			//Xml.parse (xmlData, contentHandler);
+			Xml.Parse (xmlData, contentHandler);
 			return contentHandler.getLogs ();
 		}
 	}

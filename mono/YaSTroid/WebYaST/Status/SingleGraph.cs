@@ -1,14 +1,14 @@
-
 using System.Collections.Generic;
 
-namespace WebYaST.Status
+namespace YaSTroid.WebYaST.Status
 {
+	//FIXME: JUnit this
 	public class SingleGraph
-	{
-		bool cummulated;
-		bool linegraph;
-		string headline;
-		List<Line> lines;
+	{	
+		private bool cummulated;
+		private bool linegraph;
+		private string headline;
+		private List<Line> lines;
 		
 		public SingleGraph (bool cummulated, bool linegraph, string headline, List<Line> lines)
 		{
@@ -32,11 +32,10 @@ namespace WebYaST.Status
 		{
 			return headline;
 		}
-		
-		public List<Line> getLines ()
-		{
-			return lines; //Collections.unmodifiableCollection (lines);
-		}
 
+		public IEnumerable<Line> getLines ()
+		{
+			return lines.AsReadOnly ();
+		}
 	}
 }

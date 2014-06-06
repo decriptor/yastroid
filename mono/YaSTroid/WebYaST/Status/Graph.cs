@@ -1,19 +1,26 @@
-
+//import java.util.Collection;
+//import java.util.Collections;
+//
+//import org.xml.sax.SAXException;
+//
+//import android.util.Xml;
 using System.Collections.Generic;
+using Android.Util;
 
-namespace WebYaST.Status
+namespace YaSTroid.WebYaST.Status
 {
+	//FIXME: JUnit this
 	public class Graph
 	{
-		string id;
-		int yScale;
-		string yLabel;
-		int yMax;
-		int yDecimalPlaces;
-		List<SingleGraph> singleGraphs;
+		private string id;
+		private int yScale;
+		private string yLabel;
+		private int yMax;
+		private int yDecimalPlaces;
+		private List<SingleGraph> singleGraphs;
 		
 		public Graph (string id, int yScale, string yLabel, int yMax,
-				int yDecimalPlaces, List<SingleGraph> singleGraphs)
+			int yDecimalPlaces, List<SingleGraph> singleGraphs)
 		{
 			this.id = id;
 			this.yScale = yScale;
@@ -48,15 +55,15 @@ namespace WebYaST.Status
 			return yDecimalPlaces;
 		}
 
-		public List<SingleGraph> getSingleGraphs ()
+		public IEnumerable<SingleGraph> getSingleGraphs ()
 		{
-			return singleGraphs; // should be immutable collection
+			return singleGraphs.AsReadOnly ();
 		}
 		
 		public static List<Graph> FromXmlData (string xmlData)
 		{
 			GraphContentHandler contentHandler = new GraphContentHandler ();
-			//Xml.parse (xmlData, contentHandler);
+			Xml.Parse (xmlData, contentHandler);
 			return contentHandler.getGraphs ();
 		}
 	}

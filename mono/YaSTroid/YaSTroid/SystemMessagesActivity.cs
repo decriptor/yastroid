@@ -1,19 +1,20 @@
+using System;
+using System.Collections.Generic;
 using Android.App;
 using Android.OS;
 using Android.Util;
-using System;
-using System.Collections.Generic;
-using Android.Content;
+using System.Threading.Tasks;
 
 namespace YaSTroid
 {
-	[Activity (Label = "SystemMessagesActivity")]
+	[Activity (Label = "GroupListActivity")]
 	public class SystemMessagesActivity : ListActivity
 	{
-		List<SystemMessage> messageList;
+		private List<SystemMessage> messageList = null;
 
-		ProgressDialog messageListProgress;
-		SystemMessagesAdapter messageAdapter;
+		private ProgressDialog messageListProgress = null;
+		private SystemMessagesAdapter messageAdapter;
+		private Task messageView;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -21,11 +22,14 @@ namespace YaSTroid
 			SetContentView(Resource.Layout.system_messages);
 
 			messageList = new List<SystemMessage>();
-			messageAdapter = new SystemMessagesAdapter(this, Resource.Layout.system_messages_row, messageList);
-			ListAdapter = messageAdapter;
+			this.messageAdapter = new SystemMessagesAdapter(this,
+					Resource.Layout.system_messages_row, messageList);
+			ListAdapter = this.messageAdapter;
 
-			messageListProgress = ProgressDialog.Show(this, "Please wait...", "Retrieving data...", true);
-			getMessages();
+			messageView = new Task (getMessages);
+			messageView.Start ();
+			messageListProgress = ProgressDialog.Show(this, "Please wait...",
+					"Retrieving data...", true);
 		}
 
 		protected override void OnResume() {
@@ -33,43 +37,39 @@ namespace YaSTroid
 			getMessages();
 		}
 
-//		protected override void OnListItemClick (Android.Widget.ListView l, Android.Views.View v, int position, long id)
-//		{
-//			base.OnListItemClick (l, v, position, id);
-//			var intent = new Intent (this, typeof(ServerActivity));
-//			var s = messageList [position];
-//			intent.PutExtra ("SERVER_PASS", s.getPass());
-//			StartActivity (intent);
-//		}
+	//	@Override
+	//	protected void onListItemClick(ListView l, View v, int position, long id) {
+	//		base.onListItemClick(l, v, position, id);
+	//		Intent intent = new Intent(ServerListActivity.this,
+	//				ServerActivity.class);
+	//		Server s = messageList.get(position);
+	//		intent.putExtra("SERVER_PASS", s.getPass());
+	//		startActivity(intent);
+	//	}
 
-		void getMessages()
-		{
-			try
-			{
+		private void getMessages() {
+			try {
 				SystemMessage m;
 				messageList = new List<SystemMessage>();
 				m = new SystemMessage("this is a system log message", "module", "date");
 				messageList.Add(m);
 				Log.Info("ARRAY", "" + messageList.Count);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				Log.Error("BACKGROUND_PROC", e.Message);
 			}
 
-			RunOnUiThread(()=>
-			{
+			Task returnRes = new Task(() => {
 				messageAdapter.Clear();
-				if (messageList != null && messageList.Count > 0)
-				{
+				if (messageList != null && messageList.Count > 0) {
 					messageAdapter.NotifyDataSetChanged();
-
 					for (int i = 0; i < messageList.Count; i++)
 						messageAdapter.Add(messageList[i]);
 				}
 				messageListProgress.Dismiss();
 				messageAdapter.NotifyDataSetChanged();
 			});
+
+			RunOnUiThread(returnRes.Start);
 		}
 	}
 }

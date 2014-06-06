@@ -1,3 +1,4 @@
+using System;
 using Android.Content;
 using Android.Graphics;
 using Android.Util;
@@ -5,34 +6,29 @@ using Android.Views;
 
 namespace YaSTroid
 {
-	public class CustomGraphView : View 
+	/* Based on GraphView from Arno den Hond and then heavily customized */
+	public class CustomGraphView : View
 	{
 		public static bool BAR = true;
 		public static bool LINE = false;
 
-		Paint paint;
-		float[] values;
-		string[] horlabels;
-		string[] verlabels;
-		string title;
-		bool type;
-		bool parmsSet=false;
+		private Paint paint;
+		private float[] values;
+		private string[] horlabels;
+		private string[] verlabels;
+		private string title;
+		private bool type;
+		private bool parmsSet=false;
 
-		public CustomGraphView (Context context, IAttributeSet attrs) :	base (context, attrs)
-		{
-			Initialize ();
-		}
-		
-		public CustomGraphView (Context context, IAttributeSet attrs, int defStyle) : base (context, attrs, defStyle)
-		{
-			Initialize ();
-		}
-		
-		void Initialize ()
+		public CustomGraphView(Context context) : base (context)
 		{
 		}
 
-		public void setCustomGraphViewParms (float[] values, string title, string[] horlabels, string[] verlabels, bool type)
+		public CustomGraphView(Context context, IAttributeSet attrs) : base(context, attrs)
+		{
+		}
+
+		public void setCustomGraphViewParms(float[] values, string title, string[] horlabels, string[] verlabels, bool type)
 		{
 			if (values == null)
 				values = new float[0];
@@ -43,23 +39,21 @@ namespace YaSTroid
 			else
 				this.title = title;
 			if (horlabels == null)
-				this.horlabels = new string[0];
+				this.horlabels = new String[0];
 			else
 				this.horlabels = horlabels;
 			if (verlabels == null)
-				this.verlabels = new string[0];
+				this.verlabels = new String[0];
 			else
 				this.verlabels = verlabels;
 			this.type = type;
-			paint = new Paint ();
+			paint = new Paint();
 			parmsSet = true;
 			Invalidate();
 		}
 
-		protected override void OnDraw (Canvas canvas)
+		protected override void OnDraw(Canvas canvas)
 		{
-			base.OnDraw (canvas);
-
 			if (!parmsSet)
 				return;
 			float border = 20;
@@ -74,9 +68,7 @@ namespace YaSTroid
 
 			paint.TextAlign = Paint.Align.Left;
 			int vers = verlabels.Length - 1;
-
-			for (int i = 0; i < verlabels.Length; i++)
-			{
+			for (int i = 0; i < verlabels.Length; i++) {
 				paint.Color = Color.DarkGray;
 				float y = ((graphheight / vers) * i) + border;
 				canvas.DrawLine(horstart, y, width, y, paint);
@@ -89,9 +81,9 @@ namespace YaSTroid
 				float x = ((graphwidth / hors) * i) + horstart;
 				canvas.DrawLine(x, height - border, x, border, paint);
 				paint.TextAlign = Paint.Align.Center;
-				if (i==horlabels.Length-1)
+				if (i == horlabels.Length - 1)
 					paint.TextAlign = Paint.Align.Right;
-				if (i==0)
+				if (i == 0)
 					paint.TextAlign = Paint.Align.Left;
 				paint.Color = Color.White;
 				canvas.DrawText(horlabels[i], x, height - 4, paint);
@@ -128,18 +120,18 @@ namespace YaSTroid
 			}
 		}
 
-		float getMax()
+		private float getMax()
 		{
-			float largest = int.MinValue;
+			float largest = Int32.MinValue;
 			for (int i = 0; i < values.Length; i++)
 				if (values[i] > largest)
 					largest = values[i];
 			return largest;
 		}
 
-		float getMin()
+		private float getMin()
 		{
-			float smallest = int.MaxValue;
+			float smallest = Int32.MaxValue;
 			for (int i = 0; i < values.Length; i++)
 				if (values[i] < smallest)
 					smallest = values[i];

@@ -1,14 +1,16 @@
 
-namespace WebYaST.Status
+namespace YaSTroid.WebYaST
 {
+
+	//FIXME: JUnit this
 	public class Line
 	{
-		string metricId;
-		string metricColumn;
-		string label;
-		int maxLimit;
-		int minLimit;
-		bool reached;
+		private string metricId;
+		private string metricColumn;
+		private string label;
+		private int maxLimit;
+		private int minLimit;
+		private bool reached;
 		
 		public Line (string metricId, string metricColumn, string label, 
 				int maxLimit, int minLimit, bool reached)
