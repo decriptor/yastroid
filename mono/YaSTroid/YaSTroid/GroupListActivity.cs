@@ -15,13 +15,11 @@ namespace YaSTroid
 	[Activity (Label = "GroupListActivity")]
 	public class GroupListActivity : ListActivity
 	{
-		private SQLiteDatabase database;
-		private YastroidOpenHelper dbhelper;
-		private List<Group> groupList = null;
+		SQLiteDatabase database;
+		YastroidOpenHelper dbhelper;
+		List<Group> groupList = null;
 
-		private ProgressDialog groupListProgress = null;
-		private GroupListAdapter groupAdapter;
-		private Task groupView;
+		GroupListAdapter groupAdapter;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -32,13 +30,7 @@ namespace YaSTroid
 			dbhelper = new YastroidOpenHelper(this);
 
 			groupList = new List<Group>();
-			this.groupAdapter = new GroupListAdapter(this, Resource.Layout.grouplistrow, groupList);
-			ListAdapter = this.groupAdapter;
-
-			groupView = new Task (getGroups);
-
-			groupView.Start ();
-			groupListProgress = ProgressDialog.Show(this, "Please wait...", "Retrieving groups...", true);
+			ListAdapter = groupAdapter = new GroupListAdapter(this, Resource.Layout.grouplistrow, groupList);
 		}
 
 		protected override void OnResume()
@@ -59,8 +51,7 @@ namespace YaSTroid
 
 		public override bool OnCreateOptionsMenu(IMenu menu)
 		{
-			MenuInflater inflater = MenuInflater;
-			inflater.Inflate(Resource.Menu.grouplistmenu, menu);
+			MenuInflater.Inflate(Resource.Menu.grouplistmenu, menu);
 			return true;
 		}
 
@@ -97,7 +88,8 @@ namespace YaSTroid
 			}
 		}
 
-		private void deleteGroup(long id) {
+		void deleteGroup(long id)
+		{
 			if(id == YastroidOpenHelper.GROUP_DEFAULT_ALL) {
 				Toast.MakeText(this, "Can't delete the default group", ToastLength.Short).Show();
 			}
@@ -109,16 +101,17 @@ namespace YaSTroid
 			}
 		}
 
-		private void getGroups() {
+		void getGroups()
+		{
 			database = dbhelper.WritableDatabase;
 			try {
-				ICursor sc = database.Query(YastroidOpenHelper.GROUP_TABLE_NAME, new string[] {
+				ICursor sc = database.Query(YastroidOpenHelper.GROUP_TABLE_NAME, new [] {
 					"_id",YastroidOpenHelper.GROUP_NAME, YastroidOpenHelper.GROUP_DESCRIPTION, YastroidOpenHelper.GROUP_ICON },
 						null, null, null, null, null);
 
 				sc.MoveToFirst();
 				Group g;
-				groupList = new List<Group>();
+				groupList.Clear ();
 				if (!sc.IsAfterLast) {
 					do {
 						g = new Group(sc.GetInt(0), sc.GetString(1), sc.GetString(2), sc
@@ -128,26 +121,25 @@ namespace YaSTroid
 				}
 				sc.Close();
 				database.Close();
-				Log.Info("ARRAY", "" + groupList.Count);
+				Log.Info("[Group Count]", "" + groupList.Count);
 			} catch (Exception e) {
 				Log.Error("BACKGROUND_PROC", e.Message);
 			}
 
+			UpdateGroupAdapter ();
+		}
 
-			Task returnRes = new Task (() => {
-				groupAdapter.Clear();
-				if (groupList != null && groupList.Count > 0) {
-					groupAdapter.NotifyDataSetChanged();
-					for (int i = 0; i < groupList.Count; i++)
-						groupAdapter.Add(groupList[i]);
-				} else {
-					// Add button 'Add new group'
-				}
-				groupListProgress.Dismiss();
+		void UpdateGroupAdapter()
+		{
+			groupAdapter.Clear();
+			if (groupList != null && groupList.Count > 0) {
 				groupAdapter.NotifyDataSetChanged();
-
-			});
-			RunOnUiThread(returnRes.Start);
+				for (int i = 0; i < groupList.Count; i++)
+					groupAdapter.Add(groupList[i]);
+			} else {
+				// Add button 'Add new group'
+			}
+			groupAdapter.NotifyDataSetChanged();
 		}
 	}
 }
