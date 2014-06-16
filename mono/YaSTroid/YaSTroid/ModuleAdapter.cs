@@ -15,6 +15,12 @@ namespace YaSTroid
 			this.modules = modules;
 			this.context = context;
 		}
+
+		public override int Count {
+			get {
+				return modules.Count;
+			}
+		}
 		
 		public override View GetView(int position, View convertView, ViewGroup parent)
 		{	

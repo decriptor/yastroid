@@ -92,80 +92,80 @@ namespace YaSTroid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f090023
-			public const int add_group = 2131296291;
+			// aapt resource value: 0x7f090021
+			public const int add_group = 2131296289;
 			
-			// aapt resource value: 0x7f090025
-			public const int add_server = 2131296293;
-			
-			// aapt resource value: 0x7f090020
-			public const int bottomtext = 2131296288;
-			
-			// aapt resource value: 0x7f09000a
-			public const int button_add_group = 2131296266;
-			
-			// aapt resource value: 0x7f09001c
-			public const int button_add_server = 2131296284;
+			// aapt resource value: 0x7f090022
+			public const int add_server = 2131296290;
 			
 			// aapt resource value: 0x7f09001d
-			public const int button_save_server = 2131296285;
+			public const int bottomtext = 2131296285;
 			
 			// aapt resource value: 0x7f090007
-			public const int edit_group_description = 2131296263;
-			
-			// aapt resource value: 0x7f090009
-			public const int edit_group_icon = 2131296265;
-			
-			// aapt resource value: 0x7f090005
-			public const int edit_group_name = 2131296261;
-			
-			// aapt resource value: 0x7f090015
-			public const int edit_server_host = 2131296277;
-			
-			// aapt resource value: 0x7f090013
-			public const int edit_server_name = 2131296275;
-			
-			// aapt resource value: 0x7f09001b
-			public const int edit_server_pass = 2131296283;
-			
-			// aapt resource value: 0x7f090017
-			public const int edit_server_port = 2131296279;
+			public const int button_add_group = 2131296263;
 			
 			// aapt resource value: 0x7f090019
-			public const int edit_server_user = 2131296281;
+			public const int button_add_server = 2131296281;
+			
+			// aapt resource value: 0x7f09001a
+			public const int button_save_server = 2131296282;
+			
+			// aapt resource value: 0x7f090005
+			public const int edit_group_description = 2131296261;
+			
+			// aapt resource value: 0x7f090006
+			public const int edit_group_icon = 2131296262;
+			
+			// aapt resource value: 0x7f090004
+			public const int edit_group_name = 2131296260;
+			
+			// aapt resource value: 0x7f090012
+			public const int edit_server_host = 2131296274;
+			
+			// aapt resource value: 0x7f090010
+			public const int edit_server_name = 2131296272;
+			
+			// aapt resource value: 0x7f090018
+			public const int edit_server_pass = 2131296280;
+			
+			// aapt resource value: 0x7f090014
+			public const int edit_server_port = 2131296276;
+			
+			// aapt resource value: 0x7f090016
+			public const int edit_server_user = 2131296278;
 			
 			// aapt resource value: 0x7f090003
 			public const int graph_view = 2131296259;
 			
-			// aapt resource value: 0x7f09000d
-			public const int group_description = 2131296269;
+			// aapt resource value: 0x7f09000a
+			public const int group_description = 2131296266;
+			
+			// aapt resource value: 0x7f090008
+			public const int group_icon = 2131296264;
+			
+			// aapt resource value: 0x7f090009
+			public const int group_name = 2131296265;
 			
 			// aapt resource value: 0x7f09000b
-			public const int group_icon = 2131296267;
+			public const int module_icon = 2131296267;
 			
 			// aapt resource value: 0x7f09000c
-			public const int group_name = 2131296268;
+			public const int module_name = 2131296268;
 			
-			// aapt resource value: 0x7f09000e
-			public const int module_icon = 2131296270;
-			
-			// aapt resource value: 0x7f09000f
-			public const int module_name = 2131296271;
-			
-			// aapt resource value: 0x7f090024
-			public const int preferences = 2131296292;
+			// aapt resource value: 0x7f090020
+			public const int preferences = 2131296288;
 			
 			// aapt resource value: 0x7f090000
 			public const int resource_type = 2131296256;
 			
-			// aapt resource value: 0x7f090011
-			public const int server_address = 2131296273;
+			// aapt resource value: 0x7f09000e
+			public const int server_address = 2131296270;
 			
-			// aapt resource value: 0x7f09001e
-			public const int server_icon = 2131296286;
+			// aapt resource value: 0x7f09001b
+			public const int server_icon = 2131296283;
 			
-			// aapt resource value: 0x7f090010
-			public const int server_name = 2131296272;
+			// aapt resource value: 0x7f09000d
+			public const int server_name = 2131296269;
 			
 			// aapt resource value: 0x7f090002
 			public const int spinner = 2131296258;
@@ -173,38 +173,29 @@ namespace YaSTroid
 			// aapt resource value: 0x7f090001
 			public const int spinner_label = 2131296257;
 			
-			// aapt resource value: 0x7f090021
-			public const int system_status_icon = 2131296289;
-			
-			// aapt resource value: 0x7f090022
-			public const int system_status_text = 2131296290;
+			// aapt resource value: 0x7f09001e
+			public const int system_status_icon = 2131296286;
 			
 			// aapt resource value: 0x7f09001f
-			public const int toptext = 2131296287;
+			public const int system_status_text = 2131296287;
 			
-			// aapt resource value: 0x7f090006
-			public const int txt_group_description = 2131296262;
+			// aapt resource value: 0x7f09001c
+			public const int toptext = 2131296284;
 			
-			// aapt resource value: 0x7f090008
-			public const int txt_group_icon = 2131296264;
+			// aapt resource value: 0x7f090011
+			public const int txt_server_host = 2131296273;
 			
-			// aapt resource value: 0x7f090004
-			public const int txt_group_name = 2131296260;
+			// aapt resource value: 0x7f09000f
+			public const int txt_server_name = 2131296271;
 			
-			// aapt resource value: 0x7f090014
-			public const int txt_server_host = 2131296276;
+			// aapt resource value: 0x7f090017
+			public const int txt_server_pass = 2131296279;
 			
-			// aapt resource value: 0x7f090012
-			public const int txt_server_name = 2131296274;
+			// aapt resource value: 0x7f090013
+			public const int txt_server_port = 2131296275;
 			
-			// aapt resource value: 0x7f09001a
-			public const int txt_server_pass = 2131296282;
-			
-			// aapt resource value: 0x7f090016
-			public const int txt_server_port = 2131296278;
-			
-			// aapt resource value: 0x7f090018
-			public const int txt_server_user = 2131296280;
+			// aapt resource value: 0x7f090015
+			public const int txt_server_user = 2131296277;
 			
 			static Id()
 			{
@@ -232,40 +223,37 @@ namespace YaSTroid
 			public const int grouplistrow = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int main = 2130903044;
+			public const int module_list_row = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int module_list_row = 2130903045;
+			public const int server = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int server = 2130903046;
+			public const int server_header = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int server_header = 2130903047;
+			public const int serveradd = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int serveradd = 2130903048;
+			public const int serveredit = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int serveredit = 2130903049;
+			public const int serverlist = 2130903049;
 			
 			// aapt resource value: 0x7f03000a
-			public const int serverlist = 2130903050;
+			public const int serverlistrow = 2130903050;
 			
 			// aapt resource value: 0x7f03000b
-			public const int serverlistrow = 2130903051;
+			public const int system_messages = 2130903051;
 			
 			// aapt resource value: 0x7f03000c
-			public const int system_messages = 2130903052;
+			public const int system_messages_row = 2130903052;
 			
 			// aapt resource value: 0x7f03000d
-			public const int system_messages_row = 2130903053;
+			public const int system_status = 2130903053;
 			
 			// aapt resource value: 0x7f03000e
-			public const int system_status = 2130903054;
-			
-			// aapt resource value: 0x7f03000f
-			public const int system_status_list_item = 2130903055;
+			public const int system_status_list_item = 2130903054;
 			
 			static Layout()
 			{
@@ -281,13 +269,10 @@ namespace YaSTroid
 		{
 			
 			// aapt resource value: 0x7f080000
-			public const int grouplistmenu = 2131230720;
+			public const int menu = 2131230720;
 			
 			// aapt resource value: 0x7f080001
-			public const int menu = 2131230721;
-			
-			// aapt resource value: 0x7f080002
-			public const int serverlistmenu = 2131230722;
+			public const int serverlistmenu = 2131230721;
 			
 			static Menu()
 			{

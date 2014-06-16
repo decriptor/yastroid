@@ -1,17 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="YaSTroid/GroupListAdapter.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.192.168.56.101:5555" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="YaSTroid/ServerListActivity.cs">
     <Files>
-      <File FileName="YaSTroid/GroupListActivity.cs" Line="33" Column="43" />
-      <File FileName="YaSTroid/GroupListAdapter.cs" Line="64" Column="9" />
-      <File FileName="YaSTroid/GroupAddActivity.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/MainActivity.cs" Line="12" Column="19" />
+      <File FileName="YaSTroid/GroupListAdapter.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/ServerListActivity.cs" Line="83" Column="1" />
+      <File FileName="YaSTroid/ServerListAdapter.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/sshaw/code/yastroid/mono/YaSTroid/YaSTroid/GroupListActivity.cs" line="39" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.YaSTroid AndroidDeviceId-Debug="192.168.56.101:5555" />
+  <MonoDevelop.Ide.ItemProperties.YaSTroid AndroidDeviceId-Debug="192.168.56.101:5555" MonoForAntroid.PreferredDevice="3.7&quot; WVGA (Nexus One)" />
 </Properties>

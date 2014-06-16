@@ -1,67 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:background="#ffffff"
-	android:textColor="#000000">
-	<TableRow>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" >
 		<TextView 
-		android:id="@+id/txt_server_name"
-		android:width="120px"
-		android:text="@string/add_server_name"
-		android:textColor="#000000"
-		/>
-		<EditText android:id="@+id/edit_server_name"
-		android:width="200px"
-		/>
-	</TableRow>
-	<TableRow>
+			android:id="@+id/txt_server_name"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.3"
+			android:text="@string/add_server_name" />
+		<EditText
+			android:id="@+id/edit_server_name"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.7" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" >
 		<TextView
-		android:id="@+id/txt_server_host"
-		android:width="120px"
-		android:text="@string/add_server_hostname"
-		android:textColor="#000000"
-		/>
+			android:id="@+id/txt_server_host"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.3"
+			android:text="@string/add_server_hostname" />
 		<EditText 
-		android:id="@+id/edit_server_host"
-		/>
-	</TableRow>
-	<TableRow>
+			android:id="@+id/edit_server_host"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.7" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" >
 		<TextView 
-		android:id="@+id/txt_server_port"
-		android:width="120px"
-		android:text="@string/add_server_port"
-		android:textColor="#000000"
-		/>
+			android:id="@+id/txt_server_port"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.3"
+			android:text="@string/add_server_port" />
 		<EditText 
-		android:id="@+id/edit_server_port"
-		/>
-	</TableRow>
-	<TableRow>
+			android:id="@+id/edit_server_port"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.7" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" >
+
 		<TextView
-		android:id="@+id/txt_server_user"
-		android:width="120px"
-		android:text="@string/add_server_user"
-		android:textColor="#000000"
-		/>
+			android:id="@+id/txt_server_user"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.3"
+			android:text="@string/add_server_user" />
 		<EditText
-		android:id="@+id/edit_server_user"
-		/>
-	</TableRow>
-	<TableRow>
+			android:id="@+id/edit_server_user"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.7" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" >
+
 		<TextView
-		android:id="@+id/txt_server_pass"
-		android:width="120px"
-		android:text="@string/add_server_password"
-		android:textColor="#000000"
-		/>
+			android:id="@+id/txt_server_pass"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.3"
+			android:text="@string/add_server_password" />
 		<EditText
-		android:id="@+id/edit_server_pass"
-		android:password="true"
-		/>
-	</TableRow>
+			android:id="@+id/edit_server_pass"
+			android:password="true"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.7" />
+	</LinearLayout>
+
 	<Button
-	android:id="@+id/button_add_server"
-	android:text="@string/add_server_button"
-	/>
-</TableLayout>
+		android:id="@+id/button_add_server"
+		android:text="@string/add_server_button"
+		android:layout_gravity="right"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+</LinearLayout>

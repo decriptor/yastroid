@@ -1,44 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:background="#ffffff"
-	android:textColor="#000000">
-	<TableRow>
-		<TextView 
-		android:id="@+id/txt_group_name"
-		android:width="120px"
-		android:text="@string/add_group_name"
-		android:textColor="#000000"
-		/>
-		<EditText android:id="@+id/edit_group_name"
-		android:width="200px"
-		/>
-	</TableRow>
-	<TableRow>
-		<TextView
-		android:id="@+id/txt_group_description"
-		android:width="120px"
-		android:text="@string/add_group_description"
-		android:textColor="#000000"
-		/>
-		<EditText 
-		android:id="@+id/edit_group_description"
-		/>
-	</TableRow>
-	<TableRow>
-		<TextView 
-		android:id="@+id/txt_group_icon"
-		android:width="120px"
-		android:text="@string/add_group_icon"
-		android:textColor="#000000"
-		/>
-		<EditText 
-		android:id="@+id/edit_group_icon"
-		/>
-	</TableRow>
-	<Button
-	android:id="@+id/button_add_group"
-	android:text="@string/add_group_button"
-	/>
-</TableLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="@string/add_group_name" />
+        <EditText
+            android:id="@+id/edit_group_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="@string/add_group_description" />
+        <EditText
+            android:id="@+id/edit_group_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/add_group_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" />
+        <EditText
+            android:id="@+id/edit_group_icon"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_add_group"
+        android:text="@string/add_group_button"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -16,12 +16,17 @@ namespace YaSTroid
 			this.context = context;
 		}
 
+		public override int Count {
+			get {
+				return servers.Count;
+			}
+		}
+
 		public override View GetView(int position, View convertView, ViewGroup parent)
 		{
 			View serverView = convertView;
 			if (serverView == null) {
-				LayoutInflater vi = (LayoutInflater) context
-					.GetSystemService(Context.LayoutInflaterService);
+				LayoutInflater vi = (LayoutInflater) context.GetSystemService(Context.LayoutInflaterService);
 				serverView = vi.Inflate(Resource.Layout.serverlistrow, null);
 			}
 
