@@ -1,11 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.192.168.56.101:5555" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="YaSTroid/ServerListActivity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="YaSTroid/SystemStatusActivity.cs">
     <Files>
-      <File FileName="YaSTroid/MainActivity.cs" Line="12" Column="19" />
-      <File FileName="YaSTroid/GroupListAdapter.cs" Line="1" Column="1" />
-      <File FileName="YaSTroid/ServerListActivity.cs" Line="83" Column="1" />
+      <File FileName="YaSTroid/ServerListActivity.cs" Line="1" Column="1" />
       <File FileName="YaSTroid/ServerListAdapter.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/GroupListAdapter.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/MainActivity.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/ModuleAdapter.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/ServerActivity.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/StatusListAdapter.cs" Line="1" Column="1" />
+      <File FileName="YaSTroid/SystemStatusActivity.cs" Line="35" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

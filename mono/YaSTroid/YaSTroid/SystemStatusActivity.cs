@@ -1,26 +1,24 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Org.Xml.Sax;
-using System.Collections.Generic;
 using YaSTroid.WebYaST.Status;
-using System.Threading.Tasks;
 
 namespace YaSTroid
 {
 	[Activity (Label = "SystemStatusActivity")]
 	public class SystemStatusActivity : ListActivity
 	{
-		private StatusListAdapter statusListAdapter;
-		private Task systemStatusView;
-		private ProgressDialog systemStatusListProgress = null;
-		private StatusModule statusModule;
-		private	List<Graph> graphs;
-		private List<YaSTroid.WebYaST.Status.Log> logs;
+		StatusListAdapter statusListAdapter;
+		Task systemStatusView;
+		StatusModule statusModule;
+		List<Graph> graphs;
+		List<YaSTroid.WebYaST.Status.Log> logs;
 	
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -28,17 +26,12 @@ namespace YaSTroid
 			SetContentView(Resource.Layout.system_status);
 			statusListAdapter = new StatusListAdapter(this, Resource.Layout.system_status_list_item, new List<SystemStatus>());
 			ListAdapter = statusListAdapter;
-
-			systemStatusView = new Task (buildList);
-			systemStatusView.Start ();
-			systemStatusListProgress = ProgressDialog.Show(this, "Please wait...",
-					"Retrieving data...", true);
 		}
 
 		protected override void OnResume()
 		{
 			base.OnResume();
-			//buildList();
+			buildList();
 		}
 	
 		protected override void OnListItemClick(ListView l, View v, int position, long id)
@@ -99,11 +92,7 @@ namespace YaSTroid
 				Android.Util.Log.Error("SystemStatusActivity", ex.Message);
 			}
 
-			Task returnRes = new Task (() => {
-				populateAdapter ();
-				systemStatusListProgress.Dismiss ();
-			});
-			RunOnUiThread(returnRes.Start);
+			populateAdapter ();
 		}
 		
 		private void populateAdapter()

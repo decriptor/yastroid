@@ -13,11 +13,10 @@ namespace YaSTroid
 	[Activity (Label = "ServerActivity")]
 	public class ServerActivity : ListActivity
 	{
-		private ProgressDialog moduleListProgress;
-		private Server yastServer;
-		private List<Module> moduleList = null;
-		private ModuleAdapter moduleAdapter;
-		private Task moduleView;
+		ProgressDialog moduleListProgress;
+		Server yastServer;
+		List<Module> moduleList;
+		ModuleAdapter moduleAdapter;
 
 		/*
 		 * (non-Javadoc)
@@ -30,7 +29,7 @@ namespace YaSTroid
 			yastServer = new Server (Intent.Extras);
 			
 			moduleList = new List<Module>();
-			this.moduleAdapter = new ModuleAdapter(this, Resource.Layout.module_list_row, moduleList);
+			moduleAdapter = new ModuleAdapter (this, Resource.Layout.module_list_row, moduleList);
 			
 			// Set the Header on this Activity
 			View header = LayoutInflater.Inflate(Resource.Layout.server_header, null);
@@ -42,17 +41,13 @@ namespace YaSTroid
 			//serverUptime.setText("Uptime: " + "8 days, 8 Hours"); //Not available yet
 			
 			ListView.AddHeaderView(header);
-			ListAdapter = this.moduleAdapter;
-						
-			moduleView = new Task (getModules);
-			moduleView.Start ();
-			moduleListProgress = ProgressDialog.Show(this, "Please wait...", "Building Module list...", true);
+			ListAdapter = moduleAdapter;
 		}
 		
 		protected override void OnResume()
 		{
 			base.OnResume();
-			//getModules();
+			getModules();
 		}
 		
 		protected override void OnListItemClick(ListView l, View v, int position, long id) {
@@ -75,9 +70,9 @@ namespace YaSTroid
 			}
 		}
 		
-		private void getModules()
+		void getModules()
 		{
-			moduleList = new List<Module>();
+			moduleList.Clear ();
 			string moduleName = "SETME";
 			// Get Updates
 			Module update = null;
@@ -126,20 +121,13 @@ namespace YaSTroid
 			if (systemHealth != null)
 				moduleList.Add(systemHealth);
 
-
-			Task returnRes = new Task (() => {
-				moduleAdapter.Clear();
-				if (moduleList != null && moduleList.Count > 0) {
-					moduleAdapter.NotifyDataSetChanged();
-					for (int i = 0; i < moduleList.Count; i++) {
-						moduleAdapter.Add(moduleList[i]);
-					}
+			moduleAdapter.Clear();
+			if (moduleList != null && moduleList.Count > 0) {
+				for (int i = 0; i < moduleList.Count; i++) {
+					moduleAdapter.Add(moduleList[i]);
 				}
-				moduleListProgress.Dismiss();
-				moduleAdapter.NotifyDataSetChanged();
-
-			});
-			RunOnUiThread(returnRes.Start);
+			}
+			moduleAdapter.NotifyDataSetChanged();
 		}		
 	}
 }
