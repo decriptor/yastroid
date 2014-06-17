@@ -1,3 +1,10 @@
+It would appear that WebYaST is dead and so I'll no longer waste time on this project.
+
+
+
+
+
+
 YaSTroid project
     An android application that will communicate with webyast
     service through it's RESTful interface.
