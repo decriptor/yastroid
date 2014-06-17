@@ -15,7 +15,6 @@ namespace YaSTroid
 	public class SystemStatusActivity : ListActivity
 	{
 		StatusListAdapter statusListAdapter;
-		Task systemStatusView;
 		StatusModule statusModule;
 		List<Graph> graphs;
 		List<YaSTroid.WebYaST.Status.Log> logs;

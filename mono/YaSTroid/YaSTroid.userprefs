@@ -1,6 +1,6 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.192.168.56.101:5555" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="YaSTroid/SystemStatusActivity.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebYaST/RestClient.cs">
     <Files>
       <File FileName="YaSTroid/ServerListActivity.cs" Line="1" Column="1" />
       <File FileName="YaSTroid/ServerListAdapter.cs" Line="1" Column="1" />
@@ -9,7 +9,9 @@
       <File FileName="YaSTroid/ModuleAdapter.cs" Line="1" Column="1" />
       <File FileName="YaSTroid/ServerActivity.cs" Line="1" Column="1" />
       <File FileName="YaSTroid/StatusListAdapter.cs" Line="1" Column="1" />
-      <File FileName="YaSTroid/SystemStatusActivity.cs" Line="35" Column="4" />
+      <File FileName="YaSTroid/SystemStatusActivity.cs" Line="1" Column="1" />
+      <File FileName="WebYaST/RestClient.cs" Line="64" Column="12" />
+      <File FileName="WebYaST/Update/UpdateModule.cs" Line="24" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
